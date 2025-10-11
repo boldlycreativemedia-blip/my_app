@@ -32,14 +32,14 @@ const TeamShowcase = () => {
     {
       id: 4,
       name: "Vipul Kumar",
-      designation: "Desgin Head",
+      designation: "Design Head",
       image: "/member-4.png",
       skills: ["Visual Design", "Brand Identity"],
     },
     {
       id: 5,
       name: "Naman Dadhich",
-      designation: "Cinemotographer",
+      designation: "Cinematographer",
       image: "/member-5.png",
       skills: ["Visual Storytelling", "Motion Capture"],
     },

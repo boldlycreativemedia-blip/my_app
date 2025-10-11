@@ -1,18 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import {
-  Smartphone,
-  Search,
-  Monitor,
-  ShoppingCart,
-  Users,
-  Play,
-  Music,
-  MessageCircle,
-  Camera,
-  Video,
-} from "lucide-react";
+import Image from "next/image";
 
 const LastHomeSection = () => {
   const scrollRef = useRef(null);
@@ -20,16 +9,13 @@ const LastHomeSection = () => {
   const [isDragging, setIsDragging] = useState(false);
 
   const brands = [
-    { name: "Apple", icon: Smartphone },
-    { name: "Google", icon: Search },
-    { name: "Microsoft", icon: Monitor },
-    { name: "Amazon", icon: ShoppingCart },
-    { name: "Meta", icon: Users },
-    { name: "Netflix", icon: Play },
-    { name: "Spotify", icon: Music },
-    { name: "Twitter", icon: MessageCircle },
-    { name: "Instagram", icon: Camera },
-    { name: "YouTube", icon: Video },
+    { image: "/Brand-1.png", alt: "Brand 1" },
+    { image: "/Brand-2.png", alt: "Brand 2" },
+    { image: "/Brand-3.png", alt: "Brand 3" },
+    { image: "/Brand-4.png", alt: "Brand 4" },
+    { image: "/Brand-5.png", alt: "Brand 5" },
+    { image: "/Brand-6.png", alt: "Brand 6" },
+    { image: "/Brand-7.png", alt: "Brand 7" },
   ];
 
   // Duplicate brands array for seamless loop
@@ -111,15 +97,18 @@ const LastHomeSection = () => {
         >
           {duplicatedBrands.map((brand, index) => (
             <motion.div
-              key={`${brand.name}-${index}`}
-              className="flex items-center gap-3 text-gray-400 hover:text-red-500 transition-colors duration-300 whitespace-nowrap flex-shrink-0 px-4 py-2"
-              whileHover={{ scale: 1.05 }}
+              key={`brand-${index}`}
+              className="flex items-center justify-center whitespace-nowrap flex-shrink-0 px-4 py-2 group"
+              whileHover={{ scale: 1.25 }}
               whileTap={{ scale: 0.95 }}
             >
-              <brand.icon className="w-6 h-6 md:w-8 md:h-8" />
-              <span className="text-lg md:text-xl lg:text-2xl font-semibold">
-                {brand.name}
-              </span>
+              <Image
+                src={brand.image}
+                alt={brand.alt}
+                width={120}
+                height={60}
+                className="h-12 md:h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
             </motion.div>
           ))}
         </div>
@@ -158,7 +147,7 @@ const LastHomeSection = () => {
 
           {/* Decorative Elements */}
           {/* Top Right Star */}
-          <div className="absolute top-0 right-0 w-48 h-48 md:top-0 md:-right-0">
+          <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48">
             <img
               src="/Frame2085660656.png"
               alt="Decorative star"

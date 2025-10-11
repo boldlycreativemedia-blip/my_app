@@ -123,7 +123,7 @@ const Testimonials = () => {
           </div>
 
           {/* Testimonials Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 overflow-x-auto md:overflow-x-visible pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide">
             {testimonials
               .slice(currentIndex, currentIndex + 3)
               .concat(
@@ -135,7 +135,7 @@ const Testimonials = () => {
               .map((testimonial, index) => (
                 <div
                   key={`${testimonial.id}-${currentIndex}-${index}`}
-                  className={`bg-gray-300 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 ${
+                  className={`bg-gray-300 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 min-w-[85vw] md:min-w-0 snap-center ${
                     index === 0 ? "md:col-span-2 lg:col-span-1" : ""
                   }`}
                 >

@@ -6,12 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Briefcase,
   House,
   Package2,
   Phone,
   User2,
-  Users,
+  Briefcase,
   Menu,
   X,
 } from "lucide-react";
@@ -34,13 +33,12 @@ export default function Header() {
     { href: "/services", label: "Services", icon: Package2 },
   ];
 
-  // Right side action items
+  // Right side action items (removed Profile/User button)
   const actionItems = [
-    { href: "#", label: "Profile", icon: User2, description: "User Profile" },
     {
       href: "/career",
       label: "Career",
-      icon: Users,
+      icon: Briefcase,
       description: "Join Our Team",
     },
     {
@@ -137,9 +135,9 @@ export default function Header() {
         </AnimatePresence>
       </motion.button>
 
-      {/* Middle Logo */}
+      {/* Middle Logo - Absolutely centered */}
       <motion.div
-        className="text-center"
+        className=""
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.6 }}
@@ -172,38 +170,50 @@ export default function Header() {
               className="relative group"
             >
               <Link href={item.href}>
-                <motion.button
-                  className={`
-                    ${
-                      isContactButton
-                        ? "bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full w-10 h-10 shadow-lg hover:shadow-red-500/25"
-                        : "text-white hover:text-red-400 w-10 h-10 rounded-full hover:bg-white/10"
-                    } 
-                    flex items-center justify-center transition-all duration-300 relative overflow-hidden
-                  `}
-                  whileHover={{
-                    scale: 1.1,
-                    boxShadow: isContactButton
-                      ? "0 0 20px rgba(239, 68, 68, 0.4)"
-                      : "0 0 15px rgba(255, 255, 255, 0.2)",
-                  }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <motion.div
-                    whileHover={{ rotate: isContactButton ? 15 : 0 }}
-                    transition={{ duration: 0.2 }}
+                {isContactButton ? (
+                  // Contact button as white pill shape with icon and text
+                  <motion.button
+                    className="bg-white text-black rounded-full px-5 py-2.5 flex items-center gap-2 font-medium shadow-lg hover:shadow-xl transition-all duration-300"
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: "0 10px 30px rgba(255, 255, 255, 0.3)",
+                    }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <Icon size={18} />
-                  </motion.div>
+                    <motion.div
+                      whileHover={{ rotate: 15 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Icon size={18} />
+                    </motion.div>
+                    <span>{item.label}</span>
+                  </motion.button>
+                ) : (
+                  // Career button as icon only
+                  <motion.button
+                    className="text-white hover:text-red-400 w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-all duration-300 relative overflow-hidden"
+                    whileHover={{
+                      scale: 1.1,
+                      boxShadow: "0 0 15px rgba(255, 255, 255, 0.2)",
+                    }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <motion.div
+                      whileHover={{ rotate: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Icon size={18} />
+                    </motion.div>
 
-                  {/* Ripple effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-white/20 rounded-full"
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileHover={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.button>
+                    {/* Ripple effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-white/20 rounded-full"
+                      initial={{ scale: 0, opacity: 0 }}
+                      whileHover={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.button>
+                )}
               </Link>
 
               {/* Tooltip */}
@@ -276,7 +286,7 @@ export default function Header() {
                 })}
               </div>
 
-              {/* Action Items */}
+              {/* Action Items - Changed to 2 columns grid (removed Profile) */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -286,7 +296,7 @@ export default function Header() {
                 <p className="text-gray-400 text-sm mb-4 font-medium">
                   Quick Actions
                 </p>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 gap-3">
                   {actionItems.map((item, index) => {
                     const Icon = item.icon;
                     const isContactButton = item.href === "/contactus";
@@ -307,7 +317,7 @@ export default function Header() {
                               w-full p-4 rounded-xl flex flex-col items-center gap-2 transition-all duration-300 relative overflow-hidden
                               ${
                                 isContactButton
-                                  ? "bg-gradient-to-br from-red-500 to-red-600 text-white shadow-lg"
+                                  ? "bg-white text-black shadow-lg"
                                   : "bg-white/5 text-white hover:bg-white/10 hover:text-red-400"
                               }
                             `}
@@ -327,7 +337,7 @@ export default function Header() {
                             {/* Glowing effect for contact button */}
                             {isContactButton && (
                               <motion.div
-                                className="absolute inset-0 bg-white/20 rounded-xl"
+                                className="absolute inset-0 bg-black/10 rounded-xl"
                                 initial={{ scale: 0, opacity: 0 }}
                                 whileHover={{ scale: 1, opacity: 1 }}
                                 transition={{ duration: 0.3 }}

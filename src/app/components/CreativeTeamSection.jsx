@@ -11,6 +11,7 @@ const CreativeTeamSection = () => {
       id: 0,
       type: "single",
       name: "Harsh Kuria",
+      designation: "Founder & CEO",
       image: "/member-1.png",
       delay: 0,
     },
@@ -18,6 +19,7 @@ const CreativeTeamSection = () => {
       id: 2,
       type: "single",
       name: "Harshit Singh",
+      designation: "Co-founder & COO",
       image: "/member-2.png",
       delay: 0.5,
     },
@@ -25,6 +27,7 @@ const CreativeTeamSection = () => {
       id: 3,
       type: "single",
       name: "Jungkal Brahma",
+      designation: "Art Director",
       image: "/member-3.png",
       delay: 1,
     },
@@ -32,6 +35,7 @@ const CreativeTeamSection = () => {
       id: 4,
       type: "single",
       name: "Vipul Kumar",
+      designation: "Design Head",
       image: "/member-4.png",
       delay: 1.5,
     },
@@ -39,6 +43,7 @@ const CreativeTeamSection = () => {
       id: 5,
       type: "single",
       name: "Naman Dadhich",
+      designation: "Cinematographer",
       image: "/member-5.png",
       delay: 2,
     },
@@ -46,6 +51,7 @@ const CreativeTeamSection = () => {
       id: 6,
       type: "single",
       name: "Aman Mann",
+      designation: "Photographer",
       image: "/member-6.png",
       delay: 3,
     },
@@ -53,6 +59,7 @@ const CreativeTeamSection = () => {
       id: 7,
       type: "single",
       name: "Aditya Xopun Borah",
+      designation: "Photographer",
       image: "/member-7.png",
       delay: 3.5,
     },
@@ -102,7 +109,8 @@ const CreativeTeamSection = () => {
           />
           <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300 rounded-full flex items-center justify-center">
             <span className="text-black font-bold text-xs lg:text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-2">
-              {member.name}
+              {member.name} <br/>
+              <span className="font-light">{member.designation}</span>
             </span>
           </div>
         </div>
@@ -210,6 +218,7 @@ const CreativeTeamSection = () => {
           </div>
 
           {/* View All Button for Mobile */}
+          <Link href="/about-us">
           <div className="flex justify-center mt-8">
             <div
               className={`${
@@ -228,6 +237,7 @@ const CreativeTeamSection = () => {
               </button>
             </div>
           </div>
+          </Link>
         </div>
       </div>
 

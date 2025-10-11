@@ -1,30 +1,16 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Target, Store, BarChart3, Maximize2 } from "lucide-react";
 
 const AboutSecondSection = () => {
-  // Animation variants for left to right movement
-  const leftToRightVariants = {
-    hidden: { x: -100, opacity: 0 },
+  // Animation variants for fade in
+  const fadeInVariants = {
+    hidden: { opacity: 0, y: 20 },
     visible: {
-      x: 0,
       opacity: 1,
+      y: 0,
       transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  // Animation variants for right to left movement
-  const rightToLeftVariants = {
-    hidden: { x: 100, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
+        duration: 0.6,
         ease: "easeOut",
       },
     },
@@ -36,15 +22,15 @@ const AboutSecondSection = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
       },
     },
   };
 
   // Header animation
   const headerVariants = {
-    hidden: { y: -50, opacity: 0 },
+    hidden: { y: -30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
@@ -54,46 +40,42 @@ const AboutSecondSection = () => {
       },
     },
   };
-  console.log("Imports check:", {
-    Target,
-    Store,
-    BarChart3,
-    Maximize2,
-    motion,
-  });
 
   const coreValues = [
     {
       id: 1,
-      title: "Innovation",
+      letter: "V",
+      title: "Vision",
       description:
-        "We're committed to breaking new ground, constantly evolving to deliver cutting-edge solutions.",
-        icon:Target,
-      position: "left",
+        "We See Beyond The Ordinary, Pushing Creative Boundaries With Forward-Thinking Ideas.",
     },
     {
       id: 2,
-      title: "Boldness",
+      letter: "I",
+      title: "Innovation",
       description:
-        "We're commited to breaking new ground, constantly evolving to deliver cutting-edge solutions.",
-      icon: Store,
-      position: "right",
+        "We're Committed To Breaking New Ground, Constantly Evolving To Deliver Cutting-Edge Solutions.",
     },
     {
       id: 3,
-      title: "Excellence",
+      letter: "B",
+      title: "Boldness",
       description:
-        "We strive for nothing less than extraordinary, pouring our passion into every detail of our work.",
-      icon: Maximize2,
-      position: "left",
+        "We Create Fearlessly, Embracing Original Thinking To Help Your Brand Stand Out From The Noise.",
     },
     {
       id: 4,
+      letter: "E",
+      title: "Excellence",
+      description:
+        "We Strive For Nothing Less Than Extraordinary, Pouring Our Passion Into Every Detail Of Our Work.",
+    },
+    {
+      id: 5,
+      letter: "S",
       title: "Storytelling",
       description:
-        "We believe every brand has a powerful story. We find it and bring it to life in an unforgettable way.",
-      icon: BarChart3,
-      position: "right",
+        "We Believe Every Brand Has A Powerful Story. We Find It And Bring It To Life In An Unforgettable Way.",
     },
   ];
 
@@ -102,92 +84,91 @@ const AboutSecondSection = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <motion.div
-          className="text-center mb-16"
+          className="mb-16"
           variants={headerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
-            variants={headerVariants}
-          >
-            THE BOLDLY DIFFERENCE
-          </motion.h2>
-          <motion.div className="space-y-2" variants={headerVariants}>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto">
-              We are committed to creating a visually stunning and impactful
-              brand presence for every business we partner with.
+          <div className="flex items-start gap-2 mb-8">
+            <div className="w-3 h-3 bg-[#EC4D37] rounded-full mt-2"></div>
+            <span className="text-lg text-gray-700">Our Values</span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Left Column - Title */}
+            <motion.h2
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight"
+              variants={headerVariants}
+            >
+              The BOLDLY
+              <br />
+              Difference
+            </motion.h2>
+
+            {/* Right Column - Description */}
+            <motion.div className="space-y-4" variants={headerVariants}>
+              <p className="text-lg sm:text-xl text-gray-900 leading-relaxed">
+                We Are Committed To Creating A Visually Stunning And Impactful
+                Brand Presence For Every Business We Partner With.{" "}
+                <span className="text-gray-500">
+                  Our Team Is Ready To Push Boundaries And Bring Your Vision To
+                  Life.
+                </span>
               </p>
-              <p className="text-lg sm:text-xl text-gray-600">
-                Our team is ready to push boundaries and bring your vision to
-                life.
-              </p>
-          </motion.div>
+            </motion.div>
+          </div>
         </motion.div>
 
-        {/* Core Values Grid */}
+        {/* Core Values List */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12"
+          className="space-y-10 mb-16"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.2 }}
         >
-          {coreValues.map((value) => {
-            const IconComponent = value.icon;
-            return (
-              <motion.div
-                key={value.id}
-                className="bg-white border border-gray-100 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300"
-                variants={
-                  value.position === "left"
-                    ? rightToLeftVariants
-                    : leftToRightVariants
-                }
-                whileHover={{
-                  y: -5,
-                  transition: { duration: 0.3 },
-                }}
-              >
-                <div className="flex items-start gap-4 sm:gap-6">
-                  {/* Icon */}
-                  <motion.div
-                    className="flex-shrink-0 w-12 cursor-pointer h-12 sm:w-16 sm:h-16 bg-gray-900 rounded-xl flex items-center justify-center"
-                    whileHover={{
-                      scale: 1.1,
-                      rotate: 5,
-                      transition: { duration: 0.3 },
-                    }}
-                  >
-                    <IconComponent className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                  </motion.div>
+          {coreValues.map((value) => (
+            <motion.div
+              key={value.id}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center"
+              variants={fadeInVariants}
+            >
+              {/* Left Column - Letter and Title */}
+              <div className="flex items-center gap-6 sm:gap-8">
+                <span className="text-6xl sm:text-7xl md:text-7xl font-bold text-[#EC4D37] leading-none w-16 sm:w-20 md:w-24 flex-shrink-0 flex items-center justify-center">
+                  {value.letter}
+                </span>
+                <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+                  {value.title}
+                </h3>
+              </div>
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <motion.h3
-                      className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4"
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      {value.title}
-                    </motion.h3>
-                    <motion.p
-                      className="text-gray-600 text-sm sm:text-base leading-relaxed"
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.3 }}
-                    >
-                      {value.description}
-                    </motion.p>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+              {/* Right Column - Description */}
+              <div>
+                <p className="text-base sm:text-lg text-gray-500 leading-relaxed">
+                  {value.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Bottom Text */}
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <p className="text-base sm:text-lg text-gray-700 max-w-6xl mx-auto leading-relaxed">
+            More Than Just Values, Our{" "}
+            <span className="text-[#EC4D37] font-semibold">V.I.B.E.S.</span>{" "}
+            Define Our Culture. It's The Energy That Drives Us, The Boldness
+            That Defines Us, And The Creativity That Sets Us Apart. Let's Create
+            Something Unforgettable—Together.
+          </p>
         </motion.div>
       </div>
     </div>

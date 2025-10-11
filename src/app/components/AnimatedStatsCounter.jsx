@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
 const AnimatedStatsWithDividers = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -67,11 +67,11 @@ const AnimatedStatsWithDividers = () => {
       const animate = (currentTime) => {
         if (!startTime) startTime = currentTime;
         const progress = Math.min((currentTime - startTime) / duration, 1);
-        
+
         // Easing function for smooth animation
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
         const currentCount = end * easeOutQuart;
-        
+
         setCount(currentCount);
 
         if (progress < 1) {
@@ -89,7 +89,7 @@ const AnimatedStatsWithDividers = () => {
 
   const StatItem = ({ stat, index, isLast }) => {
     const count = useCountUp(stat.number, stat.duration, isVisible);
-    
+
     const formatNumber = (num) => {
       if (stat.number >= 1 && stat.number < 10) {
         return num.toFixed(1); // For 1.5M case
@@ -100,11 +100,11 @@ const AnimatedStatsWithDividers = () => {
     return (
       <div className="flex items-center">
         {/* Stat Item */}
-        <div 
+        <div
           className="text-center animate-fadeInUp flex-1"
           style={{
             animationDelay: `${index * 0.2}s`,
-            animationFillMode: 'both'
+            animationFillMode: "both",
           }}
         >
           {/* Large Number with Animation */}
@@ -115,7 +115,7 @@ const AnimatedStatsWithDividers = () => {
               {stat.suffix && stat.suffix}
             </span>
           </div>
-          
+
           {/* Description */}
           <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-xs mx-auto">
             {stat.label}
@@ -124,11 +124,11 @@ const AnimatedStatsWithDividers = () => {
 
         {/* Vertical Divider - Only show if not the last item */}
         {!isLast && (
-          <div 
+          <div
             className="animate-fadeInUp mx-4 md:mx-6 lg:mx-8"
             style={{
               animationDelay: `${(index + 0.5) * 0.2}s`,
-              animationFillMode: 'both'
+              animationFillMode: "both",
             }}
           >
             <div className="w-px bg-gray-300 h-16 md:h-20 lg:h-24"></div>
@@ -144,40 +144,57 @@ const AnimatedStatsWithDividers = () => {
         {/* Desktop Layout - All in one row with dividers */}
         <div className="hidden lg:flex items-center justify-between">
           {stats.map((stat, index) => (
-            <StatItem 
-              key={stat.id} 
-              stat={stat} 
-              index={index} 
+            <StatItem
+              key={stat.id}
+              stat={stat}
+              index={index}
               isLast={index === stats.length - 1}
             />
           ))}
         </div>
 
         {/* Mobile/Tablet Layout - Grid without dividers */}
-        <div className="lg:hidden grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        {/* Mobile/Tablet Layout - Single row with smaller stats */}
+        <div className="lg:hidden flex items-center justify-between gap-2 overflow-x-auto">
           {stats.map((stat, index) => (
-            <div 
-              key={stat.id}
-              className="text-center animate-fadeInUp"
-              style={{
-                animationDelay: `${index * 0.2}s`,
-                animationFillMode: 'both'
-              }}
-            >
-              {/* Large Number with Animation */}
-              <div className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-mono">
-                <span>
-                  {stat.prefix && stat.prefix}
-                  {useCountUp(stat.number, stat.duration, isVisible).toFixed(stat.number >= 1 && stat.number < 10 ? 1 : 0)}
-                  {stat.suffix && stat.suffix}
-                </span>
+            <React.Fragment key={stat.id}>
+              <div
+                className="text-center animate-fadeInUp flex-shrink-0"
+                style={{
+                  animationDelay: `${index * 0.2}s`,
+                  animationFillMode: "both",
+                }}
+              >
+                {/* Large Number with Animation */}
+                <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 font-mono">
+                  <span>
+                    {stat.prefix && stat.prefix}
+                    {useCountUp(stat.number, stat.duration, isVisible).toFixed(
+                      stat.number >= 1 && stat.number < 10 ? 1 : 0
+                    )}
+                    {stat.suffix && stat.suffix}
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p className="text-gray-600 text-xs leading-tight max-w-[70px] md:max-w-[100px] mx-auto">
+                  {stat.label}
+                </p>
               </div>
-              
-              {/* Description */}
-              <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-xs mx-auto">
-                {stat.label}
-              </p>
-            </div>
+
+              {/* Vertical Divider - Only show if not the last item */}
+              {index !== stats.length - 1 && (
+                <div
+                  className="animate-fadeInUp flex-shrink-0"
+                  style={{
+                    animationDelay: `${(index + 0.5) * 0.2}s`,
+                    animationFillMode: "both",
+                  }}
+                >
+                  <div className="w-px bg-gray-300 h-12 md:h-16"></div>
+                </div>
+              )}
+            </React.Fragment>
           ))}
         </div>
       </div>
@@ -193,7 +210,7 @@ const AnimatedStatsWithDividers = () => {
             transform: translateY(0);
           }
         }
-        
+
         .animate-fadeInUp {
           animation: fadeInUp 0.8s ease-out;
           opacity: 0;

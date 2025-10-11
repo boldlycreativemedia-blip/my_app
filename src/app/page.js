@@ -18,10 +18,11 @@ import DigitalMarketingFAQs from "./components/DigitalMarketingFAQs";
 import LastHomeSection from "./components/LastHomeSection";
 import Footer from "./components/Footer";
 import ProcessSection from "./components/ProcessSection";
+import Link from "next/link";
 
 // Animated Words Component for the bottom line
 const AnimatedWords = () => {
-  const words = ["Motion","Cinematics","Media","Films","Websites"];
+  const words = ["Motion", "Cinematics", "Media", "Films", "Websites"];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -224,7 +225,7 @@ export default function Page() {
 
         {/* ANIMATION OVERLAY with Thoge Font */}
         <motion.div
-          className="fixed inset-0 z-40 bg-[#EC4D37] flex items-center justify-center px-6 pointer-events-none"
+          className="fixed inset-0 z-40 bg-[#EC4D37] flex items-center justify-center px-20 pointer-events-none"
           style={{
             scale,
             opacity,
@@ -232,11 +233,39 @@ export default function Page() {
           }}
         >
           <div className="text-center">
-            <h1 className="text-white lg:w-[438.32px] lg:h-[394.59px] leading-tight text-center lg:-mt-9 sm:-mt-24 thoge-font">
-              <span className=" text-9xl md:text-9xl lg:text-[250px]">BOLDLY</span><br/> <span className=" text-9xl md:text-9xl lg:text-[200px]">CREATIVE</span>
+            <h1 className="text-white lg:w-[438.32px] lg:h-[380.59px] leading-tight text-center lg:mt-9 sm:-mt-24 thoge-font">
+              <span className=" text-9xl md:text-9xl lg:text-[250px]">
+                BOLDLY
+              </span>
+              <br />{" "}
+              <span className=" text-9xl md:text-9xl lg:text-[200px]">
+                CREATIVE
+              </span>
               <br />
-              <span className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl"><AnimatedWords /></span>
+              <span className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl">
+                <AnimatedWords />
+              </span>
             </h1>
+
+            {/* Button on animation overlay - dark background */}
+            <button className="mt-40 bg-[#1F1B1C] text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#2a2526] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
+              Start your journey
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 12H19M19 12L12 5M19 12L12 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
         </motion.div>
 
@@ -253,13 +282,30 @@ export default function Page() {
             playsInline
           />
           {/* Optional overlay content on video */}
+          <Link href="/contactus">
           <div className="relative z-10 h-full flex items-end justify-center pb-20">
             <div className="text-white text-center">
-              <h2 className="text-4xl font-bold mb-4">
-                Welcome to Boldly Creative
-              </h2>
+              <button className="mt-40 bg-[#EC4D37] cursor-pointer text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#ea4b36] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
+              Start your journey
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 12H19M19 12L12 5M19 12L12 19"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
             </div>
           </div>
+          </Link>
         </section>
 
         {/* CONTENT SECTION - Rest of your website */}

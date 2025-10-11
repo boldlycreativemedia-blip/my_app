@@ -205,7 +205,7 @@ const ProcessSection = () => {
                   whileHover={{ scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 hover:from-gray-200 hover:to-gray-500 flex items-center justify-center shadow-xl cursor-pointer transition-all duration-300">
+                  <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-[#EC4D37] to-[#EC4D37] hover:from-gray-200 hover:to-gray-500 flex items-center justify-center shadow-xl cursor-pointer transition-all duration-300">
                     <span className="text-2xl lg:text-3xl font-bold text-white">
                       {step.id}
                     </span>

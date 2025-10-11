@@ -173,20 +173,19 @@ const ServiceNumber = () => {
           ))}
         </div>
 
-        {/* Mobile/Tablet Layout - Horizontal scrollable row */}
-        <div className="lg:hidden overflow-x-auto pb-4">
-          <div className="flex gap-8 min-w-max px-4">
-            {stats.map((stat, index) => (
+        {/* Mobile/Tablet Layout - Single row with smaller stats */}
+        <div className="lg:hidden flex items-center justify-between gap-2 overflow-x-auto">
+          {stats.map((stat, index) => (
+            <React.Fragment key={stat.id}>
               <div
-                key={stat.id}
-                className="text-center animate-fadeInUp min-w-[200px]"
+                className="text-center animate-fadeInUp flex-shrink-0"
                 style={{
                   animationDelay: `${index * 0.2}s`,
                   animationFillMode: "both",
                 }}
               >
                 {/* Large Number with Animation */}
-                <div className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-mono">
+                <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 font-mono">
                   <span>
                     {stat.prefix && stat.prefix}
                     {useCountUp(stat.number, stat.duration, isVisible).toFixed(
@@ -197,12 +196,25 @@ const ServiceNumber = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-[200px] mx-auto">
+                <p className="text-gray-600 text-xs leading-tight max-w-[70px] md:max-w-[100px] mx-auto">
                   {stat.label}
                 </p>
               </div>
-            ))}
-          </div>
+
+              {/* Vertical Divider - Only show if not the last item */}
+              {index !== stats.length - 1 && (
+                <div
+                  className="animate-fadeInUp flex-shrink-0"
+                  style={{
+                    animationDelay: `${(index + 0.5) * 0.2}s`,
+                    animationFillMode: "both",
+                  }}
+                >
+                  <div className="w-px bg-gray-300 h-12 md:h-16"></div>
+                </div>
+              )}
+            </React.Fragment>
+          ))}
         </div>
       </div>
 

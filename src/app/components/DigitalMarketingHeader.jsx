@@ -134,18 +134,7 @@ const DigitalMarketingHeader = () => {
                 <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                   To Elevate
                 </h2>
-                {/* Avatar Group */}
-                <div className="flex -space-x-2">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center border-2 border-white shadow-lg">
-                    <span className="text-white font-semibold text-sm">JD</span>
-                  </div>
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full flex items-center justify-center border-2 border-white shadow-lg">
-                    <span className="text-white font-semibold text-sm">AM</span>
-                  </div>
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center border-2 border-white shadow-lg">
-                    <span className="text-white font-semibold text-sm">SK</span>
-                  </div>
-                </div>
+            
                 <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mt-2">
                   Your Brand
                 </h2>

@@ -1,20 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import {
-  Smartphone,
-  Search,
-  Monitor,
-  ShoppingCart,
-  Users,
-  Play,
-  Music,
-  MessageCircle,
-  Camera,
-  Video,
-  ChevronUp,
-  ArrowRight,
-} from "lucide-react";1
+import { Play, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -90,16 +77,13 @@ export default function AnimatedContentSection({
   const [isDragging, setIsDragging] = useState(false);
 
   const brands = [
-    { name: "Apple", icon: Smartphone },
-    { name: "Google", icon: Search },
-    { name: "Microsoft", icon: Monitor },
-    { name: "Amazon", icon: ShoppingCart },
-    { name: "Meta", icon: Users },
-    { name: "Netflix", icon: Play },
-    { name: "Spotify", icon: Music },
-    { name: "Twitter", icon: MessageCircle },
-    { name: "Instagram", icon: Camera },
-    { name: "YouTube", icon: Video },
+    { image: "/Brand-1.png", alt: "Brand 1" },
+    { image: "/Brand-2.png", alt: "Brand 2" },
+    { image: "/Brand-3.png", alt: "Brand 3" },
+    { image: "/Brand-4.png", alt: "Brand 4" },
+    { image: "/Brand-5.png", alt: "Brand 5" },
+    { image: "/Brand-6.png", alt: "Brand 6" },
+    { image: "/Brand-7.png", alt: "Brand 7" },
   ];
 
   // Duplicate brands array for seamless loop
@@ -114,16 +98,16 @@ export default function AnimatedContentSection({
     const clientWidth = scrollContainer.clientWidth;
     const maxScroll = scrollWidth / 2; // Half because we duplicated the array
 
-    let scrollPosition = maxScroll; // Start at the midpoint for reverse scrolling
+    let scrollPosition = 0; // Start at the beginning
     const scrollSpeed = 1; // Pixels per frame
 
     const animate = () => {
       if (!isHovered && !isDragging) {
-        scrollPosition += scrollSpeed; // 👈 Move left to right
+        scrollPosition += scrollSpeed; // Move right (scrolling left visually)
 
-        // Reset to end for seamless loop
-        if (scrollPosition <= 0) {
-          scrollPosition = maxScroll;
+        // Reset to beginning for seamless loop
+        if (scrollPosition >= maxScroll) {
+          scrollPosition = 0;
         }
 
         if (scrollContainer) {
@@ -330,15 +314,18 @@ export default function AnimatedContentSection({
           >
             {duplicatedBrands.map((brand, index) => (
               <motion.div
-                key={`${brand.name}-${index}`}
-                className="flex items-center gap-3 text-gray-400 hover:text-red-500 transition-colors duration-300 whitespace-nowrap flex-shrink-0 px-4 py-2"
-                whileHover={{ scale: 1.05 }}
+                key={`brand-${index}`}
+                className="flex items-center justify-center whitespace-nowrap flex-shrink-0 px-4 py-2 group"
+                whileHover={{ scale: 1.25 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <brand.icon className="w-6 h-6 md:w-8 md:h-8" />
-                <span className="text-lg md:text-xl lg:text-2xl font-semibold">
-                  {brand.name}
-                </span>
+                <Image
+                  src={brand.image}
+                  alt={brand.alt}
+                  width={120}
+                  height={60}
+                  className="h-12 md:h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                />
               </motion.div>
             ))}
           </div>
