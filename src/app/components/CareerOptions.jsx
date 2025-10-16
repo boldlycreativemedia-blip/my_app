@@ -107,7 +107,7 @@ const CareerOptions = () => {
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`group p-6 rounded-xl bg-amber-50 border border-gray-200 hover:shadow-lg transition-all duration-500 cursor-pointer ${
+              className={`group p-6 rounded-xl bg-white border border-gray-200 hover:shadow-lg transition-all duration-500 cursor-pointer ${
                 isVisible
                   ? "opacity-100 translate-x-0 scale-100"
                   : `opacity-0 ${

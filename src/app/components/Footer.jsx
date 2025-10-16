@@ -101,7 +101,6 @@ const Footer = () => {
                 </h4>
                 <div className="space-y-1.5 md:space-y-2 text-gray-400 text-sm sm:text-base">
                   <p>Delhi NCR - India</p>
-                  <p>Bangalore - India</p>
                 </div>
               </div>
             </div>
@@ -138,32 +137,48 @@ const Footer = () => {
               {/* Social Media Links */}
               <div className="flex gap-3 sm:gap-4">
                 <a
-                  href="https://www.facebook.com"
-                  aria-label="Facebook"
-                  className="p-2 border border-gray-600 rounded-full hover:bg-gray-700 hover:border-gray-500 transition-all duration-300"
+                  href="https://www.instagram.com/boldly.creativemedia/"
+                  aria-label="Instagram"
+                  className="p-2 rounded-full hover:bg-gray-700 hover:border-gray-500 transition-all duration-300"
                 >
-                  <Facebook className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <img
+                    src="/instagram.png"
+                    alt="Instagram"
+                    className="h-10 w-10"
+                  />
                 </a>
                 <a
-                  href="https://www.instagram.com"
-                  aria-label="Instagram"
-                  className="p-2 border border-gray-600 rounded-full hover:bg-gray-700 hover:border-gray-500 transition-all duration-300"
+                  href="https://www.linkedin.com/company/boldly-creative-media"
+                  aria-label="LinkedIn"
+                  className="p-2 rounded-full hover:bg-gray-700 hover:border-gray-500 transition-all duration-300"
                 >
-                  <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <img
+                    src="/linkedin.png"
+                    alt="LinkedIn"
+                    className="h-10 w-10"
+                  />
                 </a>
                 <a
                   href="https://www.twitter.com"
                   aria-label="Twitter"
-                  className="p-2 border border-gray-600 rounded-full hover:bg-gray-700 hover:border-gray-500 transition-all duration-300"
+                  className="p-2 rounded-full hover:bg-gray-700 hover:border-gray-500 transition-all duration-300"
                 >
-                  <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <img
+                    src="/twitter.png"
+                    alt="Twitter"
+                    className="h-10 w-10"
+                  />
                 </a>
                 <a
-                  href="https://www.linkedin.com"
-                  aria-label="LinkedIn"
-                  className="p-2 border border-gray-600 rounded-full hover:bg-gray-700 hover:border-gray-500 transition-all duration-300"
+                  href="https://www.facebook.com"
+                  aria-label="Facebook"
+                  className="p-2 rounded-full hover:bg-gray-700 hover:border-gray-500 transition-all duration-300"
                 >
-                  <Linkedin className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <img
+                    src="/facebook.png"
+                    alt="Facebook"
+                    className="h-10 w-10"
+                  />
                 </a>
               </div>
             </div>

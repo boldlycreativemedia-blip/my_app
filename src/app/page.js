@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useRef, useEffect, useState } from "react";
 import {
   motion,
@@ -28,7 +27,7 @@ const AnimatedWords = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
-    }, 2000); // Change word every 2 seconds
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [words.length]);
@@ -55,6 +54,36 @@ const AnimatedWords = () => {
 };
 
 export default function Page() {
+  const [isMuted, setIsMuted] = useState(true);
+  const [fontLoaded, setFontLoaded] = useState(false);
+  const videoRef = useRef(null);
+
+  // Font loading detection
+  useEffect(() => {
+    // Check if font is already loaded
+    if (document.fonts && document.fonts.check("1em Thoge")) {
+      setFontLoaded(true);
+    } else {
+      // Wait for font to load
+      document.fonts.ready.then(() => {
+        setFontLoaded(true);
+      });
+
+      // Fallback timeout in case font doesn't load
+      const timeout = setTimeout(() => {
+        setFontLoaded(true);
+      }, 3000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, []);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlayClick = () => {
@@ -63,9 +92,9 @@ export default function Page() {
 
   // progress [0..1] driven by wheel/touch
   const progress = useMotionValue(0);
-  const isAnimatingRef = useRef(true); // tracks if we're in animation mode
+  const isAnimatingRef = useRef(true);
 
-  // visual transforms for the ANIMATION OVERLAY (scale & opacity)
+  // visual transforms for the ANIMATION OVERLAY
   const scaleRaw = useTransform(progress, [0, 1], [1, 3.5]);
   const opacityRaw = useTransform(progress, [0, 1], [1, 0]);
   const scale = useSpring(scaleRaw, { stiffness: 90, damping: 25 });
@@ -86,21 +115,43 @@ export default function Page() {
     window.scrollTo(0, 0);
   };
 
-  // --- Wheel handling ---
+  // --- Wheel handling with pause at video ---
   const sensitivityWheel = 0.0022;
+  const pauseThreshold = 0.98; // Pause when animation is almost complete
+  const isPausedAtVideo = useRef(false);
+
   function onWheel(e) {
     if (isAnimatingRef.current) {
-      // Animation mode: control animation overlay
       e.preventDefault();
       const delta = e.deltaY;
       const currentProgress = progress.get();
       let nextProgress;
 
       if (delta > 0) {
-        // Scrolling down: fade animation out (reveal website)
+        // Scrolling down: fade animation out
         nextProgress = Math.min(1, currentProgress + delta * sensitivityWheel);
+
+        // Check if we've reached the pause threshold
+        if (
+          currentProgress < pauseThreshold &&
+          nextProgress >= pauseThreshold
+        ) {
+          nextProgress = pauseThreshold;
+          isPausedAtVideo.current = true;
+
+          // Auto-resume after 800ms pause
+          setTimeout(() => {
+            if (isPausedAtVideo.current) {
+              isPausedAtVideo.current = false;
+            }
+          }, 800);
+        } else if (isPausedAtVideo.current && nextProgress > pauseThreshold) {
+          // Don't allow progression while paused
+          nextProgress = pauseThreshold;
+        }
       } else {
-        // Scrolling up: fade animation back in (hide website)
+        // Scrolling up: fade animation back in
+        isPausedAtVideo.current = false;
         nextProgress = Math.max(0, currentProgress + delta * sensitivityWheel);
       }
 
@@ -108,20 +159,20 @@ export default function Page() {
 
       // Switch to normal scrolling when animation is fully faded
       if (nextProgress >= 1) {
+        isPausedAtVideo.current = false;
         enableNormalScrolling();
       }
     } else {
-      // Normal scrolling mode: check if we should return to animation
+      // Normal scrolling mode
       if (window.scrollY === 0 && e.deltaY < 0) {
-        // At top of page and trying to scroll up further
         e.preventDefault();
         enableAnimationMode();
-        progress.set(0.95); // Start slightly faded so user sees the transition
+        progress.set(0.95);
       }
     }
   }
 
-  // --- Touch handling ---
+  // --- Touch handling with pause ---
   const touchStartY = useRef(0);
   const sensitivityTouch = 0.0035;
 
@@ -133,15 +184,33 @@ export default function Page() {
     if (isAnimatingRef.current) {
       e.preventDefault();
       const currentY = e.touches[0].clientY;
-      const delta = touchStartY.current - currentY; // positive when swiping up
+      const delta = touchStartY.current - currentY;
       const currentProgress = progress.get();
       let nextProgress;
 
       if (delta > 0) {
         // Swiping up: fade animation out
         nextProgress = Math.min(1, currentProgress + delta * sensitivityTouch);
+
+        // Check if we've reached the pause threshold
+        if (
+          currentProgress < pauseThreshold &&
+          nextProgress >= pauseThreshold
+        ) {
+          nextProgress = pauseThreshold;
+          isPausedAtVideo.current = true;
+
+          setTimeout(() => {
+            if (isPausedAtVideo.current) {
+              isPausedAtVideo.current = false;
+            }
+          }, 800);
+        } else if (isPausedAtVideo.current && nextProgress > pauseThreshold) {
+          nextProgress = pauseThreshold;
+        }
       } else {
         // Swiping down: fade animation back in
+        isPausedAtVideo.current = false;
         nextProgress = Math.max(0, currentProgress + delta * sensitivityTouch);
       }
 
@@ -149,16 +218,15 @@ export default function Page() {
       touchStartY.current = currentY;
 
       if (nextProgress >= 1) {
+        isPausedAtVideo.current = false;
         enableNormalScrolling();
       }
     } else {
-      // Normal scrolling mode: check if we should return to animation
       if (window.scrollY === 0) {
         const currentY = e.touches[0].clientY;
         const delta = touchStartY.current - currentY;
 
         if (delta < 0) {
-          // Swiping down at top of page
           e.preventDefault();
           enableAnimationMode();
           progress.set(0.95);
@@ -167,18 +235,14 @@ export default function Page() {
     }
   }
 
-  // Add event listeners on mount
   useEffect(() => {
-    // Start in animation mode
     document.body.style.overflow = "hidden";
 
-    // Add event listeners
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("touchstart", onTouchStart, { passive: false });
     window.addEventListener("touchmove", onTouchMove, { passive: false });
 
     return () => {
-      // Cleanup
       document.body.style.overflow = "";
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("touchstart", onTouchStart);
@@ -189,7 +253,7 @@ export default function Page() {
 
   return (
     <>
-      {/* Thoge Font Loading - Exact font files you have */}
+      {/* Font Loading with preload and optimizations */}
       <style jsx global>{`
         @font-face {
           font-family: "Thoge";
@@ -198,7 +262,7 @@ export default function Page() {
             url("/fonts/Thoge.ttf") format("truetype");
           font-weight: normal;
           font-style: normal;
-          font-display: swap;
+          font-display: block; /* Prevents FOUT (Flash of Unstyled Text) */
         }
 
         .thoge-font {
@@ -209,7 +273,23 @@ export default function Page() {
           text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
-        /* Preload font for better performance */
+        /* Loading screen */
+        .font-loading-overlay {
+          position: fixed;
+          inset: 0;
+          background: #ec4d37;
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: opacity 0.5s ease-out;
+        }
+
+        .font-loading-overlay.loaded {
+          opacity: 0;
+          pointer-events: none;
+        }
+
         @media (prefers-reduced-motion: no-preference) {
           .thoge-font {
             font-feature-settings: "kern" 1;
@@ -217,13 +297,27 @@ export default function Page() {
         }
       `}</style>
 
-      <main className="relative overflow-hidden">
-        {/* Fixed header always on top */}
+      {/* Font Loading Overlay */}
+      <div className={`font-loading-overlay ${fontLoaded ? "loaded" : ""}`}>
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-[#1F1B1C] border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="text-[#1F1B1C] mt-4 text-lg font-semibold">
+            Loading...
+          </p>
+        </div>
+      </div>
+
+      <main
+        className={`relative overflow-hidden transition-opacity duration-300 ${
+          fontLoaded ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {/* Fixed header */}
         <div className="fixed top-0 left-0 w-full z-50">
           <Header />
         </div>
 
-        {/* ANIMATION OVERLAY with Thoge Font */}
+        {/* ANIMATION OVERLAY */}
         <motion.div
           className="fixed inset-0 z-40 bg-[#EC4D37] flex items-center justify-center px-20 pointer-events-none"
           style={{
@@ -233,60 +327,62 @@ export default function Page() {
           }}
         >
           <div className="text-center">
-            <h1 className="text-white lg:w-[438.32px] lg:h-[380.59px] leading-tight text-center lg:mt-9 sm:-mt-24 thoge-font">
-              <span className=" text-9xl md:text-9xl lg:text-[250px]">
+            <h1 className="text-[#1F1B1C] lg:w-[438.32px] lg:h-[380.59px] leading-tight text-center lg:mt-12 sm:-mt-24 thoge-font">
+              <span className="text-9xl md:text-9xl lg:text-[250px]">
                 BOLDLY
               </span>
-              <br />{" "}
-              <span className=" text-9xl md:text-9xl lg:text-[200px]">
+              <br />
+              <span className="text-9xl md:text-9xl lg:text-[200px]">
                 CREATIVE
               </span>
               <br />
-              <span className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl">
+              <span className="text-6xl md:w-114 md:h-46 lg:w-114 lg:h-46">
                 <AnimatedWords />
               </span>
             </h1>
 
-            {/* Button on animation overlay - dark background */}
-            <button className="mt-40 bg-[#1F1B1C] text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#2a2526] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
-              Start your journey
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 12H19M19 12L12 5M19 12L12 19"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
+            <Link href="/contactus">
+              <button className="mt-40 bg-[#1F1B1C] cursor-pointer text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#2a2526] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
+                Start your journey
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 12H19M19 12L12 5M19 12L12 19"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </Link>
           </div>
         </motion.div>
 
-        {/* ACTUAL WEBSITE STARTS HERE */}
-
-        {/* VIDEO SECTION - First section of your real website */}
+        {/* VIDEO SECTION */}
         <section className="h-screen relative z-10 overflow-hidden">
           <video
+            ref={videoRef}
             className="absolute inset-0 w-full h-full object-cover"
-            src="/home_video.mp4"
+            src="/BOLDLY_CREATIVE_MEDIA.mp4"
             autoPlay
             muted
             loop
             playsInline
           />
-          {/* Optional overlay content on video */}
-          <Link href="/contactus">
-          <div className="relative z-10 h-full flex items-end justify-center pb-20">
-            <div className="text-white text-center">
-              <button className="mt-40 bg-[#EC4D37] cursor-pointer text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#ea4b36] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
-              Start your journey
+
+          {/* Mute/Unmute Button */}
+          <button
+            onClick={toggleMute}
+            className="absolute bottom-8 right-8 z-20 bg-[#1F1B1C] text-white p-4 rounded-full transition-all duration-300"
+            aria-label={isMuted ? "Unmute video" : "Mute video"}
+          >
+            {isMuted ? (
               <svg
                 width="24"
                 height="24"
@@ -295,20 +391,84 @@ export default function Page() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M5 12H19M19 12L12 5M19 12L12 19"
+                  d="M11 5L6 9H2V15H6L11 19V5Z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <line
+                  x1="23"
+                  y1="9"
+                  x2="17"
+                  y2="15"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <line
+                  x1="17"
+                  y1="9"
+                  x2="23"
+                  y2="15"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            ) : (
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11 5L6 9H2V15H6L11 19V5Z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 11.995C17.0039 13.3208 16.4774 14.5924 15.54 15.53M19.07 4.93C20.9447 6.80528 21.9979 9.34836 21.9979 12C21.9979 14.6516 20.9447 17.1947 19.07 19.07"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
-            </button>
+            )}
+          </button>
+
+          <Link href="/contactus">
+            <div className="relative z-10 h-full flex items-end justify-center pb-20">
+              <div className="text-white text-center">
+                <button className="mt-40 bg-[#EC4D37] cursor-pointer text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#ea4b36] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
+                  Start your journey
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5 12H19M19 12L12 5M19 12L12 19"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
-          </div>
           </Link>
         </section>
 
-        {/* CONTENT SECTION - Rest of your website */}
+        {/* REST OF CONTENT */}
         <AnimatedContentSection
           isAnimatingRef={isAnimatingRef}
           handlePlayClick={handlePlayClick}

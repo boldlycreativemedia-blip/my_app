@@ -75,6 +75,8 @@ export default function AnimatedContentSection({
   const scrollRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const scrollPositionRef = useRef(0); // Use ref instead of state
+  const animationRef = useRef(null);
 
   const brands = [
     { image: "/Brand-1.png", alt: "Brand 1" },
@@ -92,49 +94,51 @@ export default function AnimatedContentSection({
   // Auto-scroll functionality
   useEffect(() => {
     const scrollContainer = scrollRef.current;
-    if (!scrollContainer || isHovered || isDragging) return;
+    if (!scrollContainer) return;
 
-    const scrollWidth = scrollContainer.scrollWidth;
-    const clientWidth = scrollContainer.clientWidth;
-    const maxScroll = scrollWidth / 2; // Half because we duplicated the array
-
-    let scrollPosition = 0; // Start at the beginning
-    const scrollSpeed = 1; // Pixels per frame
+    const scrollSpeed = 1;
 
     const animate = () => {
-      if (!isHovered && !isDragging) {
-        scrollPosition += scrollSpeed; // Move right (scrolling left visually)
+      if (!isHovered && !isDragging && scrollContainer) {
+        const maxScroll = scrollContainer.scrollWidth / 2;
+
+        scrollPositionRef.current += scrollSpeed;
 
         // Reset to beginning for seamless loop
-        if (scrollPosition >= maxScroll) {
-          scrollPosition = 0;
+        if (scrollPositionRef.current >= maxScroll) {
+          scrollPositionRef.current = 0;
         }
 
-        if (scrollContainer) {
-          scrollContainer.scrollLeft = scrollPosition;
-        }
+        scrollContainer.scrollLeft = scrollPositionRef.current;
       }
-      requestAnimationFrame(animate);
+      animationRef.current = requestAnimationFrame(animate);
     };
 
-    const animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, [isHovered, isDragging]);
+    animationRef.current = requestAnimationFrame(animate);
 
-  // Handle manual scroll
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isHovered, isDragging]); // Keep dependencies but use ref for position
+
+  // Sync ref with actual scroll position when user manually scrolls
   const handleScroll = () => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    const scrollWidth = scrollContainer.scrollWidth;
-    const maxScroll = scrollWidth / 2;
+    // Update the ref to match current scroll position
+    scrollPositionRef.current = scrollContainer.scrollLeft;
+
+    const maxScroll = scrollContainer.scrollWidth / 2;
 
     // Reset scroll position for seamless loop when reaching the end
     if (scrollContainer.scrollLeft >= maxScroll - 10) {
       scrollContainer.scrollLeft = 0;
+      scrollPositionRef.current = 0;
     }
   };
-
   return (
     <section
       className="relative z-10 bg-gray-50 w-full px-6 md:px-12 py-28 min-h-screen"
@@ -189,7 +193,7 @@ export default function AnimatedContentSection({
                 <br />
                 <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6">
                   Your Story
-                  <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-red-500 rounded-full flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
                     <Image
                       src="/finance_mode.png"
                       alt="finance"
@@ -198,33 +202,39 @@ export default function AnimatedContentSection({
                       className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 text-white"
                     />
                   </span>
-                  Amplified
                 </span>
               </motion.h1>
 
               {/* CTA Button */}
-              <motion.button
-                className="group bg-red-500 hover:bg-red-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium flex items-center gap-2 sm:gap-3 transition-all duration-300 w-full sm:w-auto justify-center sm:justify-start"
+              {/* CTA Button */}
+              <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="inline-block"
               >
-                Get Free Consultation
-                <motion.div
-                  className="w-6 h-6 sm:w-8 sm:h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center"
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black" />
-                </motion.div>
-              </motion.button>
+                <Link href="/contactus" className="inline-block">
+                  <motion.div
+                    className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Get Free Consultation
+                    <motion.span
+                      className="w-6 h-6 sm:w-8 sm:h-8 bg-white bg-opacity-20 rounded-full inline-flex items-center justify-center"
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
+                    </motion.span>
+                  </motion.div>
+                </Link>
+              </motion.div>
             </motion.div>
 
             {/* Stats positioned on the right */}
@@ -273,13 +283,13 @@ export default function AnimatedContentSection({
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.div
-              className="text-gray-300 md:text-gray-400 text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-center md:text-right overflow-hidden"
+              className="text-gray-300 md:text-gray-400 text-3xl sm:text-4xl md:text-6xl lg:text-8xl gap-20 font-bold leading-none select-none text-center md:text-right overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.2 }}
             >
-              \\Your Growth
+              \\Amplified
             </motion.div>
           </motion.div>
         </div>
@@ -290,7 +300,7 @@ export default function AnimatedContentSection({
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.9 }}
         >
           {/* Scrolling Container */}
           <div
@@ -299,9 +309,8 @@ export default function AnimatedContentSection({
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
-              WebkitScrollbar: { display: "none" },
             }}
-            onMouseEnter={() => setIsHovered(true)}
+            onMouseEnter={() => setIsHovered(false)}
             onMouseLeave={() => {
               setIsHovered(false);
               setIsDragging(false);
@@ -316,15 +325,15 @@ export default function AnimatedContentSection({
               <motion.div
                 key={`brand-${index}`}
                 className="flex items-center justify-center whitespace-nowrap flex-shrink-0 px-4 py-2 group"
-                whileHover={{ scale: 1.25 }}
+                whileHover={{ scale: 1.3 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Image
+                <img
                   src={brand.image}
                   alt={brand.alt}
                   width={120}
                   height={60}
-                  className="h-12 md:h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  className="h-40 md:h-46 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </motion.div>
             ))}
@@ -390,31 +399,32 @@ export default function AnimatedContentSection({
               </motion.p>
 
               {/* Vertical Bar Chart */}
-              <div className="flex items-end justify-center gap-4 h-32">
+              {/* Vertical Bar Chart */}
+              <div className="flex items-end justify-center gap-4 h-40">
                 {[
                   {
-                    label: "Graphic",
-                    percent: 20,
+                    label: "Engagement",
+                    percent: 55,
                     color: "bg-red-500",
-                    height: "25%",
+                    height: "27.5%",
                   },
                   {
-                    label: "Copywriting",
+                    label: "Brand Awareness",
                     percent: 75,
                     color: "bg-sky-400",
-                    height: "75%",
+                    height: "37.5%",
                   },
                   {
-                    label: "Website",
-                    percent: 40,
+                    label: "Reach",
+                    percent: 200,
                     color: "bg-yellow-400",
-                    height: "50%",
+                    height: "100%",
                   },
                   {
-                    label: "UI / UX",
-                    percent: 95,
+                    label: "Client ROI",
+                    percent: 150,
                     color: "bg-emerald-400",
-                    height: "95%",
+                    height: "75%",
                   },
                 ].map((item, index) => (
                   <motion.div
@@ -435,7 +445,7 @@ export default function AnimatedContentSection({
                     {/* Bar */}
                     <div
                       className="relative w-full bg-gray-700 rounded-t-lg overflow-hidden"
-                      style={{ height: "120px" }}
+                      style={{ height: "140px" }}
                     >
                       <motion.div
                         className={`absolute bottom-0 left-0 right-0 ${item.color} rounded-t-lg flex items-start justify-center pt-2`}
@@ -494,7 +504,7 @@ export default function AnimatedContentSection({
 
             {/* Team Image with Play Button - Same height as chart */}
             <motion.div
-              className="relative rounded-3xl -mt-4 overflow-hidden cursor-pointer h-80"
+              className="relative rounded-3xl -mt-2.5 overflow-hidden cursor-pointer h-80"
               variants={childVariants}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
               onClick={handlePlayClick}
@@ -607,7 +617,7 @@ export default function AnimatedContentSection({
                   className="w-full h-full object-cover"
                   controls
                   autoPlay
-                  src="/your-video.mp4"
+                  src="/BOLDLY_CREATIVE_MEDIA.mp4"
                 >
                   Your browser does not support the video tag.
                 </video>

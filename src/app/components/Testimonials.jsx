@@ -9,35 +9,33 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      text: "The team at Orcative exceeded our expectations. The website they built is a game-changer for our business.",
-      name: "Califin Danang",
-      title: "Product Manager",
-      avatar:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+      text: "Working with this team was an absolute game-changer for our brand. Their attention to visual storytelling and ability to capture emotions through video helped us connect deeply with our audience. The final edit exceeded expectations.",
+      name: "Fitness Brand",
+      title: "Marketing Manager",
     },
     {
       id: 2,
-      text: "Branding services elevated our online presence and helped us attract more clients. Highly recommended!",
-      name: "Sarah Johnson",
-      title: "CEO, BrightTech",
-      avatar:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+      text: "They handled our entire event coverage seamlessly — from planning to delivery. The team was professional, quick on their feet, and delivered cinematic-quality highlights that we proudly shared across our social media platforms.",
+      name: "Entertainment Company",
+      title: "Event Operations Head",
     },
     {
       id: 3,
-      text: "Their creative approach and attention to detail helped transform our brand to reach new heights in the market.",
-      name: "Emma Rodriguez",
-      title: "Product Designer",
-      avatar:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+      text: "What impressed us the most was their creativity and communication. They understood our brief instantly and added ideas that elevated the project beyond what we had imagined. Truly a reliable creative partner.",
+      name: "Hospitality Industry",
+      title: "Brand Manager",
     },
     {
       id: 4,
-      text: "Outstanding service and innovative solutions. They delivered beyond what we imagined was possible for our startup.",
-      name: "Michael Chen",
-      title: "Founder, TechFlow",
-      avatar:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      text: "We’ve worked with multiple video agencies, but none matched the professionalism and storytelling quality this team brings. The videos didn’t just look good — they actually improved engagement and conversions for our campaign.",
+      name: "Tech Startup",
+      title: "Digital Marketing Lead",
+    },
+    {
+      id: 5,
+      text: "The team brings energy, passion, and precision to every project. From event shoots to social media edits, their work consistently maintains high production value and fast turnaround times. Highly recommended!",
+      name: "Media & Events Agency",
+      title: "Creative Director",
     },
   ];
 
@@ -48,7 +46,7 @@ const Testimonials = () => {
         setCurrentIndex((prevIndex) =>
           prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
         );
-      }, 2000); // Auto-scroll every 2 seconds when hovering
+      }, 2000000); // Auto-scroll every 2 seconds when hovering
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -146,11 +144,6 @@ const Testimonials = () => {
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <img
-                      src={testimonial.avatar}
-                      alt={testimonial.name}
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
                     <div>
                       <h4 className="font-semibold text-gray-900">
                         {testimonial.name}

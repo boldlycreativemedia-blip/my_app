@@ -7,6 +7,8 @@ const LastAboutSection = () => {
   const scrollRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const scrollPositionRef = useRef(0); // Use ref instead of state
+  const animationRef = useRef(null);
 
   const brands = [
     { image: "/Brand-1.png", alt: "Brand 1" },
@@ -24,48 +26,52 @@ const LastAboutSection = () => {
   // Auto-scroll functionality
   useEffect(() => {
     const scrollContainer = scrollRef.current;
-    if (!scrollContainer || isHovered || isDragging) return;
+    if (!scrollContainer) return;
 
-    const scrollWidth = scrollContainer.scrollWidth;
-    const clientWidth = scrollContainer.clientWidth;
-    const maxScroll = scrollWidth / 2; // Half because we duplicated the array
-
-    let scrollPosition = maxScroll; // Start at the midpoint for reverse scrolling
-    const scrollSpeed = 1; // Pixels per frame
+    const scrollSpeed = 1;
 
     const animate = () => {
-      if (!isHovered && !isDragging) {
-        scrollPosition += scrollSpeed; // 👈 Move left to right
+      if (!isHovered && !isDragging && scrollContainer) {
+        const maxScroll = scrollContainer.scrollWidth / 2;
 
-        // Reset to end for seamless loop
-        if (scrollPosition <= 0) {
-          scrollPosition = maxScroll;
+        scrollPositionRef.current += scrollSpeed;
+
+        // Reset to beginning for seamless loop
+        if (scrollPositionRef.current >= maxScroll) {
+          scrollPositionRef.current = 0;
         }
 
-        if (scrollContainer) {
-          scrollContainer.scrollLeft = scrollPosition;
-        }
+        scrollContainer.scrollLeft = scrollPositionRef.current;
       }
-      requestAnimationFrame(animate);
+      animationRef.current = requestAnimationFrame(animate);
     };
 
-    const animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, [isHovered, isDragging]);
+    animationRef.current = requestAnimationFrame(animate);
 
-  // Handle manual scroll
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isHovered, isDragging]); // Keep dependencies but use ref for position
+
+  // Sync ref with actual scroll position when user manually scrolls
   const handleScroll = () => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    const scrollWidth = scrollContainer.scrollWidth;
-    const maxScroll = scrollWidth / 2;
+    // Update the ref to match current scroll position
+    scrollPositionRef.current = scrollContainer.scrollLeft;
+
+    const maxScroll = scrollContainer.scrollWidth / 2;
 
     // Reset scroll position for seamless loop when reaching the end
     if (scrollContainer.scrollLeft >= maxScroll - 10) {
       scrollContainer.scrollLeft = 0;
+      scrollPositionRef.current = 0;
     }
   };
+
   return (
     <div className="bg-white">
       <div className="min-h-screen bg-white flex items-center justify-center p-4">
@@ -120,13 +126,12 @@ const LastAboutSection = () => {
         </div>
       </div>
       <motion.div
-        className="py-12 max-w-7xl mx-auto bg-white relative overflow-hidden"
+        className="py-12 bg-gray-50 relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.9 }}
       >
-        {/* Scrolling Container */}
         {/* Scrolling Container */}
         <div
           ref={scrollRef}
@@ -134,9 +139,8 @@ const LastAboutSection = () => {
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
-            WebkitScrollbar: { display: "none" },
           }}
-          onMouseEnter={() => setIsHovered(true)}
+          onMouseEnter={() => setIsHovered(false)}
           onMouseLeave={() => {
             setIsHovered(false);
             setIsDragging(false);
@@ -151,15 +155,15 @@ const LastAboutSection = () => {
             <motion.div
               key={`brand-${index}`}
               className="flex items-center justify-center whitespace-nowrap flex-shrink-0 px-4 py-2 group"
-              whileHover={{ scale: 1.25 }}
+              whileHover={{ scale: 1.3 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Image
+              <img
                 src={brand.image}
                 alt={brand.alt}
                 width={120}
                 height={60}
-                className="h-12 md:h-16 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className="h-40 md:h-46 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </motion.div>
           ))}

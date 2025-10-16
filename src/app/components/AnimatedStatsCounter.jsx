@@ -10,63 +10,80 @@ const AnimatedStatsWithDividers = () => {
       number: 50,
       suffix: "M+",
       label: "Eyes on our edits — and counting.",
-      duration: 2000,
+      duration: 3000,
     },
     {
       id: 2,
       number: 90,
       suffix: "%",
       label: "Clients who keep coming back for more.",
-      duration: 2000,
+      duration: 3000,
     },
     {
       id: 3,
       number: 200,
       suffix: "+",
       label: "Collabs that made it to the spotlight.",
-      duration: 2000,
+      duration: 3000,
     },
     {
       id: 4,
       number: 100,
       suffix: "%",
       label: "Deadlines met. Vibes unmatched.",
-      duration: 1000,
+      duration: 2000,
     },
   ];
 
   // Intersection Observer to trigger animation when component is visible
   useEffect(() => {
+    const currentRef = sectionRef.current;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
+        // Immediately update visibility state when entering/leaving viewport
+        setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 } // Lower threshold for earlier detection
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
   }, []);
 
-  // Counter animation hook
+  // Counter animation hook - FIXED VERSION
   const useCountUp = (end, duration, shouldStart) => {
     const [count, setCount] = useState(0);
+    const animationFrameRef = useRef(null);
 
     useEffect(() => {
-      if (!shouldStart) return;
+      // Cancel any existing animation
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
 
-      let startTime;
-      let animationFrame;
+      // Reset to 0 immediately when not visible
+      if (!shouldStart) {
+        setCount(0);
+        return;
+      }
+
+      // Reset to 0 and start animation
+      setCount(0);
+
+      const startTime = performance.now();
 
       const animate = (currentTime) => {
-        if (!startTime) startTime = currentTime;
-        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
 
         // Easing function for smooth animation
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
@@ -75,13 +92,21 @@ const AnimatedStatsWithDividers = () => {
         setCount(currentCount);
 
         if (progress < 1) {
-          animationFrame = requestAnimationFrame(animate);
+          animationFrameRef.current = requestAnimationFrame(animate);
+        } else {
+          animationFrameRef.current = null;
         }
       };
 
-      animationFrame = requestAnimationFrame(animate);
+      // Start animation immediately
+      animationFrameRef.current = requestAnimationFrame(animate);
 
-      return () => cancelAnimationFrame(animationFrame);
+      return () => {
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+          animationFrameRef.current = null;
+        }
+      };
     }, [end, duration, shouldStart]);
 
     return count;
@@ -101,9 +126,11 @@ const AnimatedStatsWithDividers = () => {
       <div className="flex items-center">
         {/* Stat Item */}
         <div
-          className="text-center animate-fadeInUp flex-1"
+          className={`text-center flex-1 transition-opacity duration-300 ${
+            isVisible ? "animate-fadeInUp" : "opacity-0"
+          }`}
           style={{
-            animationDelay: `${index * 0.2}s`,
+            animationDelay: isVisible ? `${index * 0.2}s` : "0s",
             animationFillMode: "both",
           }}
         >
@@ -125,9 +152,11 @@ const AnimatedStatsWithDividers = () => {
         {/* Vertical Divider - Only show if not the last item */}
         {!isLast && (
           <div
-            className="animate-fadeInUp mx-4 md:mx-6 lg:mx-8"
+            className={`mx-4 md:mx-6 lg:mx-8 transition-opacity duration-300 ${
+              isVisible ? "animate-fadeInUp" : "opacity-0"
+            }`}
             style={{
-              animationDelay: `${(index + 0.5) * 0.2}s`,
+              animationDelay: isVisible ? `${(index + 0.5) * 0.2}s` : "0s",
               animationFillMode: "both",
             }}
           >
@@ -138,64 +167,69 @@ const AnimatedStatsWithDividers = () => {
     );
   };
 
-  return (
-    <div ref={sectionRef} className="w-full bg-gray-50 py-16 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Desktop Layout - All in one row with dividers */}
-        <div className="hidden lg:flex items-center justify-between">
-          {stats.map((stat, index) => (
-            <StatItem
-              key={stat.id}
-              stat={stat}
-              index={index}
-              isLast={index === stats.length - 1}
-            />
-          ))}
+  // Mobile stat item component to avoid duplicate hook calls
+  const MobileStatItem = ({ stat, index, isLast }) => {
+    const count = useCountUp(stat.number, stat.duration, isVisible);
+
+    const formatNumber = (num) => {
+      if (stat.number >= 1 && stat.number < 10) {
+        return num.toFixed(1);
+      }
+      return Math.floor(num);
+    };
+
+    return (
+      <div
+        className={`flex flex-col flex-1 min-w-0 ${
+          isVisible ? "animate-fadeInUp" : "opacity-0"
+        }`}
+        style={{
+          animationDelay: isVisible ? `${index * 0.2}s` : "0s",
+          animationFillMode: "both",
+        }}
+      >
+        {/* Large Number with Animation */}
+        <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 font-mono text-center leading-none mb-2">
+          {stat.prefix && stat.prefix}
+          {formatNumber(count)}
+          {stat.suffix && stat.suffix}
         </div>
 
-        {/* Mobile/Tablet Layout - Grid without dividers */}
-        {/* Mobile/Tablet Layout - Single row with smaller stats */}
-        <div className="lg:hidden flex items-center justify-between gap-2 overflow-x-auto">
-          {stats.map((stat, index) => (
-            <React.Fragment key={stat.id}>
-              <div
-                className="text-center animate-fadeInUp flex-shrink-0"
-                style={{
-                  animationDelay: `${index * 0.2}s`,
-                  animationFillMode: "both",
-                }}
-              >
-                {/* Large Number with Animation */}
-                <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 font-mono">
-                  <span>
-                    {stat.prefix && stat.prefix}
-                    {useCountUp(stat.number, stat.duration, isVisible).toFixed(
-                      stat.number >= 1 && stat.number < 10 ? 1 : 0
-                    )}
-                    {stat.suffix && stat.suffix}
-                  </span>
-                </div>
+        {/* Description */}
+        <p className="text-gray-600 text-xs sm:text-sm leading-tight text-center">
+          {stat.label}
+        </p>
+      </div>
+    );
+  };
 
-                {/* Description */}
-                <p className="text-gray-600 text-xs leading-tight max-w-[70px] md:max-w-[100px] mx-auto">
-                  {stat.label}
-                </p>
-              </div>
+  return (
+    <>
+      <div ref={sectionRef} className="w-full bg-gray-50 py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          {/* Desktop Layout - All in one row with dividers */}
+          <div className="hidden lg:flex items-center justify-between">
+            {stats.map((stat, index) => (
+              <StatItem
+                key={stat.id}
+                stat={stat}
+                index={index}
+                isLast={index === stats.length - 1}
+              />
+            ))}
+          </div>
 
-              {/* Vertical Divider - Only show if not the last item */}
-              {index !== stats.length - 1 && (
-                <div
-                  className="animate-fadeInUp flex-shrink-0"
-                  style={{
-                    animationDelay: `${(index + 0.5) * 0.2}s`,
-                    animationFillMode: "both",
-                  }}
-                >
-                  <div className="w-px bg-gray-300 h-12 md:h-16"></div>
-                </div>
-              )}
-            </React.Fragment>
-          ))}
+          {/* Mobile/Tablet Layout - Single row with smaller stats */}
+          <div className="lg:hidden flex items-center justify-between gap-2 overflow-x-auto">
+            {stats.map((stat, index) => (
+              <MobileStatItem
+                key={stat.id}
+                stat={stat}
+                index={index}
+                isLast={index === stats.length - 1}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -216,7 +250,7 @@ const AnimatedStatsWithDividers = () => {
           opacity: 0;
         }
       `}</style>
-    </div>
+    </>
   );
 };
 

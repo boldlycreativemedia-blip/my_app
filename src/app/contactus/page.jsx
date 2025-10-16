@@ -6,16 +6,6 @@ import emailjs from "@emailjs/browser";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {
-  Smartphone,
-  Search,
-  Monitor,
-  ShoppingCart,
-  Users,
-  Play,
-  Music,
-  MessageCircle,
-  Camera,
-  Video,
   ArrowRight,
   Upload,
   X,
@@ -33,6 +23,8 @@ const page = () => {
   const formRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const scrollPositionRef = useRef(0); // Use ref instead of state
+  const animationRef = useRef(null);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -54,16 +46,13 @@ const page = () => {
   const [submitStatus, setSubmitStatus] = useState(null);
 
   const brands = [
-    { name: "Apple", icon: Smartphone },
-    { name: "Google", icon: Search },
-    { name: "Microsoft", icon: Monitor },
-    { name: "Amazon", icon: ShoppingCart },
-    { name: "Meta", icon: Users },
-    { name: "Netflix", icon: Play },
-    { name: "Spotify", icon: Music },
-    { name: "Twitter", icon: MessageCircle },
-    { name: "Instagram", icon: Camera },
-    { name: "YouTube", icon: Video },
+    { image: "/Brand-1.png", alt: "Brand 1" },
+    { image: "/Brand-2.png", alt: "Brand 2" },
+    { image: "/Brand-3.png", alt: "Brand 3" },
+    { image: "/Brand-4.png", alt: "Brand 4" },
+    { image: "/Brand-5.png", alt: "Brand 5" },
+    { image: "/Brand-6.png", alt: "Brand 6" },
+    { image: "/Brand-7.png", alt: "Brand 7" },
   ];
 
   // Form options
@@ -101,55 +90,60 @@ const page = () => {
     "Other",
   ];
 
-  // Duplicate brands array for seamless loop
-  const duplicatedBrands = [...brands, ...brands];
-
   // EmailJS configuration (replace with your actual service details)
   const EMAILJS_SERVICE_ID = "your_service_id";
   const EMAILJS_TEMPLATE_ID = "your_template_id";
   const EMAILJS_PUBLIC_KEY = "your_public_key";
 
+  // Duplicate brands array for seamless loop
+  const duplicatedBrands = [...brands, ...brands];
+
   // Auto-scroll functionality
   useEffect(() => {
     const scrollContainer = scrollRef.current;
-    if (!scrollContainer || isHovered || isDragging) return;
+    if (!scrollContainer) return;
 
-    const scrollWidth = scrollContainer.scrollWidth;
-    const clientWidth = scrollContainer.clientWidth;
-    const maxScroll = scrollWidth / 2;
-
-    let scrollPosition = maxScroll;
     const scrollSpeed = 1;
 
     const animate = () => {
-      if (!isHovered && !isDragging) {
-        scrollPosition += scrollSpeed;
+      if (!isHovered && !isDragging && scrollContainer) {
+        const maxScroll = scrollContainer.scrollWidth / 2;
 
-        if (scrollPosition <= 0) {
-          scrollPosition = maxScroll;
+        scrollPositionRef.current += scrollSpeed;
+
+        // Reset to beginning for seamless loop
+        if (scrollPositionRef.current >= maxScroll) {
+          scrollPositionRef.current = 0;
         }
 
-        if (scrollContainer) {
-          scrollContainer.scrollLeft = scrollPosition;
-        }
+        scrollContainer.scrollLeft = scrollPositionRef.current;
       }
-      requestAnimationFrame(animate);
+      animationRef.current = requestAnimationFrame(animate);
     };
 
-    const animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, [isHovered, isDragging]);
+    animationRef.current = requestAnimationFrame(animate);
 
-  // Handle manual scroll
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isHovered, isDragging]); // Keep dependencies but use ref for position
+
+  // Sync ref with actual scroll position when user manually scrolls
   const handleScroll = () => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    const scrollWidth = scrollContainer.scrollWidth;
-    const maxScroll = scrollWidth / 2;
+    // Update the ref to match current scroll position
+    scrollPositionRef.current = scrollContainer.scrollLeft;
 
+    const maxScroll = scrollContainer.scrollWidth / 2;
+
+    // Reset scroll position for seamless loop when reaching the end
     if (scrollContainer.scrollLeft >= maxScroll - 10) {
       scrollContainer.scrollLeft = 0;
+      scrollPositionRef.current = 0;
     }
   };
 
@@ -372,7 +366,8 @@ ${attachmentsList}
       >
         <div className="max-w-8xl mx-auto px-4 sm:px-6 py-4 sm:py-8 md:py-16">
           {/* Main Heading Section */}
-          <div className="relative">+
+          <div className="relative">
+            +
             <motion.div
               className="max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-6xl"
               initial={{ x: -100, opacity: 0 }}
@@ -447,10 +442,10 @@ ${attachmentsList}
             </h2>
             <p className="text-lg text-gray-600 mb-2">
               Write us an email via this form or just send us an{" "}
-              <span className="text-red-500 font-semibold">E-mail</span> at:{" "}
+              <span className="text-[#EC4D37] font-semibold">E-mail</span> at:{" "}
               <a
                 href="mailto:info@boldlycreative.com"
-                className="text-red-500 underline"
+                className="text-[#EC4D37] underline"
               >
                 info@boldlycreative.com
               </a>
@@ -482,7 +477,7 @@ ${attachmentsList}
                   onChange={handleInputChange}
                   placeholder="Your full name*"
                   required
-                  className="w-full px-4 py-4 border-b-2 border-gray-200 focus:border-red-500 outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400"
+                  className="w-full px-4 py-4 border-2 border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400 rounded-lg"
                 />
               </motion.div>
 
@@ -499,7 +494,7 @@ ${attachmentsList}
                   onChange={handleInputChange}
                   placeholder="Your email*"
                   required
-                  className="w-full px-4 py-4 border-b-2 border-gray-200 focus:border-red-500 outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400"
+                  className="w-full px-4 py-4 border-2 border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400 rounded-lg"
                 />
               </motion.div>
             </div>
@@ -518,7 +513,7 @@ ${attachmentsList}
                   value={formData.contactNumber}
                   onChange={handleInputChange}
                   placeholder="Contact number"
-                  className="w-full px-4 py-4 border-b-2 border-gray-200 focus:border-red-500 outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400"
+                  className="w-full px-4 py-4 border-2 border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400 rounded-lg"
                 />
               </motion.div>
 
@@ -534,7 +529,7 @@ ${attachmentsList}
                   value={formData.organization}
                   onChange={handleInputChange}
                   placeholder="Organization"
-                  className="w-full px-4 py-4 border-b-2 border-gray-200 focus:border-red-500 outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400"
+                  className="w-full px-4 py-4 border-2 border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400 rounded-lg"
                 />
               </motion.div>
             </div>
@@ -551,7 +546,7 @@ ${attachmentsList}
                   name="region"
                   value={formData.region}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-4 border-b-2 border-gray-200 focus:border-red-500 outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-4 border-2 rounded-lg border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
                 >
                   <option value="">Region</option>
                   {regions.map((region) => (
@@ -572,7 +567,7 @@ ${attachmentsList}
                   name="industryType"
                   value={formData.industryType}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-4 border-b-2 border-gray-200 focus:border-red-500 outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-4 border-2 rounded-lg border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
                 >
                   <option value="">Industry type</option>
                   {industryTypes.map((industry) => (
@@ -596,7 +591,7 @@ ${attachmentsList}
                   name="budgetRange"
                   value={formData.budgetRange}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-4 border-b-2 border-gray-200 focus:border-red-500 outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-4 border-2 rounded-lg border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
                 >
                   <option value="">Choose your budget range</option>
                   {budgetRanges.map((budget) => (
@@ -617,7 +612,7 @@ ${attachmentsList}
                   name="helpWith"
                   value={formData.helpWith}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-4 border-b-2 border-gray-200 focus:border-red-500 outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-4 border-2 rounded-lg border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
                 >
                   <option value="">You need help with?</option>
                   {helpOptions.map((help) => (
@@ -643,7 +638,7 @@ ${attachmentsList}
                 placeholder="How can we help?*"
                 required
                 rows={5}
-                className="w-full px-4 py-4 border-b-2 border-gray-200 focus:border-red-500 outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400 resize-none"
+                className="w-full px-4 py-4 border-2 rounded-lg border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 placeholder-gray-400 resize-none"
               />
             </motion.div>
 
@@ -654,7 +649,7 @@ ${attachmentsList}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 1.0 }}
             >
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-red-500 transition-colors duration-300">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#EC4D37] transition-colors duration-300">
                 <input
                   type="file"
                   multiple
@@ -670,10 +665,13 @@ ${attachmentsList}
                   <Upload className="w-8 h-8 text-gray-400" />
                   <span className="text-gray-600">
                     Add Attachment from your{" "}
-                    <span className="text-red-500 underline">Computer</span> or{" "}
-                    <span className="text-red-500 underline">Google Drive</span>{" "}
+                    <span className="text-[#EC4D37] underline">Computer</span>{" "}
+                    or{" "}
+                    <span className="text-[#EC4D37] underline">
+                      Google Drive
+                    </span>{" "}
                     or Through{" "}
-                    <span className="text-red-500 underline">URLs</span>
+                    <span className="text-[#EC4D37] underline">URLs</span>
                   </span>
                 </label>
               </div>
@@ -700,7 +698,7 @@ ${attachmentsList}
                       <button
                         type="button"
                         onClick={() => removeAttachment(index)}
-                        className="text-red-500 hover:text-red-700 transition-colors"
+                        className="text-[#EC4D37] hover:text-[#ec4933] transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -724,15 +722,15 @@ ${attachmentsList}
                   name="privacyPolicy"
                   checked={formData.privacyPolicy}
                   onChange={handleInputChange}
-                  className="mt-1 w-4 h-4 text-red-600 border-2 border-gray-300 rounded focus:ring-red-500"
+                  className="mt-1 w-4 h-4 text-[#EC4D37] border-2 border-gray-300 rounded focus:ring-[#EC4D37]"
                 />
                 <span className="text-sm text-gray-600">
                   I have read Boldlycreative{" "}
-                  <a href="#" className="text-red-500 underline">
+                  <a href="#" className="text-[#EC4D37] underline">
                     Privacy Policy
                   </a>{" "}
                   and agree to the{" "}
-                  <a href="#" className="text-red-500 underline">
+                  <a href="#" className="text-[#EC4D37] underline">
                     Terms of Use
                   </a>
                   *
@@ -745,7 +743,7 @@ ${attachmentsList}
                   name="stayUpdated"
                   checked={formData.stayUpdated}
                   onChange={handleInputChange}
-                  className="mt-1 w-4 h-4 text-red-600 border-2 border-gray-300 rounded focus:ring-red-500"
+                  className="mt-1 w-4 h-4 text-[#EC4D37] border-2 border-gray-300 rounded focus:ring-[#EC4D37]"
                 />
                 <span className="text-sm text-gray-600">
                   I want to stay updated with upcoming technology Trends
@@ -766,7 +764,7 @@ ${attachmentsList}
                 disabled={isSubmitting || !formData.privacyPolicy}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-2 bg-[#EC4D37] hover:bg-[#ef452e] disabled:bg-gray-400 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>
@@ -834,14 +832,14 @@ ${attachmentsList}
           {/* Address Section */}
           <motion.div
             variants={cardVariants}
-            className="bg-[#06D6A0]  rounded-3xl p-8 md:p-12 shadow-2xl shadow-green-500/20 mb-12"
+            className="bg-[#78E4C8] rounded-2xl p-3 shadow-2xl shadow-green-500/20 mb-12"
           >
             <motion.div
               variants={itemVariants}
               className="flex items-start gap-6"
             >
               <motion.div
-                className="bg-white p-4 rounded-2xl shadow-lg"
+                className="p-4"
                 whileHover={{
                   scale: 1.1,
                   rotate: 360,
@@ -849,7 +847,11 @@ ${attachmentsList}
                 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <MapPin className="w-8 h-8 text-b" />
+                <img
+                  src="/address.png"
+                  alt="Address"
+                  className="w-12 h-12 object-contain"
+                />
               </motion.div>
 
               <div className="flex-1">
@@ -888,7 +890,11 @@ ${attachmentsList}
                     transition: { duration: 0.4 },
                   }}
                 >
-                  <Phone className="w-6 h-6 text-black" />
+                  <img
+                    src="/call.png"
+                    alt="call"
+                    className="w-8 h-8 object-contain"
+                  />
                 </motion.div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-800">
                   Additional Contacts
@@ -906,10 +912,14 @@ ${attachmentsList}
                     variants={phoneHoverVariants}
                     whileHover="hover"
                     whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 transition-all duration-300 group cursor-pointer border border-green-200"
+                    className="flex items-center gap-3 p-4 rounded-xl transition-all duration-300 group cursor-pointer border border-gray-200"
                   >
-                    <Phone className="w-5 h-5 text-green-600 group-hover:text-green-700" />
-                    <span className="text-green-700 font-medium">
+                    <img
+                      src="/call.png"
+                      alt="call"
+                      className="w-8 h-8 object-contain"
+                    />
+                    <span className="text-[#0078FA] font-medium">
                       + (91) 7011575305
                     </span>
                   </motion.a>
@@ -919,10 +929,14 @@ ${attachmentsList}
                     variants={phoneHoverVariants}
                     whileHover="hover"
                     whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 transition-all duration-300 group cursor-pointer border border-green-200"
+                    className="flex items-center gap-3 p-4 rounded-xl transition-all duration-300 group cursor-pointer border border-gray-200"
                   >
-                    <Phone className="w-5 h-5 text-green-600 group-hover:text-green-700" />
-                    <span className="text-green-700 font-medium">
+                    <img
+                      src="/call.png"
+                      alt="call"
+                      className="w-8 h-8 object-contain"
+                    />
+                    <span className="text-[#0078FA] font-medium">
                       + (91) 96506 76241
                     </span>
                   </motion.a>
@@ -960,14 +974,14 @@ ${attachmentsList}
                   variants={emailHoverVariants}
                   whileHover="hover"
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-4 p-5 rounded-xl bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 transition-all duration-300 group cursor-pointer border border-blue-200"
+                  className="flex items-center gap-4 p-5 rounded-xl transition-all duration-300 group cursor-pointer border border-gray-200"
                 >
-                  <Mail className="w-6 h-6 text-blue-600 group-hover:text-blue-700" />
+                  <Mail className="w-8 h-8" />
                   <div>
-                    <span className="text-blue-700 font-medium text-lg">
+                    <span className="text-[#0078FA] font-medium text-lg">
                       boldlycreativemedia@gmail.com
                     </span>
-                    <p className="text-blue-500 text-sm mt-1">
+                    <p className="text-[#0078FA] text-sm mt-1">
                       General Inquiries
                     </p>
                   </div>
@@ -1029,21 +1043,21 @@ ${attachmentsList}
 
       {/* Moving Brand Logos Section */}
       <motion.div
-        className="py-12 bg-gray-100 relative overflow-hidden"
+        className="py-12 bg-gray-50 relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.9 }}
       >
+        {/* Scrolling Container */}
         <div
           ref={scrollRef}
           className="flex items-center gap-12 md:gap-16 overflow-x-auto cursor-grab active:cursor-grabbing select-none"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
-            WebkitScrollbar: { display: "none" },
           }}
-          onMouseEnter={() => setIsHovered(true)}
+          onMouseEnter={() => setIsHovered(false)}
           onMouseLeave={() => {
             setIsHovered(false);
             setIsDragging(false);
@@ -1056,15 +1070,18 @@ ${attachmentsList}
         >
           {duplicatedBrands.map((brand, index) => (
             <motion.div
-              key={`${brand.name}-${index}`}
-              className="flex items-center gap-3 text-gray-400 hover:text-red-500 transition-colors duration-300 whitespace-nowrap flex-shrink-0 px-4 py-2"
-              whileHover={{ scale: 1.05 }}
+              key={`brand-${index}`}
+              className="flex items-center justify-center whitespace-nowrap flex-shrink-0 px-4 py-2 group"
+              whileHover={{ scale: 1.3 }}
               whileTap={{ scale: 0.95 }}
             >
-              <brand.icon className="w-6 h-6 md:w-8 md:h-8" />
-              <span className="text-lg md:text-xl lg:text-2xl font-semibold">
-                {brand.name}
-              </span>
+              <img
+                src={brand.image}
+                alt={brand.alt}
+                width={120}
+                height={60}
+                className="h-40 md:h-46 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
             </motion.div>
           ))}
         </div>

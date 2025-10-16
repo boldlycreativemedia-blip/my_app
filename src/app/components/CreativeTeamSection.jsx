@@ -108,7 +108,7 @@ const CreativeTeamSection = () => {
             className="w-full h-full object-cover group-hover:blur-sm transition-all duration-300"
           />
           <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300 rounded-full flex items-center justify-center">
-            <span className="text-black font-bold text-xs lg:text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-2">
+            <span className="text-white font-bold text-xs lg:text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-2">
               {member.name} <br/>
               <span className="font-light">{member.designation}</span>
             </span>

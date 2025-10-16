@@ -135,7 +135,7 @@ const ProcessSection = () => {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
             Our Process
           </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-[#EC4D37] mx-auto rounded-full"></div>
         </motion.div>
 
         {/* Process Steps */}
@@ -183,7 +183,7 @@ const ProcessSection = () => {
                           }}
                           className="flex items-start gap-3"
                         >
-                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 group-hover:from-white group-hover:to-black mt-2 flex-shrink-0 transition-all duration-300"></div>
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#EC4D37] to-[#EC4D37] group-hover:from-[#1F1B1C] group-hover:to-[#1F1B1C] mt-2 flex-shrink-0 transition-all duration-300"></div>
                           <span className="text-gray-700 leading-relaxed group-hover:text-white transition-colors duration-300">
                             {point}
                           </span>
@@ -205,7 +205,7 @@ const ProcessSection = () => {
                   whileHover={{ scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-[#EC4D37] to-[#EC4D37] hover:from-gray-200 hover:to-gray-500 flex items-center justify-center shadow-xl cursor-pointer transition-all duration-300">
+                  <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-[#EC4D37] to-[#EC4D37] hover:from-[#1F1B1C] hover:to-[#1F1B1C] flex items-center justify-center shadow-xl cursor-pointer transition-all duration-300">
                     <span className="text-2xl lg:text-3xl font-bold text-white">
                       {step.id}
                     </span>

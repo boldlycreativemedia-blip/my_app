@@ -104,12 +104,12 @@ const ServiceDigitalMarketing = () => {
 
         {/* Goal Setting Section */}
         <div
-          className={`bg-[#06D6A0] rounded-2xl p-8 mb-12 transition-all duration-1000 delay-500 ${
+          className={`bg-[#78E4C8] rounded-2xl p-8 mb-12 transition-all duration-1000 delay-500 ${
             isVisible
               ? "opacity-100 translate-y-0 scale-100"
               : "opacity-0 translate-y-10 scale-95"
           }`}
-          style={{ backgroundColor: "#06D6A0" }}
+          style={{ backgroundColor: "#78E4C8" }}
         >
           <div className="flex items-start space-x-6">
             <div

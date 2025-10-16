@@ -8,6 +8,7 @@ import Image from "next/image";
 import CareerOptions from "../components/CareerOptions";
 import Opportunity from "../components/Opportunity";
 import LastAboutSection from "../components/LastAboutSection";
+import Link from "next/link";
 
 const page = () => {
   const sectionRef = useRef(null);
@@ -43,7 +44,7 @@ const page = () => {
                   <br />
                   <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6">
                     Career
-                    <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-red-500 rounded-full flex-shrink-0">
+                    <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
                       <Image
                         src="/draw.png"
                         alt="draw"
@@ -57,8 +58,9 @@ const page = () => {
                 </motion.h1>
 
                 {/* CTA Button */}
+                <Link href="contactus">
                 <motion.button
-                  className="group bg-red-500 hover:bg-red-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium flex items-center gap-2 sm:gap-3 transition-all duration-300 w-full sm:w-auto justify-center sm:justify-start mt-6"
+                  className="group bg-[#EC4D37] cursor-pointer text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium flex items-center gap-2 sm:gap-3 transition-all duration-300 w-full sm:w-auto justify-center sm:justify-start mt-6"
                   initial={{ scale: 0.8, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
@@ -76,9 +78,10 @@ const page = () => {
                       ease: "easeInOut",
                     }}
                   >
-                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black" />
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black cursor-pointer" />
                   </motion.div>
                 </motion.button>
+                </Link>
               </motion.div>
 
               {/* RIGHT CONTENT - New Heading (Top Right on Desktop) */}

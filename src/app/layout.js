@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata = {
   title: "Boldly Creative",
-  description: "Digital Marketing",
+  description: "Boldly creative media, agency",
 };
 
 export default function RootLayout({ children }) {
