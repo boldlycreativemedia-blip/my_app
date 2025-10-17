@@ -617,7 +617,7 @@ export default function AnimatedContentSection({
                   className="w-full h-full object-cover"
                   controls
                   autoPlay
-                  src="/BOLDLY_CREATIVE_MEDIA.mp4"
+                  src="https://res.cloudinary.com/dqjc5fqyx/video/upload/v1739723931/BOLDLY_CREATIVE_MEDIA_3_xsl1da.mp4"
                 >
                   Your browser does not support the video tag.
                 </video>
