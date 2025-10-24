@@ -1,11 +1,6 @@
 import React from "react";
 import {
-  Mail,
   ArrowRight,
-  Facebook,
-  Instagram,
-  Twitter,
-  Linkedin,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -23,7 +18,7 @@ const Footer = () => {
                 <br />
                 started?
               </h2>
-              <p className="text-gray-400 mb-6 md:mb-8 text-sm sm:text-base leading-relaxed">
+              <p className="text-white mb-6 md:mb-8 text-sm sm:text-base leading-relaxed">
                 If there are questions you want to ask,
                 <br className="hidden sm:block" />
                 <span className="sm:hidden"> </span>
@@ -35,7 +30,7 @@ const Footer = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="bg-transparent border-b border-gray-500 w-full pb-3 pr-12 focus:outline-none focus:border-white text-sm sm:text-base placeholder-gray-500 transition-colors"
+                  className="bg-transparent border-b border-gray-500 w-full pb-3 pr-12 focus:outline-none focus:border-white text-sm sm:text-base placeholder-white transition-colors"
                 />
                 <button
                   className="absolute right-0 bottom-2 text-white hover:text-gray-300 transition-colors"
@@ -66,25 +61,25 @@ const Footer = () => {
                 <nav className="flex flex-col space-y-3 md:space-y-4">
                   <a
                     href="/#"
-                    className="hover:text-gray-400 transition-colors text-sm sm:text-base"
+                    className="hover:text-white transition-colors text-sm sm:text-base"
                   >
                     Home
                   </a>
                   <a
                     href="/about"
-                    className="hover:text-gray-400 transition-colors text-sm sm:text-base"
+                    className="hover:text-white transition-colors text-sm sm:text-base"
                   >
                     About
                   </a>
                   <a
                     href="/services"
-                    className="hover:text-gray-400 transition-colors text-sm sm:text-base"
+                    className="hover:text-white transition-colors text-sm sm:text-base"
                   >
                     Services
                   </a>
                   <a
                     href="https://www.behance.net/boldlycreativemedia"
-                    className="hover:text-gray-400 transition-colors text-sm sm:text-base"
+                    className="hover:text-white transition-colors text-sm sm:text-base"
                   >
                     Portfolio
                   </a>
@@ -99,7 +94,7 @@ const Footer = () => {
                 <h4 className="text-base sm:text-lg font-semibold mb-3 md:mb-4 text-gray-300">
                   Offices
                 </h4>
-                <div className="space-y-1.5 md:space-y-2 text-gray-400 text-sm sm:text-base">
+                <div className="space-y-1.5 md:space-y-2 text-white text-sm sm:text-base">
                   <p>Delhi NCR - India</p>
                 </div>
               </div>
@@ -114,7 +109,7 @@ const Footer = () => {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
               {/* Copyright and Legal Links */}
-              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-gray-400 text-center sm:text-left">
+              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-white text-center sm:text-left">
                 <p className="whitespace-nowrap">
                   © 2025 Copyright by boldlycreative
                 </p>

@@ -406,13 +406,13 @@ export default function AnimatedContentSection({
                     label: "Engagement",
                     percent: 55,
                     color: "bg-red-500",
-                    height: "27.5%",
+                    height: "55%",
                   },
                   {
                     label: "Brand Awareness",
                     percent: 75,
                     color: "bg-sky-400",
-                    height: "37.5%",
+                    height: "75%",
                   },
                   {
                     label: "Reach",

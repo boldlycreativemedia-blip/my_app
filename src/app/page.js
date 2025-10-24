@@ -369,7 +369,7 @@ export default function Page() {
           <video
             ref={videoRef}
             className="absolute inset-0 w-full h-full object-cover"
-            src="https://res.cloudinary.com/dqjc5fqyx/video/upload/v1739723931/BOLDLY_CREATIVE_MEDIA_3_xsl1da.mp4"
+            src="https://res.cloudinary.com/dqjc5fqyx/video/upload/v1761289269/BOLDLY_CREATIVE_MEDIA_homepage_umdefu.mp4"
             autoPlay
             muted
             loop

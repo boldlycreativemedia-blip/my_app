@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 const CareerPage = () => {
   const [loading, setLoading] = useState(false);
-  const [expandedJob, setExpandedJob] = useState(null);
+  const [expandedJobs, setExpandedJobs] = useState([]);
 
   const jobData = [
     {
@@ -95,18 +94,14 @@ const CareerPage = () => {
         ease: "easeOut",
       },
     },
-    hover: {
-      y: -8,
-      scale: 1.02,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    },
   };
 
   const handleJobClick = (jobId) => {
-    setExpandedJob(expandedJob === jobId ? null : jobId);
+    if (expandedJobs.includes(jobId)) {
+      setExpandedJobs(expandedJobs.filter((id) => id !== jobId));
+    } else {
+      setExpandedJobs([...expandedJobs, jobId]);
+    }
   };
 
   if (loading) {
@@ -142,7 +137,7 @@ const CareerPage = () => {
 
         {/* Job Cards Grid */}
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto items-start"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -151,19 +146,18 @@ const CareerPage = () => {
             <motion.div
               key={job.id}
               variants={cardVariants}
-              whileHover="hover"
+              initial="hidden"
+              animate="visible"
+              className={`relative overflow-hidden rounded-2xl p-8 shadow-xl transition-all duration-300 cursor-pointer ${
+                expandedJobs.includes(job.id)
+                  ? "bg-gradient-to-br from-[#EC4D37] to-[#EC4D37]"
+                  : "bg-[#1F1B1C] hover:bg-gradient-to-br hover:from-[#EC4D37] hover:to-[#EC4D37]"
+              } text-white`}
               onClick={() => handleJobClick(job.id)}
-              className="relative overflow-hidden rounded-2xl p-8 shadow-xl transition-all duration-300 cursor-pointer bg-[#1F1B1C] text-white hover:bg-gradient-to-br hover:from-[#EC4D37] hover:to-[#EC4D37]"
             >
               {/* Geometry Icon in Top Right Corner */}
               <div className="absolute -top-0 -right-4 w-30 h-24">
-                <Image
-                  src="/Frame2085660656.png"
-                  alt="geometry"
-                  width={48}
-                  height={48}
-                  className="w-full h-full object-contain"
-                />
+                <div className="w-12 h-12 bg-white/10 rounded-lg"></div>
               </div>
 
               {/* Content */}
@@ -197,7 +191,7 @@ const CareerPage = () => {
 
                 {/* Expandable Details */}
                 <AnimatePresence>
-                  {expandedJob === job.id && (
+                  {expandedJobs.includes(job.id) && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
@@ -254,14 +248,11 @@ const CareerPage = () => {
                 </AnimatePresence>
 
                 {/* Click to expand/collapse */}
-                <motion.div
-                  className="inline-flex items-center text-sm font-semibold mt-4"
-                  whileHover={{ opacity: 1 }}
-                >
-                  {expandedJob === job.id ? "Show Less" : "Learn More"}
+                <div className="inline-flex items-center text-sm font-semibold mt-4">
+                  {expandedJobs.includes(job.id) ? "Show Less" : "Learn More"}
                   <svg
                     className={`w-4 h-4 ml-2 transition-transform ${
-                      expandedJob === job.id ? "rotate-180" : ""
+                      expandedJobs.includes(job.id) ? "rotate-180" : ""
                     }`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -272,16 +263,8 @@ const CareerPage = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                </motion.div>
+                </div>
               </div>
-
-              {/* Hover Effect Overlay */}
-              <motion.div
-                className="absolute inset-0 bg-white bg-opacity-5 pointer-events-none"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
-              />
             </motion.div>
           ))}
         </motion.div>

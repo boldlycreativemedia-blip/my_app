@@ -15,7 +15,7 @@ const DigitalMarketingHeader = () => {
         "Brand & Corporate Videos / Advertising & Commercials / Social Media Content / Explainer & Educational Videos / Event Coverage & Live Production / Product & Service Videos / Documentary & Storytelling / Animation & Motion Graphics / Music & Entertainment / Offline/Traditional Media Videos",
       description:
         "Comprehensive video solutions for every platform, online and offline. From brand storytelling to TV commercials, we create engaging visual content that captures your audience's attention and drives results.",
-      image: "🎬",
+      image: "/Video_Production_Services.jpg",
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ const DigitalMarketingHeader = () => {
         "Corporate & Executive Photography / Brand & Campaign Photography / Product & Luxury Photography / Event & Experience Photography / Portrait & Lifestyle Photography / Hospitality & Architectural Photography / Food & Beverage Photography / Industrial & Documentary for Business / Creative & Artistic Photography / Travel & Destination Photography",
       description:
         "High-end photography crafted for businesses, brands, and individuals. Professional imagery that elevates your brand presence across all mediums and platforms.",
-      image: "📸",
+      image: "/Photography_Services.png",
     },
     {
       id: 3,
@@ -33,7 +33,7 @@ const DigitalMarketingHeader = () => {
         "Brand Identity & Visual Design / Marketing & Promotional Graphics / Social Media Graphics / Web & Digital Design / Motion & Animated Graphics / Product & Packaging Design / Presentation & Corporate Design / Event & Exhibition Graphics / Illustration & Custom Artwork / Print & Offline Collateral",
       description:
         "Creative designs that define brands across digital and print. From logo design to complete brand guidelines, we create visual identities that resonate with your target audience.",
-      image: "🎨",
+      image: "/Graphics_&_Design_Services.JPG",
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ const DigitalMarketingHeader = () => {
         "Custom Website Design / Corporate & Business Websites / E-commerce Websites / Portfolio & Personal Branding Websites / Marketing & Campaign Websites / Blog & Content Websites / Website Redesign & Revamp / Web Animations & Interactive Design / Maintenance & Website Support / SEO & Website Optimization",
       description:
         "Creative, functional websites designed to elevate brands online. Responsive, user-friendly websites that convert visitors into customers and drive business growth.",
-      image: "💻",
+      image: "/Website_Design_&_Development_Services.png",
     },
   ];
 
@@ -248,10 +248,14 @@ const DigitalMarketingHeader = () => {
                                 {service.title}
                               </h4>
 
-                              {/* Service icon */}
+                             {/* Service image */}
                               <div className="flex justify-start mb-6">
-                                <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl flex items-center justify-center text-3xl transform hover:scale-110 transition-transform duration-300">
-                                  {service.image}
+                                <div className="w-full h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                  <img 
+                                    src={service.image} 
+                                    alt={service.title}
+                                    className="w-full h-full object-cover"
+                                  />
                                 </div>
                               </div>
 

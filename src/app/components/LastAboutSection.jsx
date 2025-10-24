@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 const LastAboutSection = () => {
   const scrollRef = useRef(null);
@@ -92,9 +93,11 @@ const LastAboutSection = () => {
               </p>
 
               {/* CTA Button */}
-              <button className="bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+              <Link href="/contactus">
+              <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
                 Get Free Consultation
               </button>
+              </Link>
             </div>
           </div>
 

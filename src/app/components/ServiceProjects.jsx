@@ -1,125 +1,182 @@
 "use client";
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
+import { ArrowRight, Volume2, VolumeX } from "lucide-react";
+import Link from "next/link";
 
-const ProjectCard = ({ title, description, date, delay = 0, videoUrl }) => {
+const ProjectCard = ({
+  title,
+  description,
+  date,
+  videoUrl,
+  isHovered,
+  onHover,
+  onLeave,
+}) => {
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef(null);
+
+  const toggleMute = (e) => {
+    e.stopPropagation();
+    setIsMuted(!isMuted);
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{
-        duration: 0.6,
-        delay: delay,
-        ease: [0.25, 0.25, 0, 1],
-      }}
-      whileHover={{
-        y: -10,
-        transition: { duration: 0.3, ease: "easeOut" },
-      }}
-      className="group relative cursor-pointer"
-    >
-      {/* Video container */}
-      <div className="relative h-64 mb-6 overflow-hidden rounded-lg shadow-lg">
-        {videoUrl ? (
-          <video
-            src={videoUrl}
-            className="w-full h-full object-cover rounded-lg"
-            autoPlay
-            loop
-            muted
-            playsInline
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gray-200">
-            <div className="text-center text-gray-500">
-              <div className="w-16 h-16 bg-gray-300 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                <svg
-                  className="w-8 h-8"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+    <div className="flex-shrink-0 w-[350px] md:w-[400px] px-4">
+      <motion.div
+        onMouseEnter={onHover}
+        onMouseLeave={onLeave}
+        animate={{
+          scale: isHovered ? 1.1 : 1,
+          y: isHovered ? -20 : 0,
+        }}
+        transition={{ duration: 0.3 }}
+        style={{ zIndex: isHovered ? 50 : 1 }}
+        className="group relative cursor-pointer"
+      >
+        {/* Video container */}
+        <div className="relative h-80 mt-7 mb-6 overflow-hidden rounded-lg shadow-lg">
+          {videoUrl ? (
+            <>
+              <video
+                ref={videoRef}
+                src={videoUrl}
+                className="w-full h-full object-cover rounded-lg"
+                autoPlay
+                loop
+                muted={isMuted}
+                playsInline
+              />
+              {/* Mute/Unmute Button */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={toggleMute}
+                className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white p-2.5 rounded-full backdrop-blur-sm transition-all duration-300 z-10"
+              >
+                {isMuted ? (
+                  <VolumeX className="w-4 h-4" />
+                ) : (
+                  <Volume2 className="w-4 h-4" />
+                )}
+              </motion.button>
+
+              {/* Hover Overlay */}
+              {isHovered && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute inset-0 border-4 border-[#EC4D37] rounded-lg pointer-events-none"
+                />
+              )}
+            </>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gray-200">
+              <div className="text-center text-gray-500">
+                <div className="w-16 h-16 bg-gray-300 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                  <svg
+                    className="w-8 h-8"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <p className="text-sm">Project Video</p>
               </div>
-              <p className="text-sm">Project Video</p>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
 
-      <div className="relative z-10">
-        <motion.h3
-          className="text-sm font-medium text-[#EC4D37] mb-2"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: delay + 0.4, duration: 0.5 }}
-        >
-          {title}
-        </motion.h3>
+        <div className="relative z-10">
+          <h3 className="text-sm font-medium text-[#EC4D37] mb-2">{title}</h3>
 
-        <motion.h4
-          className="text-xl font-bold text-[#1F1B1C] mb-4 leading-tight"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ delay: delay + 0.5, duration: 0.5 }}
-        >
-          {description}
-        </motion.h4>
+          <h4 className="text-xl font-bold text-[#1F1B1C] mb-4 leading-tight">
+            {description}
+          </h4>
 
-        <motion.p
-          className="text-gray-600 text-sm"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: delay + 0.6, duration: 0.5 }}
-        >
-          {date}
-        </motion.p>
-      </div>
-    </motion.div>
+          <p className="text-gray-600 text-sm">{date}</p>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 
 const ServiceProjects = () => {
-  const [isMounted, setIsMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const [isPaused, setIsPaused] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const x = useMotionValue(0);
 
   const projects = [
     {
-      title: "Web Development",
-      description: "Covers marketing, sales, and customer service.",
-      date: "Dec 02, 2025",
-      videoUrl: "", // Add your video URL here
+      title: "Event Coverage",
+      description: "The Great Indian Garba Fest – Event Coverage",
+      date: "2025",
+      videoUrl:
+        "https://res.cloudinary.com/dqjc5fqyx/video/upload/v1761292635/The_Great_Indian_Garba_Fest_Event_Coverage_umnlpc.mp4",
     },
     {
-      title: "Social Media Ads",
-      description: "Covers marketing, sales, and customer service.",
-      date: "Dec 02, 2025",
-      videoUrl: "", // Add your video URL here
+      title: "Social Buzz Campaign",
+      description: "MAWW – Social Buzz Campaign",
+      date: "2025",
+      videoUrl:
+        "https://res.cloudinary.com/dqjc5fqyx/video/upload/v1761292768/MAWW_Social_Buzz_Campaign_cymf24.mp4",
     },
     {
-      title: "Business",
-      description: "Covers marketing, sales, and customer service.",
-      date: "Dec 02, 2025",
-      videoUrl: "", // Add your video URL here
+      title: "Social Media Campaign",
+      description: "Motorola – Social Media Campaign",
+      date: "2025",
+      videoUrl:
+        "https://res.cloudinary.com/dqjc5fqyx/video/upload/v1761292836/Motorola_Social_Media_Campaign_tuwy8k.mp4",
+    },
+    {
+      title: "Testimonial Ad",
+      description: "Innovarch Testimonial Ad",
+      date: "2025",
+      videoUrl:
+        "https://res.cloudinary.com/dqjc5fqyx/video/upload/v1761292958/Innovarch_Testimonial_Ad_hsjsnk.mp4",
+    },
+    {
+      title: "DVC Campaign",
+      description: "CAB Curtains – DVC Campaign",
+      date: "2025",
+      videoUrl:
+        "https://res.cloudinary.com/dqjc5fqyx/video/upload/v1761293019/CAB_Curtains_DVC_Campaign_zbpgpt.mp4",
     },
   ];
+
+  // Duplicate projects for seamless infinite scroll
+  const duplicatedProjects = [...projects, ...projects, ...projects];
+  const cardWidth = 382; // 350px + 32px padding
+  const loopWidth = cardWidth * projects.length;
+
+  // Smooth infinite scroll animation
+  useAnimationFrame((t, delta) => {
+    if (!isPaused) {
+      const speed = 0.5; // pixels per frame
+      let currentX = x.get();
+      currentX -= speed;
+
+      // Reset position for seamless loop
+      if (currentX <= -loopWidth) {
+        currentX += loopWidth;
+      }
+
+      x.set(currentX);
+    }
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4 sm:px-6 lg:px-8">
@@ -135,19 +192,7 @@ const ServiceProjects = () => {
             >
               View Our Project{" "}
               <span className="block">
-                <motion.span
-                  className="bg-[#EC4D37] bg-clip-text text-transparent"
-                  animate={{
-                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  Highlights
-                </motion.span>
+                <span className="text-[#EC4D37]">Highlights</span>
               </span>
             </motion.h1>
           </div>
@@ -175,7 +220,7 @@ const ServiceProjects = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="group cursor-pointer bg-[#1F1B1C] hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-full flex items-center space-x-3 transition-all duration-300 shadow-lg"
             >
-              <span>Contact Us</span>
+              <Link href="/contactus"><span>Contact Us</span></Link>
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{
@@ -190,25 +235,29 @@ const ServiceProjects = () => {
           </div>
         </div>
 
-        {/* Project Cards Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={index}
-              title={project.title}
-              description={project.description}
-              date={project.date}
-              videoUrl={project.videoUrl}
-              delay={index * 0.2}
-            />
-          ))}
-        </motion.div>
+        {/* Carousel Section */}
+        <div className="relative overflow-hidden py-8">
+          <motion.div className="flex" style={{ x }}>
+            {duplicatedProjects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                title={project.title}
+                description={project.description}
+                date={project.date}
+                videoUrl={project.videoUrl}
+                isHovered={hoveredIndex === index}
+                onHover={() => {
+                  setIsPaused(true);
+                  setHoveredIndex(index);
+                }}
+                onLeave={() => {
+                  setIsPaused(false);
+                  setHoveredIndex(null);
+                }}
+              />
+            ))}
+          </motion.div>
+        </div>
       </div>
     </div>
   );
