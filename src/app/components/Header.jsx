@@ -60,7 +60,7 @@ export default function Header() {
         rounded-full border border-white/10
         px-6 py-4 
         flex justify-between items-center 
-        w-[95%] max-w-6xl shadow-2xl h-18
+        w-[95%] max-w-7xl shadow-2xl h-18
       "
     >
       {/* Left Side Links (Desktop) */}

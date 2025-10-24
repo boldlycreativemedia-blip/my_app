@@ -127,7 +127,7 @@ const LastHomeSection = () => {
       </motion.div>
 
       <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="relative w-full max-w-6xl bg-[#EC4D37] rounded-3xl overflow-hidden">
+        <div className="relative w-full max-w-7xl bg-[#EC4D37] rounded-3xl overflow-hidden">
           {/* Main Content Container */}
           <div className="relative z-10 px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">
             <div className="max-w-2xl">

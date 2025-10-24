@@ -364,7 +364,7 @@ ${attachmentsList}
         className="relative z-10 bg-gray-100 w-full px-6 md:px-12 py-12 md:py-20 min-h-screen"
         ref={sectionRef}
       >
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 py-4 sm:py-8 md:py-16">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-4 sm:py-8 md:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             +
@@ -823,7 +823,7 @@ ${attachmentsList}
 
       <section className="py-16 px-6 md:px-12 bg-gradient-to-tr from-gray-50 to-gray-100 min-h-screen flex items-center justify-center">
         <motion.div
-          className="max-w-6xl mx-auto"
+          className="max-w-[1920px] mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

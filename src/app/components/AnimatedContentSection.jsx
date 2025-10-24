@@ -141,10 +141,10 @@ export default function AnimatedContentSection({
   };
   return (
     <section
-      className="relative z-10 bg-gray-50 w-full px-6 md:px-12 py-28 min-h-screen"
+      className="relative z-10 bg-gray-50 w-full px-6 md:px-12 py-28 min-h-screen flex justify-center"
       ref={sectionRef}
     >
-      <div className="max-w-max">
+      <div className="w-full max-w-[1920px]">
         {/* Service Categories at Bottom */}
         <motion.div
           className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center xl:gap-32 -mt-18"
@@ -171,7 +171,7 @@ export default function AnimatedContentSection({
           ))}
         </motion.div>
         {/* Main Content Container */}
-        <div className="max-w-9xl mx-auto px-4 sm:px-6 py-6 sm:py-16">
+        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 py-6 sm:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             {/* LEFT CONTENT - Main Heading */}
@@ -348,7 +348,7 @@ export default function AnimatedContentSection({
         </motion.div>
 
         {/* Two-column layout with scroll animations */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start mt-20">
+        <div className="w-full max-w-[1900px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start mt-20">
           {/* LEFT COLUMN - Slides in from left */}
           <motion.div
             ref={leftColumnRef}
@@ -504,43 +504,20 @@ export default function AnimatedContentSection({
 
             {/* Team Image with Play Button - Same height as chart */}
             <motion.div
-              className="relative rounded-3xl -mt-2.5 overflow-hidden cursor-pointer h-80"
+              className="relative rounded-3xl 2xl:mt-15  overflow-hidden cursor-pointer h-80"
               variants={childVariants}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
               onClick={handlePlayClick}
-              style={{
-                background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-              }}
             >
               {!isPlaying ? (
                 <>
-                  {/* Team Image */}
+                  {/* Video Thumbnail Image */}
                   <div className="w-full h-full flex items-center justify-center relative">
-                    {/* Simulated team image with people */}
-                    <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center relative overflow-hidden">
-                      {/* Mock people silhouettes */}
-                      <div className="flex items-center justify-center gap-4 relative z-10">
-                        {/* Person 1 */}
-                        <div className="w-20 h-24 bg-black bg-opacity-30 rounded-full relative">
-                          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-black bg-opacity-40 rounded-full"></div>
-                        </div>
-
-                        {/* Person 2 (center) */}
-                        <div className="w-24 h-28 bg-black bg-opacity-30 rounded-full relative">
-                          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-14 h-14 bg-black bg-opacity-40 rounded-full"></div>
-                          {/* Glasses */}
-                          <div className="absolute top-6 left-1/2 transform -translate-x-1/2 w-8 h-2 bg-black bg-opacity-60 rounded-full"></div>
-                        </div>
-
-                        {/* Person 3 */}
-                        <div className="w-20 h-24 bg-black bg-opacity-30 rounded-full relative">
-                          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-black bg-opacity-40 rounded-full"></div>
-                        </div>
-                      </div>
-
-                      {/* Tablet/device */}
-                      <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 w-16 h-12 bg-black bg-opacity-50 rounded-lg"></div>
-                    </div>
+                    <img
+                      className="w-full h-full object-cover"
+                      src="/thumbnail.png"
+                      alt="Video thumbnail"
+                    />
                   </div>
 
                   {/* Animated Play Button Overlay */}

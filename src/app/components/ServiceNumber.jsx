@@ -225,7 +225,7 @@ const ServiceNumber = () => {
   return (
     <>
       <div ref={sectionRef} className="w-full bg-gray-100 py-16 px-4">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1920px] mx-auto">
           {/* Header Section */}
           <div className="text-center mb-16">
             {/* Main Heading */}

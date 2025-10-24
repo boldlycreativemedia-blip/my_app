@@ -117,7 +117,7 @@ const CareerPage = () => {
 
   return (
     <div className="min-h-screen bg-white py-16 px-4">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1920px] mx-auto">
         {/* Header */}
         <motion.div
           className="text-center mb-16"
@@ -137,7 +137,7 @@ const CareerPage = () => {
 
         {/* Job Cards Grid */}
         <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto items-start"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-[1920px] mx-auto items-start"
           variants={containerVariants}
           initial="hidden"
           animate="visible"

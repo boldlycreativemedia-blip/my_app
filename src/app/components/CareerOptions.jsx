@@ -63,7 +63,7 @@ const CareerOptions = () => {
       ref={sectionRef}
       className="w-full bg-white py-16 px-4 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1920px] mx-auto">
         {/* Header Section */}
         <div className="mb-16">
           {/* Main Content - Two Column Layout */}

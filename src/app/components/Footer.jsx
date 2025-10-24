@@ -9,7 +9,7 @@ const Footer = () => {
     <footer className="bg-[#1F1B1C] text-white">
       {/* Main Footer Content */}
       <div className="px-4 sm:px-6 md:px-12 lg:px-16 pt-12 md:pt-16 pb-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1920px] mx-auto">
           <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-12 mb-12 md:mb-16">
             {/* Left Section - CTA */}
             <div className="w-full lg:w-1/2">
@@ -106,7 +106,7 @@ const Footer = () => {
       {/* Bottom Section */}
       <div className="border-t border-gray-700">
         <div className="px-4 sm:px-6 md:px-12 lg:px-16 py-5 md:py-6">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[1920px] mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
               {/* Copyright and Legal Links */}
               <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-white text-center sm:text-left">

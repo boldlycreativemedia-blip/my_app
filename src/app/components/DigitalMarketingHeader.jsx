@@ -122,7 +122,7 @@ const DigitalMarketingHeader = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header Section */}
-      <div className="max-w-7xl mx-auto bg-gray-100 py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1920px] mx-auto bg-gray-100 py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
             {/* Main Heading */}
@@ -158,7 +158,7 @@ const DigitalMarketingHeader = () => {
 
       {/* Services Section */}
       <div className="py-10 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1920px] mx-auto">
           {services.map((service, index) => (
             <div
               key={service.id}

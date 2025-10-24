@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { ArrowRight, Volume2, VolumeX } from "lucide-react";
-import Link from "next/link";
 
 const ProjectCard = ({
   title,
@@ -12,14 +11,38 @@ const ProjectCard = ({
   isHovered,
   onHover,
   onLeave,
+  isInView,
 }) => {
   const [isMuted, setIsMuted] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const videoRef = useRef(null);
 
   const toggleMute = (e) => {
     e.stopPropagation();
     setIsMuted(!isMuted);
   };
+
+  // Optimize Cloudinary URL with transformations
+  const getOptimizedVideoUrl = (url) => {
+    if (!url) return null;
+
+    // Add Cloudinary transformations for optimization
+    // q_auto = automatic quality, f_auto = automatic format, w_400 = width 400px
+    const urlParts = url.split("/upload/");
+    if (urlParts.length === 2) {
+      return `${urlParts[0]}/upload/q_auto:low,f_auto,w_400,c_limit/${urlParts[1]}`;
+    }
+    return url;
+  };
+
+  const optimizedVideoUrl = getOptimizedVideoUrl(videoUrl);
+
+  // Preload video when in view
+  useEffect(() => {
+    if (isInView && videoRef.current && !isLoaded) {
+      videoRef.current.load();
+    }
+  }, [isInView, isLoaded]);
 
   return (
     <div className="flex-shrink-0 w-[350px] md:w-[400px] px-4">
@@ -35,31 +58,50 @@ const ProjectCard = ({
         className="group relative cursor-pointer"
       >
         {/* Video container */}
-        <div className="relative h-80 mt-7 mb-6 overflow-hidden rounded-lg shadow-lg">
-          {videoUrl ? (
+        <div className="relative h-80 mt-7 mb-6 overflow-hidden rounded-lg shadow-lg bg-gray-200">
+          {optimizedVideoUrl ? (
             <>
+              {/* Loading Placeholder */}
+              {!isLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                  <div className="text-center text-gray-500">
+                    <div className="w-16 h-16 bg-gray-300 rounded-lg mx-auto mb-4 flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#EC4D37]"></div>
+                    </div>
+                    <p className="text-sm">Loading video...</p>
+                  </div>
+                </div>
+              )}
+
               <video
                 ref={videoRef}
-                src={videoUrl}
-                className="w-full h-full object-cover rounded-lg"
-                autoPlay
+                src={optimizedVideoUrl}
+                className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
+                  isLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                autoPlay={isInView}
                 loop
                 muted={isMuted}
                 playsInline
+                preload={isInView ? "auto" : "none"}
+                onLoadedData={() => setIsLoaded(true)}
               />
+
               {/* Mute/Unmute Button */}
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={toggleMute}
-                className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white p-2.5 rounded-full backdrop-blur-sm transition-all duration-300 z-10"
-              >
-                {isMuted ? (
-                  <VolumeX className="w-4 h-4" />
-                ) : (
-                  <Volume2 className="w-4 h-4" />
-                )}
-              </motion.button>
+              {isLoaded && (
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={toggleMute}
+                  className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white p-2.5 rounded-full backdrop-blur-sm transition-all duration-300 z-10"
+                >
+                  {isMuted ? (
+                    <VolumeX className="w-4 h-4" />
+                  ) : (
+                    <Volume2 className="w-4 h-4" />
+                  )}
+                </motion.button>
+              )}
 
               {/* Hover Overlay */}
               {isHovered && (
@@ -117,7 +159,9 @@ const ProjectCard = ({
 const ServiceProjects = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [visibleRange, setVisibleRange] = useState({ start: 0, end: 6 });
   const x = useMotionValue(0);
+  const containerRef = useRef(null);
 
   const projects = [
     {
@@ -162,6 +206,30 @@ const ServiceProjects = () => {
   const cardWidth = 382; // 350px + 32px padding
   const loopWidth = cardWidth * projects.length;
 
+  // Calculate which videos are in view
+  useEffect(() => {
+    const updateVisibleRange = () => {
+      const currentX = Math.abs(x.get());
+      const viewportWidth = window.innerWidth;
+
+      // Calculate which cards are visible (with buffer)
+      const startIndex = Math.floor((currentX - cardWidth) / cardWidth);
+      const endIndex = Math.ceil(
+        (currentX + viewportWidth + cardWidth) / cardWidth
+      );
+
+      setVisibleRange({
+        start: Math.max(0, startIndex),
+        end: Math.min(duplicatedProjects.length, endIndex),
+      });
+    };
+
+    const unsubscribe = x.on("change", updateVisibleRange);
+    updateVisibleRange(); // Initial calculation
+
+    return () => unsubscribe();
+  }, [x, duplicatedProjects.length]);
+
   // Smooth infinite scroll animation
   useAnimationFrame((t, delta) => {
     if (!isPaused) {
@@ -180,7 +248,7 @@ const ServiceProjects = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1920px] mx-auto">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-16">
           <div className="lg:max-w-xl">
@@ -220,7 +288,7 @@ const ServiceProjects = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="group cursor-pointer bg-[#1F1B1C] hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-full flex items-center space-x-3 transition-all duration-300 shadow-lg"
             >
-              <Link href="/contactus"><span>Contact Us</span></Link>
+              <span>Contact Us</span>
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{
@@ -236,7 +304,7 @@ const ServiceProjects = () => {
         </div>
 
         {/* Carousel Section */}
-        <div className="relative overflow-hidden py-8">
+        <div ref={containerRef} className="relative overflow-hidden py-8">
           <motion.div className="flex" style={{ x }}>
             {duplicatedProjects.map((project, index) => (
               <ProjectCard
@@ -246,6 +314,9 @@ const ServiceProjects = () => {
                 date={project.date}
                 videoUrl={project.videoUrl}
                 isHovered={hoveredIndex === index}
+                isInView={
+                  index >= visibleRange.start && index <= visibleRange.end
+                }
                 onHover={() => {
                   setIsPaused(true);
                   setHoveredIndex(index);

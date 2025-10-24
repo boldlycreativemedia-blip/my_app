@@ -107,7 +107,7 @@ const TeamShowcase = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-20 px-4 relative overflow-hidden">
       <motion.div
-        className="max-w-7xl mx-auto"
+        className="max-w-[1920px] mx-auto"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

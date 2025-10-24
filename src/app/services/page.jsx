@@ -83,7 +83,7 @@ const page = () => {
         className="relative z-10 bg-gray-100 w-full px-6 md:px-12 py-20 min-h-screen"
         ref={sectionRef}
       >
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 py-6 sm:py-16">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-6 sm:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             {/* LEFT CONTENT - Main Heading - FIXED: Removed viewport trigger and set immediate animation */}

@@ -147,7 +147,7 @@ const CreativeTeamSection = () => {
 
   return (
     <div ref={sectionRef} className="w-full bg-gray-100 py-20 px-4">
-      <div className="max-w-7xl mx-auto text-center">
+      <div className="max-w-[1920px] mx-auto text-center">
         {/* Header */}
         <div className="mb-16">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">

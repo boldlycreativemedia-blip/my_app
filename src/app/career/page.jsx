@@ -20,7 +20,7 @@ const page = () => {
         className="relative z-10 bg-gray-100 w-full px-6 md:px-12 py-20 min-h-screen"
         ref={sectionRef}
       >
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 py-6 sm:py-16">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-6 sm:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             {/* Desktop: Two column layout, Mobile: Stacked */}
@@ -44,7 +44,7 @@ const page = () => {
                   <br />
                   <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6">
                     Career
-                    <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
+                    <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full ">
                       <Image
                         src="/draw.png"
                         alt="draw"
