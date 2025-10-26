@@ -146,11 +146,18 @@ const CreativeTeamSection = () => {
   );
 
   return (
-    <div ref={sectionRef} className="w-full bg-gray-100 py-20 px-4">
+    <div ref={sectionRef} className="w-full bg-[#F8F8F8] py-[80px] px-4">
       <div className="max-w-[1920px] mx-auto text-center">
+        {/* Our Team Badge */}
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+              Our Team
+            </span>
+          </div>
         {/* Header */}
         <div className="mb-16">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-8 leading-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#1F1B1C] mb-8 leading-tight">
             Engage With Our Creative Team
           </h1>
 
@@ -191,10 +198,10 @@ const CreativeTeamSection = () => {
                   animationFillMode: "both",
                 }}
               >
-                <button className="bg-gray-800 cursor-pointer hover:bg-gray-900 text-white px-6 py-3 rounded-full flex items-center gap-3 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <button className="bg-[#1F1B1C] cursor-pointer hover:bg-[#1F1B1C] text-white px-6 py-3 rounded-full flex items-center gap-3 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                   <span className="font-medium text-sm">View All</span>
                   <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                    <ArrowRight className="w-3 h-3 cursor-pointer text-gray-800" />
+                    <ArrowRight className="w-3 h-3 cursor-pointer text-[#1F1B1C]" />
                   </div>
                 </button>
               </div>
@@ -229,10 +236,10 @@ const CreativeTeamSection = () => {
                 animationFillMode: "both",
               }}
             >
-              <button className="bg-gray-800 cursor-pointer hover:bg-gray-900 text-white px-6 py-3 rounded-full flex items-center gap-3 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <button className="bg-[#1F1B1C] cursor-pointer hover:bg-[#1F1B1C] text-white px-6 py-3 rounded-full flex items-center gap-3 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                 <span className="font-medium text-sm">View All</span>
                 <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                  <ArrowRight className="w-3 h-3 cursor-pointer text-gray-800" />
+                  <ArrowRight className="w-3 h-3 cursor-pointer text-[#1F1B1C]" />
                 </div>
               </button>
             </div>

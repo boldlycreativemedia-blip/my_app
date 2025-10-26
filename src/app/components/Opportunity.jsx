@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Video, Palette } from "lucide-react";
 
 const CareerPage = () => {
   const [loading, setLoading] = useState(false);
@@ -8,7 +9,7 @@ const CareerPage = () => {
   const jobData = [
     {
       id: 1,
-      emoji: "🎬",
+      icon: Video,
       title: "Video Editing Intern",
       subtitle: "Boldly Creative Media",
       location: "Remote",
@@ -38,7 +39,7 @@ const CareerPage = () => {
     },
     {
       id: 2,
-      emoji: "🎨",
+      icon: Palette,
       title: "Graphic Design Intern",
       subtitle: "Boldly Creative Media",
       location: "Remote",
@@ -116,8 +117,15 @@ const CareerPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white py-16 px-4">
-      <div className="max-w-[1920px] mx-auto">
+    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4">
+      <div className="max-w-[1920px] ml-10 mr-4 mt-4 mx-auto">
+        {/* Our Team Badge */}
+          <div className="flex items-center justify-center gap-2 ">
+            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+              Available Jobs
+            </span>
+          </div>
         {/* Header */}
         <motion.div
           className="text-center mb-16"
@@ -149,22 +157,26 @@ const CareerPage = () => {
               initial="hidden"
               animate="visible"
               className={`relative overflow-hidden rounded-2xl p-8 shadow-xl transition-all duration-300 cursor-pointer ${
-                expandedJobs.includes(job.id)
-                  ? "bg-gradient-to-br from-[#EC4D37] to-[#EC4D37]"
-                  : "bg-[#1F1B1C] hover:bg-gradient-to-br hover:from-[#EC4D37] hover:to-[#EC4D37]"
+                expandedJobs.includes(job.id) ? "bg-[#1F1B1C]" : "bg-[#1F1B1C]"
               } text-white`}
               onClick={() => handleJobClick(job.id)}
             >
-              {/* Geometry Icon in Top Right Corner */}
-              <div className="absolute -top-0 -right-4 w-30 h-24">
-                <div className="w-12 h-12 bg-white/10 rounded-lg"></div>
+              {/* Top Right Star */}
+              <div className="absolute top-0 right-0 w-24 h-24 sm:w-24 sm:h-24 md:w-30 md:h-30 lg:w-30 lg:h-30">
+                <img
+                  src="/Frame2085660656.png"
+                  alt="Decorative star"
+                  className="w-full h-full object-contain"
+                />
               </div>
 
               {/* Content */}
               <div className="relative z-10">
-                {/* Emoji and Title */}
+                {/* Icon and Title */}
                 <div className="mb-4">
-                  <span className="text-4xl mb-3 block">{job.emoji}</span>
+                  <div className="mb-3">
+                    <job.icon className="w-10 h-10" strokeWidth={1.5} />
+                  </div>
                   <h3 className="text-2xl font-bold leading-tight mb-1">
                     {job.title}
                   </h3>

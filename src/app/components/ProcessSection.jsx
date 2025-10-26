@@ -123,7 +123,7 @@ const ProcessSection = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F8F8F8] py-3 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1920px] mx-auto">
         {/* Header */}
         <motion.div
@@ -143,7 +143,7 @@ const ProcessSection = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative"
+          className="relative ml-4 mr-4"
         >
 
           <div className="space-y-12">

@@ -80,10 +80,10 @@ const page = () => {
     <div>
       <Header />
       <section
-        className="relative z-10 bg-gray-100 w-full px-6 md:px-12 py-20 min-h-screen"
+        className="relative z-10 bg-white w-full px-6 md:px-12 py-16 min-h-screen"
         ref={sectionRef}
       >
-        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-6 sm:py-16">
+        <div className="max-w-[1920px] ml-4 mr-4 mx-auto px-4 sm:px-6 py-6 sm:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             {/* LEFT CONTENT - Main Heading - FIXED: Removed viewport trigger and set immediate animation */}
@@ -94,7 +94,7 @@ const page = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <motion.h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl  font-bold leading-tight sm:leading-none text-black mb-6 sm:mb-8 md:mb-12"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-9xl  font-bold leading-tight sm:leading-none text-black mb-6 sm:mb-8 md:mb-12"
                 initial={{ y: 0, opacity: 1 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
@@ -185,7 +185,7 @@ const page = () => {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           >
             <motion.div
-              className="text-gray-300 md:text-gray-400 text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden"
+              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden"
               initial={{ scale: 1, opacity: 1 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1, delay: 0.3 }}
@@ -197,7 +197,7 @@ const page = () => {
         <DigitalMarketingHeader />
         {/* Moving Brand Logos Section */}
         <motion.div
-          className=" bg-gray-100 relative overflow-hidden"
+          className=" bg-white relative overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -234,7 +234,7 @@ const page = () => {
                   alt={brand.alt}
                   width={120}
                   height={60}
-                  className="h-40 md:h-46 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </motion.div>
             ))}

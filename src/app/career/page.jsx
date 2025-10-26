@@ -17,7 +17,7 @@ const page = () => {
     <div>
       <Header />
       <section
-        className="relative z-10 bg-gray-100 w-full px-6 md:px-12 py-20 min-h-screen"
+        className="relative z-10 bg-white w-full px-6 py-10"
         ref={sectionRef}
       >
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-6 sm:py-16">
@@ -58,30 +58,34 @@ const page = () => {
                 </motion.h1>
 
                 {/* CTA Button */}
-                <Link href="contactus">
-                <motion.button
-                  className="group bg-[#EC4D37] cursor-pointer text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium flex items-center gap-2 sm:gap-3 transition-all duration-300 w-full sm:w-auto justify-center sm:justify-start mt-6"
+                <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="inline-block"
                 >
-                  View Open Roles
-                  <motion.div
-                    className="w-6 h-6 sm:w-8 sm:h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black cursor-pointer" />
-                  </motion.div>
-                </motion.button>
-                </Link>
+                  <Link href="https://www.linkedin.com/company/boldly-creative-media/" className="inline-block">
+                    <motion.div
+                      className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Get Free Consultation
+                      <motion.span
+                        className="w-6 h-6 sm:w-8 sm:h-8 bg-white bg-opacity-20 rounded-full inline-flex items-center justify-center"
+                        animate={{ x: [0, 4, 0] }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
+                      </motion.span>
+                    </motion.div>
+                  </Link>
+                </motion.div>
               </motion.div>
 
               {/* RIGHT CONTENT - New Heading (Top Right on Desktop) */}
@@ -99,9 +103,9 @@ const page = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                 >
-                  Let's build a 
+                  Let's build a
                   <br />
-                  future where 
+                  future where
                   <br />
                   Creativity thrives
                 </motion.h2>
@@ -118,7 +122,7 @@ const page = () => {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
           >
             <motion.div
-              className="text-gray-300 md:text-gray-400 text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden"
+              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}

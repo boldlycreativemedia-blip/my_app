@@ -105,7 +105,14 @@ const TeamShowcase = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-20 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-[#F8F8F8] py-10 px-4 relative overflow-hidden">
+      {/* Our Team Badge */}
+          <div className="flex items-center justify-center gap-2 ">
+            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+              Our Team
+            </span>
+          </div>
       <motion.div
         className="max-w-[1920px] mx-auto"
         variants={containerVariants}
@@ -128,7 +135,7 @@ const TeamShowcase = () => {
         {/* Continuous Scrolling Team Cards */}
         <motion.div className="relative py-1" variants={itemVariants}>
           {/* Scrolling Container */}
-          <div className="overflow-hidden relative h-[600px]">
+          <div className="overflow-hidden relative h-[520px]">
             <motion.div
               ref={containerRef}
               className="flex gap-8 will-change-transform absolute"
@@ -145,7 +152,7 @@ const TeamShowcase = () => {
                   className="flex-shrink-0 w-80 group"
                 >
                   <motion.div
-                    className="relative overflow-hidden rounded-2xl shadow-2xl cursor-pointer bg-white h-full transition-transform duration-700 group-hover:scale-105"
+                    className="relative mt-10 overflow-hidden rounded-2xl shadow-2xl cursor-pointer bg-white h-full transition-transform duration-700 group-hover:scale-105"
                     whileHover={{
                       scale: 1.05,
                       y: -10,
@@ -158,41 +165,36 @@ const TeamShowcase = () => {
                       transition: { delay: (index % 6) * 0.1 },
                     }}
                   >
-                    <div className="w-full h-96 relative">
+                    <div className="w-full h-72 relative">
                       <img
                         src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover "
                         draggable={false}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute inset-0 bg-transperent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
 
                     {/* Member Info */}
-                    <div className="p-6">
+                    <div className="p-3">
                       <h3 className="text-xl font-bold text-gray-900 mb-1">
                         {member.name}
                       </h3>
                       <p className="text-orange-500 font-medium">
                         {member.designation}
                       </p>
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <div className="mt-2 flex flex-wrap gap-2">
                         {member?.skills
                           ?.slice(0, 2)
                           .map((skill, skillIndex) => (
                             <span
                               key={skillIndex}
-                              className="px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded-full"
+                              className=" py-1 text-xs bg-[#F8F8F8] text-gray-600 rounded-full"
                             >
                               {skill}
                             </span>
                           ))}
                       </div>
-                    </div>
-
-                    {/* Hover indicator */}
-                    <div className="absolute top-4 right-4 w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                     </div>
                   </motion.div>
                 </div>

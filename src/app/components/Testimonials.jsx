@@ -78,8 +78,8 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-[1920px] mx-auto">
+    <div className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1920px] ml-4 mr-4 mx-auto">
         {/* Header */}
         <div className="mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -133,7 +133,7 @@ const Testimonials = () => {
               .map((testimonial, index) => (
                 <div
                   key={`${testimonial.id}-${currentIndex}-${index}`}
-                  className={`bg-gray-300 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 min-w-[85vw] md:min-w-0 snap-center ${
+                  className={`bg-[#F8F8F8] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 min-w-[85vw] md:min-w-0 snap-center ${
                     index === 0 ? "md:col-span-2 lg:col-span-1" : ""
                   }`}
                 >

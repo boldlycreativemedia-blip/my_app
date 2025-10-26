@@ -80,16 +80,23 @@ const DigitalMarketingFAQs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-[1920px] mx-auto">
+    <div className="min-h-screen bg-[#F8F8F8] py-3 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1920px] border border-transparent rounded-2xl bg-white ml-4 mr-4 py-[80px] mx-auto">
+        {/* Our Team Badge */}
+          <div className="flex items-center justify-center gap-2 ">
+            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+              Our FAQs
+            </span>
+          </div>
         {/* Header Section */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-7"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900">
             Creative Media FAQs
           </h1>
           <p className="text-gray-600 max-w-2xl text-xl mx-auto mb-8 leading-relaxed">
@@ -102,7 +109,7 @@ const DigitalMarketingFAQs = () => {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/contactus" className="w-full sm:w-auto">
-              <button className="px-6 cursor-pointer py-3 bg-white border-2 border-gray-300 rounded-full text-gray-700 font-medium hover:border-gray-400 transition-colors duration-200 flex items-center gap-2">
+              <button className="px-6 cursor-pointer py-3 bg-white border-2 border-[#1F1B1C] rounded-full text-[#1F1B1C] font-medium hover:border-[#1F1B1C] transition-colors duration-200 flex items-center gap-2">
                 More Questions
                 <ChevronRightIcon className="w-4 h-4" />
               </button>
@@ -125,7 +132,7 @@ const DigitalMarketingFAQs = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="transition-all duration-300 hover:scale-110"
+              className="transition-all duration-300 hover:scale-105"
             >
               {/* Question Header */}
               <button

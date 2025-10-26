@@ -120,37 +120,45 @@ const DigitalMarketingHeader = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-white min-h-screen">
       {/* Header Section */}
-      <div className="max-w-[1920px] mx-auto bg-gray-100 py-16 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+      <div className="max-w-[1920px] ml-4 mr-4 mx-auto bg-white py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1920px]">
+          {/* Our Services Badge */}
+          <div className="flex items-center gap-2 mb-8">
+            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+              Our Services
+            </span>
+          </div>
+
+          <div className="flex flex-col  lg:flex-row items-start lg:items-baseline justify-between gap-8">
             {/* Main Heading */}
-            <div className="flex-1">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+            <div className="flex-1 max-w-[1920px]">
+              <h1 className=" max-w-[1920px] text-4xl sm:text-5xl lg:text-7xl font-bold text-[#1F1B1C] leading-tight">
                 Innovative Services Crafted
               </h1>
               <div className="flex items-center gap-4 mt-4">
-                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-[#1F1B1C] leading-tight">
                   To Elevate
                 </h2>
-            
-                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mt-2">
+
+                <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-[#1F1B1C] leading-tight mt-2">
                   Your Brand
                 </h2>
               </div>
             </div>
 
-            {/* CTA Button */}
-            <Link href='services'>
-            <div className="flex-shrink-0">
-              <button className="group flex items-center gap-3 cursor-pointer border-2 border-gray-100 hover:border-orange-500 px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-lg">
-                <span className="text-gray-800 font-semibold text-lg">
-                  Explore Our Services
-                </span>
-                <ArrowRight className="w-5 h-5 text-orange-500 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
-            </div>
+            {/* CTA Button - Minimalist Style */}
+            <Link href="services">
+              <div className="flex-shrink-0 ">
+                <button className="group flex cursor-pointer items-baseline gap-2 border-b-2 border-[#1F1B1C] hover:border-[#EC4D37] transition-all duration-300">
+                  <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+                    Learn More Our Service
+                  </span>
+                  <ArrowRight className="w-4 h-4 text-[#1F1B1C] group-hover:text-[#EC4D37] group-hover:translate-x-1 transition-all duration-300" />
+                </button>
+              </div>
             </Link>
           </div>
         </div>
@@ -158,7 +166,7 @@ const DigitalMarketingHeader = () => {
 
       {/* Services Section */}
       <div className="py-10 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="max-w-[1920px] mx-auto">
+        <div className="max-w-[1920px] ml-4 mr-4 mx-auto">
           {services.map((service, index) => (
             <div
               key={service.id}
@@ -194,7 +202,7 @@ const DigitalMarketingHeader = () => {
                         0{service.id}
                       </span>
                       {!expandedSections[service.id] && (
-                        <h3 className="text-2xl lg:text-3xl font-bold text-gray-900">
+                        <h3 className="text-2xl lg:text-3xl font-bold text-[#1F1B1C]">
                           {service.title}
                         </h3>
                       )}
@@ -244,15 +252,15 @@ const DigitalMarketingHeader = () => {
                             </div>
                             <div className="lg:w-3/5">
                               {/* Service title and description */}
-                              <h4 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-6">
+                              <h4 className="text-2xl lg:text-3xl font-bold text-[#1F1B1C] mb-6">
                                 {service.title}
                               </h4>
 
-                             {/* Service image */}
+                              {/* Service image */}
                               <div className="flex justify-start mb-6">
                                 <div className="w-full h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
-                                  <img 
-                                    src={service.image} 
+                                  <img
+                                    src={service.image}
                                     alt={service.title}
                                     className="w-full h-full object-cover"
                                   />

@@ -75,8 +75,8 @@ const LastAboutSection = () => {
 
   return (
     <div className="bg-white">
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="relative w-full max-w-7xl bg-[#EC4D37] rounded-3xl overflow-hidden">
+      <div className="min-h-screen bg-white flex items-center justify-center p-[48px]">
+        <div className="relative w-full max-w-[1920px] bg-[#EC4D37] rounded-3xl overflow-hidden">
           {/* Main Content Container */}
           <div className="relative z-10 px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">
             <div className="max-w-2xl">
@@ -119,17 +119,10 @@ const LastAboutSection = () => {
               className="w-full h-full object-contain"
             />
           </div>
-
-          {/* Background pattern overlay */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-white rounded-full"></div>
-            <div className="absolute top-3/4 left-1/3 w-16 h-16 border border-white rounded-full"></div>
-            <div className="absolute top-1/2 left-1/6 w-8 h-8 bg-white rounded-full"></div>
-          </div>
         </div>
       </div>
       <motion.div
-        className="py-12 bg-gray-50 relative overflow-hidden"
+        className=" ml-10 mr-10 bg-white relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -166,7 +159,7 @@ const LastAboutSection = () => {
                 alt={brand.alt}
                 width={120}
                 height={60}
-                className="h-40 md:h-46 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </motion.div>
           ))}

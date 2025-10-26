@@ -124,10 +124,10 @@ export default function AboutAnimatedContent() {
 
   return (
     <section
-      className="relative z-10 bg-gray-50 w-full px-6 md:px-12 py-8 min-h-screen"
+      className="relative z-10 bg-white ml-4 mr-4 w-full px-6 md:px-12 py-8 min-h-screen"
       ref={sectionRef}
     >
-      <div className="max-w-[1920px]">
+      <div className="max-w-[1920px]  ">
         {/* Main Content Container */}
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-6 sm:py-20">
           {/* Main Heading Section - Changed to animate immediately */}
@@ -194,7 +194,7 @@ export default function AboutAnimatedContent() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.div
-              className="text-gray-300 md:text-gray-400 text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-center md:text-right overflow-hidden"
+              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-center md:text-right overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1, delay: 0.2 }}
@@ -206,11 +206,11 @@ export default function AboutAnimatedContent() {
 
         {/* Moving Brand Logos Section */}
         <motion.div
-          className="py-12 bg-gray-50 relative overflow-hidden"
+          className=" bg-white ml-4 mr-4 relative overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9 }}
+          transition={{ duration: 1 }}
         >
           <div
             ref={scrollRef}
@@ -242,7 +242,7 @@ export default function AboutAnimatedContent() {
                   alt={brand.alt}
                   width={120}
                   height={60}
-                  className="h-40 md:h-46 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </motion.div>
             ))}
@@ -256,29 +256,74 @@ export default function AboutAnimatedContent() {
         </motion.div>
 
         {/* Two-column layout with scroll animations */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start mt-20">
-          {/* LEFT COLUMN */}
-          <motion.div
-            ref={leftColumnRef}
-            className="space-y-6"
-            variants={leftSlideVariants}
-            initial="hidden"
-            animate={isLeftInView ? "visible" : "hidden"}
-          >
-            <motion.h2
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
-              variants={childVariants}
-            >
-              The Creative Minds
-              <br />
-              Behind your brand's <br />
-              Most Powerful <br />
-              Digital presence
-            </motion.h2>
-
+        <div className="max-w-[1920px] mx-auto mt-10">
+          {/* Our Team Badge */}
+          <div className="flex items-center gap-2 ">
+            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+              Introduction
+            </span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            {/* LEFT COLUMN */}
             <motion.div
-              className="relative -mt-3 rounded-2xl overflow-hidden bg-[#06D6A0] cursor-pointer p-8"
+              ref={leftColumnRef}
+              className="space-y-6"
+              variants={leftSlideVariants}
+              initial="hidden"
+              animate={isLeftInView ? "visible" : "hidden"}
+            >
+              <motion.h2
+                className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+                variants={childVariants}
+              >
+                The Creative Minds
+                <br />
+                Behind your brand's <br />
+                Most Powerful <br />
+                Digital presence
+              </motion.h2>
+            </motion.div>
+
+            {/* RIGHT COLUMN */}
+            <motion.div
+              ref={rightColumnRef}
+              className="space-y-6"
+              variants={rightSlideVariants}
+              initial="hidden"
+              animate={isRightInView ? "visible" : "hidden"}
+            >
+              <motion.p
+                className="text-lg md:text-[18.85px] text-gray-700 leading-relaxed"
+                variants={childVariants}
+              >
+                At Boldly Creative Media, we believe every brand has a unique
+                story to tell. We're a team of creative and strategic minds
+                dedicated to bringing those stories to life through compelling
+                digital content.
+                <motion.span
+                  className="text-gray-500 block mt-3"
+                  variants={childVariants}
+                >
+                  From stunning video and photography to a seamless online
+                  presence with custom website design and engaging social media,
+                  we're here to help you connect with your audience. We're more
+                  than just a creative agency—we're your partners in building a
+                  brand that captivates and grows. Let's work together to make
+                  your brand impossible to ignore.
+                </motion.span>
+              </motion.p>
+            </motion.div>
+          </div>
+
+          {/* MISSION AND VISION BOXES - EQUAL HEIGHT GRID */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-6">
+            {/* MISSION BOX */}
+            <motion.div
+              className="relative rounded-2xl overflow-hidden bg-[#78E4C8] cursor-pointer p-8"
               variants={childVariants}
+              initial="hidden"
+              animate={isLeftInView ? "visible" : "hidden"}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
             >
               <div className="absolute -top-1 -right-2">
@@ -313,13 +358,11 @@ export default function AboutAnimatedContent() {
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
+                <img
+                  src="vision.png"
+                  alt="Decorative element"
+                  className="w-12 h-12 opacity-90"
+                />
               </motion.div>
 
               <div className="relative z-10">
@@ -356,40 +399,13 @@ export default function AboutAnimatedContent() {
               <div className="absolute -top-8 -right-8 w-24 h-24 bg-white opacity-20 rounded-full" />
               <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-white opacity-10 rounded-full" />
             </motion.div>
-          </motion.div>
 
-          {/* RIGHT COLUMN */}
-          <motion.div
-            ref={rightColumnRef}
-            className="space-y-6"
-            variants={rightSlideVariants}
-            initial="hidden"
-            animate={isRightInView ? "visible" : "hidden"}
-          >
-            <motion.p
-              className="text-lg md:text-[18.85px] text-gray-700 leading-relaxed"
-              variants={childVariants}
-            >
-              At Boldly Creative Media, we believe every brand has a unique
-              story to tell. We're a team of creative and strategic minds
-              dedicated to bringing those stories to life through compelling
-              digital content.
-              <motion.span
-                className="text-gray-500 block mt-3"
-                variants={childVariants}
-              >
-                From stunning video and photography to a seamless online
-                presence with custom website design and engaging social media,
-                we're here to help you connect with your audience. We're more
-                than just a creative agency—we're your partners in building a
-                brand that captivates and grows. Let's work together to make
-                your brand impossible to ignore.
-              </motion.span>
-            </motion.p>
-
+            {/* VISION BOX */}
             <motion.div
-              className="relative rounded-2xl overflow-hidden bg-[#06D6A0] cursor-pointer p-8"
+              className="relative rounded-2xl overflow-hidden bg-[#78E4C8] cursor-pointer p-8"
               variants={childVariants}
+              initial="hidden"
+              animate={isRightInView ? "visible" : "hidden"}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
             >
               <div className="absolute -top-1 -right-2">
@@ -424,13 +440,11 @@ export default function AboutAnimatedContent() {
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
+                <img
+                  src="vision.png"
+                  alt="Decorative element"
+                  className="w-12 h-12 opacity-90"
+                />
               </motion.div>
 
               <div className="relative z-10">
@@ -467,7 +481,7 @@ export default function AboutAnimatedContent() {
               <div className="absolute -top-8 -right-8 w-24 h-24 bg-white opacity-20 rounded-full" />
               <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-white opacity-10 rounded-full" />
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

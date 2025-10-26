@@ -270,7 +270,6 @@ export default function Page() {
           font-weight: normal;
           letter-spacing: 0.03em;
           text-transform: uppercase;
-          text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
         }
 
         /* Loading screen */

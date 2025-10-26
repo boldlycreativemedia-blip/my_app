@@ -124,7 +124,7 @@ const ServiceDigitalMarketing = () => {
                 Strategic Vision
               </h3>
               <p className="text-gray-700 text-base leading-relaxed">
-                CWe partner with you to clearly define your brand's unique story
+                We partner with you to clearly define your brand's unique story
                 and creative goals, ensuring every project delivers on a
                 powerful, cohesive vision.
               </p>
@@ -137,7 +137,7 @@ const ServiceDigitalMarketing = () => {
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`group p-6 rounded-xl bg-gray-50 border border-gray-200 hover:shadow-lg transition-all duration-500 cursor-pointer ${
+              className={`group p-6 rounded-xl bg-white border border-gray-200 hover:shadow-lg transition-all duration-500 cursor-pointer ${
                 isVisible
                   ? "opacity-100 translate-x-0 scale-100"
                   : `opacity-0 ${

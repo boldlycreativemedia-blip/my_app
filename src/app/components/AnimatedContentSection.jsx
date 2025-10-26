@@ -141,13 +141,13 @@ export default function AnimatedContentSection({
   };
   return (
     <section
-      className="relative z-10 bg-gray-50 w-full px-6 md:px-12 py-28 min-h-screen flex justify-center"
+      className="relative z-10 bg-white w-full px-6 md:px-12 ml-4 mr-4 py-28 min-h-screen flex justify-center"
       ref={sectionRef}
     >
       <div className="w-full max-w-[1920px]">
         {/* Service Categories at Bottom */}
         <motion.div
-          className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center xl:gap-32 -mt-18"
+          className="max-w-[1920px] mx-auto flex flex-col sm:flex-row justify-between items-center xl:gap-32 -mt-18"
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
@@ -283,7 +283,7 @@ export default function AnimatedContentSection({
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.div
-              className="text-gray-300 md:text-gray-400 text-3xl sm:text-4xl md:text-6xl lg:text-8xl gap-20 font-bold leading-none select-none text-center md:text-right overflow-hidden"
+              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl gap-20 font-bold leading-none select-none text-center md:text-right overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
@@ -296,7 +296,7 @@ export default function AnimatedContentSection({
 
         {/* Moving Brand Logos Section */}
         <motion.div
-          className="py-12 bg-gray-50 relative overflow-hidden"
+          className=" bg-white relative overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -333,7 +333,7 @@ export default function AnimatedContentSection({
                   alt={brand.alt}
                   width={120}
                   height={60}
-                  className="h-40 md:h-46 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </motion.div>
             ))}
@@ -348,37 +348,75 @@ export default function AnimatedContentSection({
         </motion.div>
 
         {/* Two-column layout with scroll animations */}
-        <div className="w-full max-w-[1900px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start mt-20">
-          {/* LEFT COLUMN - Slides in from left */}
-          <motion.div
-            ref={leftColumnRef}
-            className="space-y-8"
-            variants={leftSlideVariants}
-            initial="hidden"
-            animate={isLeftInView ? "visible" : "hidden"}
-          >
-            {/* Small tag */}
+        <div className="w-full max-w-[1900px] mx-auto">
+          {/* Our Team Badge */}
+          <div className="flex items-center gap-2 ">
+            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+              Why Choose Us?
+            </span>
+          </div>
+          {/* First Row - Text Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            {/* LEFT COLUMN - Slides in from left */}
             <motion.div
-              className="inline-flex items-center gap-2"
-              variants={childVariants}
-            ></motion.div>
-
-            <motion.h2
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900"
-              variants={childVariants}
+              ref={leftColumnRef}
+              className="space-y-8"
+              variants={leftSlideVariants}
+              initial="hidden"
+              animate={isLeftInView ? "visible" : "hidden"}
             >
-              Your Complete
-              <br />
-              Creative Journey
-              <br />
-              From Vision to
-              <br />
-              Results That <span className="font-black">Last</span>
-            </motion.h2>
+              {/* Small tag */}
+              <motion.div
+                className="inline-flex items-center gap-2"
+                variants={childVariants}
+              ></motion.div>
 
-            {/* Vertical Bar Chart Card */}
+              <motion.h2
+                className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900"
+                variants={childVariants}
+              >
+                Your Complete
+                <br />
+                Creative Journey
+                <br />
+                From Vision to
+                <br />
+                Results That <span className="font-black">Last</span>
+              </motion.h2>
+            </motion.div>
+
+            {/* RIGHT COLUMN - Text Content */}
             <motion.div
-              className="bg-gray-900 text-white rounded-3xl p-8 w-full h-80 relative overflow-hidden"
+              ref={rightColumnRef}
+              className="space-y-6"
+              variants={rightSlideVariants}
+              initial="hidden"
+              animate={isRightInView ? "visible" : "hidden"}
+            >
+              <motion.p
+                className="text-lg md:text-[23px] md:mt-12 text-gray-900 leading-relaxed font-medium"
+                variants={childVariants}
+              >
+                We simplify the entire creative journey—from strategy and
+                planning to production, editing, and beyond. We simplify the
+                entire creative journey—from strategy and planning to
+                production, editing, and beyond.{" "}
+                <span className="text-gray-500">
+                  Our team manages logistics, coordination, and on-set
+                  execution, while post-production brings your content to life
+                  with edits, refinements, and revisions that ensure quality and
+                  impact.
+                </span>
+              </motion.p>
+            </motion.div>
+          </div>
+
+          {/* Second Row - Chart and Video with Matching Heights */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch mt-8">
+            {/* LEFT - Vertical Bar Chart Card */}
+            <motion.div
+              className="bg-gray-900 text-white rounded-3xl p-8 w-full flex flex-col relative overflow-hidden"
               variants={childVariants}
               initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
@@ -399,8 +437,7 @@ export default function AnimatedContentSection({
               </motion.p>
 
               {/* Vertical Bar Chart */}
-              {/* Vertical Bar Chart */}
-              <div className="flex items-end justify-center gap-4 h-40">
+              <div className="flex items-end justify-center gap-4 flex-1">
                 {[
                   {
                     label: "Engagement",
@@ -473,38 +510,10 @@ export default function AnimatedContentSection({
                 ))}
               </div>
             </motion.div>
-          </motion.div>
 
-          {/* RIGHT COLUMN - Slides in from right */}
-          <motion.div
-            ref={rightColumnRef}
-            className="space-y-8"
-            variants={rightSlideVariants}
-            initial="hidden"
-            animate={isRightInView ? "visible" : "hidden"}
-          >
-            {/* Text Content */}
-            <motion.div className="space-y-6" variants={childVariants}>
-              <motion.p
-                className="text-lg md:text-[23px] md:mt-12  text-gray-900 leading-relaxed font-medium "
-                variants={childVariants}
-              >
-                We simplify the entire creative journey—from strategy and
-                planning to production, editing, and beyond. We simplify the
-                entire creative journey—from strategy and planning to
-                production, editing, and beyond.{" "}
-                <span className="text-gray-500">
-                  Our team manages logistics, coordination, and on-set
-                  execution, while post-production brings your content to life
-                  with edits, refinements, and revisions that ensure quality and
-                  impact.
-                </span>
-              </motion.p>
-            </motion.div>
-
-            {/* Team Image with Play Button - Same height as chart */}
+            {/* RIGHT - Team Image with Play Button */}
             <motion.div
-              className="relative rounded-3xl 2xl:mt-15  overflow-hidden cursor-pointer h-80"
+              className="relative rounded-3xl overflow-hidden cursor-pointer flex items-center justify-center"
               variants={childVariants}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
               onClick={handlePlayClick}
@@ -600,7 +609,7 @@ export default function AnimatedContentSection({
                 </video>
               )}
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -73,9 +73,9 @@ const LastHomeSection = () => {
     }
   };
   return (
-    <div className="bg-gray-100">
+    <div className="bg-white">
       <motion.div
-        className="py-12 bg-gray-50 relative overflow-hidden"
+        className="ml-10 mr-10 bg-white relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -84,7 +84,7 @@ const LastHomeSection = () => {
         {/* Scrolling Container */}
         <div
           ref={scrollRef}
-          className="flex items-center gap-12 md:gap-16 overflow-x-auto cursor-grab active:cursor-grabbing select-none"
+          className="flex items-center overflow-x-auto cursor-grab active:cursor-grabbing select-none"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
@@ -112,7 +112,7 @@ const LastHomeSection = () => {
                 alt={brand.alt}
                 width={120}
                 height={60}
-                className="h-40 md:h-46 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </motion.div>
           ))}
@@ -126,10 +126,10 @@ const LastHomeSection = () => {
         `}</style>
       </motion.div>
 
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="relative w-full max-w-7xl bg-[#EC4D37] rounded-3xl overflow-hidden">
+      <div className="min-h-screen bg-white flex items-center justify-center p-[48px]">
+        <div className="relative w-full max-w-[1920px]   bg-[#EC4D37] rounded-3xl overflow-hidden">
           {/* Main Content Container */}
-          <div className="relative z-10 px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">
+          <div className="relative  z-10 px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">
             <div className="max-w-2xl">
               {/* Main Heading */}
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
@@ -145,9 +145,9 @@ const LastHomeSection = () => {
 
               {/* CTA Button */}
               <Link href="/contactus">
-              <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                Get Free Consultation
-              </button>
+                <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  Get Free Consultation
+                </button>
               </Link>
             </div>
           </div>
@@ -169,13 +169,6 @@ const LastHomeSection = () => {
               alt="Decorative shape"
               className="w-full h-full object-contain"
             />
-          </div>
-
-          {/* Background pattern overlay */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-white rounded-full"></div>
-            <div className="absolute top-3/4 left-1/3 w-16 h-16 border border-white rounded-full"></div>
-            <div className="absolute top-1/2 left-1/6 w-8 h-8 bg-white rounded-full"></div>
           </div>
         </div>
       </div>

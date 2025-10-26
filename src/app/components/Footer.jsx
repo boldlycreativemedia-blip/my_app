@@ -1,10 +1,20 @@
-import React from "react";
-import {
-  ArrowRight,
-} from "lucide-react";
+import React, { useState } from "react";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Footer = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    if (email && email.includes("@")) {
+      // Navigate to contact page with email as query parameter
+      router.push(`/contactus?email=${encodeURIComponent(email)}`);
+    }
+  };
+
   return (
     <footer className="bg-[#1F1B1C] text-white">
       {/* Main Footer Content */}
@@ -25,20 +35,24 @@ const Footer = () => {
                 we will answer all your questions
               </p>
 
-              {/* Email Input */}
-              <div className="relative max-w-md">
+              {/* Email Input Form */}
+              <form onSubmit={handleEmailSubmit} className="relative max-w-md">
                 <input
                   type="email"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="bg-transparent border-b border-gray-500 w-full pb-3 pr-12 focus:outline-none focus:border-white text-sm sm:text-base placeholder-white transition-colors"
                 />
                 <button
+                  type="submit"
                   className="absolute right-0 bottom-2 text-white hover:text-gray-300 transition-colors"
                   aria-label="Submit email"
                 >
                   <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6" />
                 </button>
-              </div>
+              </form>
             </div>
 
             {/* Right Section - Navigation & Contact */}
@@ -158,11 +172,7 @@ const Footer = () => {
                   aria-label="Twitter"
                   className="p-2 rounded-full hover:bg-gray-700 hover:border-gray-500 transition-all duration-300"
                 >
-                  <img
-                    src="/twitter.png"
-                    alt="Twitter"
-                    className="h-10 w-10"
-                  />
+                  <img src="/twitter.png" alt="Twitter" className="h-10 w-10" />
                 </a>
                 <a
                   href="https://www.facebook.com"

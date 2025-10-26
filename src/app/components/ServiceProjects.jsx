@@ -22,15 +22,15 @@ const ProjectCard = ({
     setIsMuted(!isMuted);
   };
 
-  // Optimize Cloudinary URL with transformations
+  // Optimize Cloudinary URL with transformations - HIGH QUALITY
   const getOptimizedVideoUrl = (url) => {
     if (!url) return null;
 
-    // Add Cloudinary transformations for optimization
-    // q_auto = automatic quality, f_auto = automatic format, w_400 = width 400px
+    // Use high quality settings for premium footage
+    // q_auto:best = best quality, f_auto = automatic format, w_600 = width 600px for portrait
     const urlParts = url.split("/upload/");
     if (urlParts.length === 2) {
-      return `${urlParts[0]}/upload/q_auto:low,f_auto,w_400,c_limit/${urlParts[1]}`;
+      return `${urlParts[0]}/upload/q_auto:best,f_auto,w_600,ar_9:16,c_fill/${urlParts[1]}`;
     }
     return url;
   };
@@ -45,7 +45,7 @@ const ProjectCard = ({
   }, [isInView, isLoaded]);
 
   return (
-    <div className="flex-shrink-0 w-[350px] md:w-[400px] px-4">
+    <div className="flex-shrink-0 w-[320px] md:w-[360px] px-4">
       <motion.div
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
@@ -57,8 +57,8 @@ const ProjectCard = ({
         style={{ zIndex: isHovered ? 50 : 1 }}
         className="group relative cursor-pointer"
       >
-        {/* Video container */}
-        <div className="relative h-80 mt-7 mb-6 overflow-hidden rounded-lg shadow-lg bg-gray-200">
+        {/* Video container - Portrait/Reel format (9:16 ratio) */}
+        <div className="relative h-[640px] mt-7 mb-6 overflow-hidden rounded-lg shadow-lg bg-gray-200">
           {optimizedVideoUrl ? (
             <>
               {/* Loading Placeholder */}
@@ -160,8 +160,10 @@ const ServiceProjects = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [visibleRange, setVisibleRange] = useState({ start: 0, end: 6 });
+  const [isDragging, setIsDragging] = useState(false);
   const x = useMotionValue(0);
   const containerRef = useRef(null);
+  const dragStartX = useRef(0);
 
   const projects = [
     {
@@ -203,7 +205,7 @@ const ServiceProjects = () => {
 
   // Duplicate projects for seamless infinite scroll
   const duplicatedProjects = [...projects, ...projects, ...projects];
-  const cardWidth = 382; // 350px + 32px padding
+  const cardWidth = 344; // 320px + 24px padding (adjusted for portrait cards)
   const loopWidth = cardWidth * projects.length;
 
   // Calculate which videos are in view
@@ -232,8 +234,8 @@ const ServiceProjects = () => {
 
   // Smooth infinite scroll animation
   useAnimationFrame((t, delta) => {
-    if (!isPaused) {
-      const speed = 0.5; // pixels per frame
+    if (!isPaused && !isDragging) {
+      const speed = 1; // pixels per frame
       let currentX = x.get();
       currentX -= speed;
 
@@ -246,8 +248,38 @@ const ServiceProjects = () => {
     }
   });
 
+  // Handle drag events
+  const handleDragStart = () => {
+    setIsDragging(true);
+    setIsPaused(true);
+    dragStartX.current = x.get();
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    // Resume auto-scroll after a short delay
+    setTimeout(() => {
+      setIsPaused(false);
+    }, 1000);
+  };
+
+  const handleDrag = (event, info) => {
+    let newX = dragStartX.current + info.offset.x;
+
+    // Handle infinite loop boundaries during drag
+    if (newX > 0) {
+      newX -= loopWidth;
+      dragStartX.current -= loopWidth;
+    } else if (newX <= -loopWidth * 2) {
+      newX += loopWidth;
+      dragStartX.current += loopWidth;
+    }
+
+    x.set(newX);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F8F8F8] py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1920px] mx-auto">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-16">
@@ -305,7 +337,17 @@ const ServiceProjects = () => {
 
         {/* Carousel Section */}
         <div ref={containerRef} className="relative overflow-hidden py-8">
-          <motion.div className="flex" style={{ x }}>
+          <motion.div
+            className="flex cursor-grab active:cursor-grabbing"
+            style={{ x }}
+            drag="x"
+            dragConstraints={{ left: -loopWidth * 2, right: 0 }}
+            dragElastic={0.1}
+            dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDrag={handleDrag}
+          >
             {duplicatedProjects.map((project, index) => (
               <ProjectCard
                 key={index}

@@ -224,8 +224,15 @@ const ServiceNumber = () => {
 
   return (
     <>
-      <div ref={sectionRef} className="w-full bg-gray-100 py-16 px-4">
-        <div className="max-w-[1920px] mx-auto">
+      <div ref={sectionRef} className="w-full bg-[#F8F8F8] py-5 px-4">
+        <div className="max-w-[1920px] ml-8 mr-4 mx-auto">
+          {/* Our Team Badge */}
+          <div className="flex items-center justify-center gap-2 ">
+            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+              Impact
+            </span>
+          </div>
           {/* Header Section */}
           <div className="text-center mb-16">
             {/* Main Heading */}
@@ -308,7 +315,7 @@ const ServiceNumber = () => {
                         animationFillMode: "both",
                       }}
                     >
-                      <div className="w-px bg-gray-300 h-12 md:h-16"></div>
+                      <div className="w-px bg-white h-12 md:h-16"></div>
                     </div>
                   )}
                 </React.Fragment>

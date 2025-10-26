@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Target, Store, Zap, BarChart3, Flag } from "lucide-react";
 
 const CareerOptions = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -29,7 +28,7 @@ const CareerOptions = () => {
       title: "Career Growth:",
       description:
         "Pursue your passion through continuous learning, mentorship, and opportunities for professional advancement.",
-      icon: Target,
+      image: "/career.png",
       animationDelay: 0.8,
     },
     {
@@ -37,7 +36,7 @@ const CareerOptions = () => {
       title: "Great Culture:",
       description:
         "Join a vibrant, supportive team that celebrates original ideas, creative expression, and open collaboration.",
-      icon: Store,
+      image: "/culture.png",
       animationDelay: 0.8,
     },
     {
@@ -45,7 +44,7 @@ const CareerOptions = () => {
       title: "Flexible Hours:",
       description:
         "Enjoy the freedom to balance work and life with our flexible scheduling and remote work options.",
-      icon: Zap,
+      image: "/hours.png",
       animationDelay: 1.5,
     },
     {
@@ -53,19 +52,23 @@ const CareerOptions = () => {
       title: "Competitive Salary:",
       description:
         "We reward exceptional talent with a comprehensive benefits package and a competitive salary that reflects your passion and skills.",
-      icon: BarChart3,
+      image: "/payments.png",
       animationDelay: 1.5,
     },
   ];
 
   return (
-    <div
-      ref={sectionRef}
-      className="w-full bg-white py-16 px-4 overflow-hidden"
-    >
-      <div className="max-w-[1920px] mx-auto">
+    <div ref={sectionRef} className="w-full bg-white py-3 px-4 overflow-hidden">
+      <div className="max-w-[1920px] ml-10 mr-4 mx-auto">
         {/* Header Section */}
-        <div className="mb-16">
+        <div className="">
+          {/* Our Team Badge */}
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+              Benefits
+            </span>
+          </div>
           {/* Main Content - Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             {/* Left Column - Main Heading */}
@@ -103,7 +106,7 @@ const CareerOptions = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
           {services.map((service, index) => (
             <div
               key={service.id}
@@ -120,7 +123,11 @@ const CareerOptions = () => {
             >
               <div className="flex items-start space-x-4">
                 <div className="transition-all duration-300 group-hover:rotate-12">
-                  <service.icon className="w-8 h-8 text-gray-700" />
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-8 h-8 object-contain"
+                  />
                 </div>
                 <div className="flex-1">
                   <h4 className="text-xl font-semibold text-gray-900 mb-3">

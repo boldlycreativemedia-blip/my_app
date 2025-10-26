@@ -5,6 +5,7 @@ import Image from "next/image";
 import emailjs from "@emailjs/browser";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useSearchParams } from "next/navigation";
 import {
   ArrowRight,
   Upload,
@@ -23,13 +24,17 @@ const page = () => {
   const formRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const scrollPositionRef = useRef(0); // Use ref instead of state
+  const scrollPositionRef = useRef(0);
   const animationRef = useRef(null);
 
-  // Form state
+  // Get email from URL query parameter
+  const searchParams = useSearchParams();
+  const emailFromUrl = searchParams.get("email");
+
+  // Form state - Initialize with email from URL if present
   const [formData, setFormData] = useState({
     fullName: "",
-    email: "",
+    email: emailFromUrl || "",
     contactNumber: "",
     organization: "",
     region: "",
@@ -44,6 +49,24 @@ const page = () => {
   const [attachments, setAttachments] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
+  // Update email when URL parameter changes
+  useEffect(() => {
+    if (emailFromUrl) {
+      setFormData((prev) => ({
+        ...prev,
+        email: emailFromUrl,
+      }));
+
+      // Smooth scroll to form after a brief delay
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 500);
+    }
+  }, [emailFromUrl]);
 
   const brands = [
     { image: "/Brand-1.png", alt: "Brand 1" },
@@ -111,7 +134,6 @@ const page = () => {
 
         scrollPositionRef.current += scrollSpeed;
 
-        // Reset to beginning for seamless loop
         if (scrollPositionRef.current >= maxScroll) {
           scrollPositionRef.current = 0;
         }
@@ -128,19 +150,16 @@ const page = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isHovered, isDragging]); // Keep dependencies but use ref for position
+  }, [isHovered, isDragging]);
 
-  // Sync ref with actual scroll position when user manually scrolls
   const handleScroll = () => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    // Update the ref to match current scroll position
     scrollPositionRef.current = scrollContainer.scrollLeft;
 
     const maxScroll = scrollContainer.scrollWidth / 2;
 
-    // Reset scroll position for seamless loop when reaching the end
     if (scrollContainer.scrollLeft >= maxScroll - 10) {
       scrollContainer.scrollLeft = 0;
       scrollPositionRef.current = 0;
@@ -238,7 +257,6 @@ ${attachmentsList}
         to_name: "BoldlyCreative Team",
         message: emailContent,
         reply_to: formData.email,
-        // Add individual fields for better template customization
         full_name: formData.fullName,
         email: formData.email,
         contact_number: formData.contactNumber,
@@ -251,7 +269,6 @@ ${attachmentsList}
         attachments_count: attachments.length,
       };
 
-      // Send email using EmailJS
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -297,22 +314,16 @@ ${attachmentsList}
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
+        staggerChildren: 0.2,
       },
     },
   };
 
-  const itemVariants = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-      scale: 0.9,
-    },
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
       y: 0,
-      scale: 1,
       transition: {
         duration: 0.6,
         ease: "easeOut",
@@ -320,39 +331,37 @@ ${attachmentsList}
     },
   };
 
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: 50,
-      rotateX: -15,
-    },
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
     visible: {
       opacity: 1,
-      y: 0,
-      rotateX: 0,
+      x: 0,
       transition: {
-        duration: 0.8,
-        ease: "easeOut",
+        duration: 0.5,
       },
     },
   };
 
   const phoneHoverVariants = {
     hover: {
-      scale: 1.05,
-      rotate: [0, -5, 5, 0],
+      scale: 1.02,
+      backgroundColor: "#f0f9ff",
+      borderColor: "#0078FA",
       transition: {
         duration: 0.3,
+        ease: "easeOut",
       },
     },
   };
 
   const emailHoverVariants = {
     hover: {
-      scale: 1.05,
-      y: -5,
+      scale: 1.02,
+      backgroundColor: "#f0f9ff",
+      borderColor: "#0078FA",
       transition: {
         duration: 0.3,
+        ease: "easeOut",
       },
     },
   };
@@ -361,22 +370,21 @@ ${attachmentsList}
     <div>
       <Header />
       <section
-        className="relative z-10 bg-gray-100 w-full px-6 md:px-12 py-12 md:py-20 min-h-screen"
+        className="relative z-10 bg-white max-w-[1920px] px-6 md:px-12 py-12 pb-6"
         ref={sectionRef}
       >
-        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-4 sm:py-8 md:py-16">
+        <div className="max-w-[1920px] mx-auto px-4 py-12 sm:px-6">
           {/* Main Heading Section */}
           <div className="relative">
-            +
             <motion.div
-              className="max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-6xl"
+              className="xl:max-w-[1920px] sm:max-w-2xl md:max-w-3xl lg:max-w-6xl"
               initial={{ x: -100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <motion.h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight sm:leading-none text-black mb-4 sm:mb-6 md:mb-12"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight sm:leading-none text-black mb-2"
                 initial={{ y: 20, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
@@ -409,7 +417,7 @@ ${attachmentsList}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.div
-              className="text-gray-300 md:text-gray-400 text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden"
+              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
@@ -423,45 +431,43 @@ ${attachmentsList}
 
       {/* Contact Form Section */}
       <motion.section
-        className="bg-white py-16 px-6 md:px-12"
+        className="bg-[#F8F8F8] py-12 mt-2 px-6"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ y: 30, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
-              Ready to Get Started?
-            </h2>
-            <p className="text-lg text-gray-600 mb-2">
-              Write us an email via this form or just send us an{" "}
-              <span className="text-[#EC4D37] font-semibold">E-mail</span> at:{" "}
-              <a
-                href="mailto:info@boldlycreative.com"
-                className="text-[#EC4D37] underline"
-              >
-                info@boldlycreative.com
-              </a>
-            </p>
-            <p className="text-sm text-gray-500">we will follow up in 24 hrs</p>
-          </motion.div>
-
+        <div className="max-w-6xl mx-auto">
           <motion.form
             ref={formRef}
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="space-y-6 bg-white rounded-lg p-8 shadow-sm"
             initial={{ y: 50, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
+            <motion.div
+              className="text-center mb-8"
+              initial={{ y: 30, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-lg text-[#212529] mb-2 font-semibold">
+                Write us an email via this form or just send us an{" "}
+                <span className="text-[#EC4D37] font-semibold">E-mail</span> at:{" "}
+                <a
+                  href="mailto:boldlycreativemedia@gmail.com"
+                  className="text-[#EC4D37] underline"
+                >
+                  boldlycreativemedia@gmail.com
+                </a>
+              </p>
+              <p className="text-lg text-[#212529] font-semibold">
+                we will follow up in 24 hrs
+              </p>
+            </motion.div>
             {/* Basic Information Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <motion.div
@@ -541,12 +547,19 @@ ${attachmentsList}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.5 }}
+                className="relative"
               >
                 <select
                   name="region"
                   value={formData.region}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-4 border-2 rounded-lg border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-4 border border-gray-300 rounded focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-white text-gray-600 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 1rem center",
+                    backgroundSize: "12px",
+                  }}
                 >
                   <option value="">Region</option>
                   {regions.map((region) => (
@@ -562,12 +575,19 @@ ${attachmentsList}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.6 }}
+                className="relative"
               >
                 <select
                   name="industryType"
                   value={formData.industryType}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-4 border-2 rounded-lg border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-4 border border-gray-300 rounded focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-white text-gray-600 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 1rem center",
+                    backgroundSize: "12px",
+                  }}
                 >
                   <option value="">Industry type</option>
                   {industryTypes.map((industry) => (
@@ -586,12 +606,19 @@ ${attachmentsList}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.7 }}
+                className="relative"
               >
                 <select
                   name="budgetRange"
                   value={formData.budgetRange}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-4 border-2 rounded-lg border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-4 border border-gray-300 rounded focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-white text-gray-600 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 1rem center",
+                    backgroundSize: "12px",
+                  }}
                 >
                   <option value="">Choose your budget range</option>
                   {budgetRanges.map((budget) => (
@@ -607,12 +634,19 @@ ${attachmentsList}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.8 }}
+                className="relative"
               >
                 <select
                   name="helpWith"
                   value={formData.helpWith}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-4 border-2 rounded-lg border-gray-200 focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-transparent text-gray-800 appearance-none cursor-pointer"
+                  className="w-full px-4 py-4 border border-gray-300 rounded focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-white text-gray-600 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 1rem center",
+                    backgroundSize: "12px",
+                  }}
                 >
                   <option value="">You need help with?</option>
                   {helpOptions.map((help) => (
@@ -649,7 +683,7 @@ ${attachmentsList}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 1.0 }}
             >
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#EC4D37] transition-colors duration-300">
+              <div className="text-center">
                 <input
                   type="file"
                   multiple
@@ -660,10 +694,10 @@ ${attachmentsList}
                 />
                 <label
                   htmlFor="file-upload"
-                  className="cursor-pointer flex flex-col items-center gap-2"
+                  className="cursor-pointer flex items-center justify-start gap-2"
                 >
-                  <Upload className="w-8 h-8 text-gray-400" />
-                  <span className="text-gray-600">
+                  <img src="/attach_file.png" alt="Safe" className="w-5 h-5" />
+                  <span className="text-gray-700 text-sm">
                     Add Attachment from your{" "}
                     <span className="text-[#EC4D37] underline">Computer</span>{" "}
                     or{" "}
@@ -687,7 +721,11 @@ ${attachmentsList}
                       className="flex items-center justify-between bg-gray-50 p-3 rounded-lg"
                     >
                       <div className="flex items-center gap-2">
-                        <Upload className="w-4 h-4 text-gray-500" />
+                        <img
+                          src="/attach_file.png"
+                          alt="Safe"
+                          className="w-5 h-5"
+                        />
                         <span className="text-sm text-gray-700">
                           {attachment.name}
                         </span>
@@ -802,18 +840,22 @@ ${attachmentsList}
 
             {/* Security Notice */}
             <motion.div
-              className="flex items-center justify-center gap-8 pt-6 text-sm text-gray-500"
+              className="flex flex-col md:flex-row items-center justify-center gap-6 pt-6 text-sm text-gray-700"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 1.3 }}
             >
               <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
+                <img src="/safe.png" alt="Safe" className="w-5 h-5" />
                 <span>Your data is 100% safe</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
+                <img
+                  src="/person_shield.png"
+                  alt="Privacy Shield"
+                  className="w-5 h-5"
+                />
                 <span>Your data privacy is protected</span>
               </div>
             </motion.div>
@@ -821,229 +863,207 @@ ${attachmentsList}
         </div>
       </motion.section>
 
-      <section className="py-16 px-6 md:px-12 bg-gradient-to-tr from-gray-50 to-gray-100 min-h-screen flex items-center justify-center">
-        <motion.div
-          className="max-w-[1920px] mx-auto"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {/* Address Section */}
+      <section className="py-8 max-w-[1920px] mx-auto w-full px-6 bg-white flex items-center justify-center overflow-hidden">
+        <div className="max-w-[1920px] mx-auto">
           <motion.div
-            variants={cardVariants}
-            className="bg-[#78E4C8] rounded-2xl p-3 shadow-2xl shadow-green-500/20 mb-12"
+            className=" relative z-10"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
           >
-            <motion.div
-              variants={itemVariants}
-              className="flex items-start gap-6"
-            >
-              <motion.div
-                className="p-4"
-                whileHover={{
-                  scale: 1.1,
-                  rotate: 360,
-                  transition: { duration: 0.6 },
-                }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <img
-                  src="/address.png"
-                  alt="Address"
-                  className="w-12 h-12 object-contain"
-                />
-              </motion.div>
-
-              <div className="flex-1">
-                <motion.h2
-                  className="text-2xl md:text-3xl font-bold text-gray-800 mb-4"
-                  variants={itemVariants}
-                >
-                  Address
-                </motion.h2>
-                <motion.p
-                  className="text-gray-600 text-lg leading-relaxed"
-                  variants={itemVariants}
-                >
-                  Plot 14, Akash Nagar, Ghaziabad, Uttar Pradesh 201013{" "}
-                </motion.p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Contact Information Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Additional Contacts */}
+            {/* Address Section */}
             <motion.div
               variants={cardVariants}
-              className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 md:p-10 shadow-2xl shadow-green-500/20"
+              className="bg-[#78E4C8] max-w-[1920px] rounded-xl p-3 shadow-2xl shadow-green-500/20 mb-12"
             >
               <motion.div
                 variants={itemVariants}
-                className="flex items-center gap-4 mb-8"
+                className="flex items-start gap-6"
               >
                 <motion.div
-                  className="bg-white p-3 rounded-2xl shadow-lg"
+                  className="p-4"
                   whileHover={{
                     scale: 1.1,
-                    rotate: [0, -10, 10, 0],
-                    transition: { duration: 0.4 },
+                    rotate: 360,
+                    transition: { duration: 0.6 },
                   }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   <img
-                    src="/call.png"
-                    alt="call"
-                    className="w-8 h-8 object-contain"
+                    src="/address.png"
+                    alt="Address"
+                    className="w-12 h-12 object-contain"
                   />
                 </motion.div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-800">
-                  Additional Contacts
-                </h3>
+
+                <div className="flex-1">
+                  <motion.h2
+                    className="text-2xl md:text-3xl font-bold text-gray-800 mb-4"
+                    variants={itemVariants}
+                  >
+                    Address
+                  </motion.h2>
+                  <motion.p
+                    className="text-gray-600 text-lg leading-relaxed"
+                    variants={itemVariants}
+                  >
+                    Plot 14, Akash Nagar, Ghaziabad, Uttar Pradesh 201013
+                  </motion.p>
+                </div>
               </motion.div>
-
-              <div className="space-y-6">
-                {/* Phone Numbers */}
-                <motion.div
-                  variants={itemVariants}
-                  className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-                >
-                  <motion.a
-                    href="tel:+917011575305"
-                    variants={phoneHoverVariants}
-                    whileHover="hover"
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-3 p-4 rounded-xl transition-all duration-300 group cursor-pointer border border-gray-200"
-                  >
-                    <img
-                      src="/call.png"
-                      alt="call"
-                      className="w-8 h-8 object-contain"
-                    />
-                    <span className="text-[#0078FA] font-medium">
-                      + (91) 7011575305
-                    </span>
-                  </motion.a>
-
-                  <motion.a
-                    href="tel:+9196506 76241"
-                    variants={phoneHoverVariants}
-                    whileHover="hover"
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-3 p-4 rounded-xl transition-all duration-300 group cursor-pointer border border-gray-200"
-                  >
-                    <img
-                      src="/call.png"
-                      alt="call"
-                      className="w-8 h-8 object-contain"
-                    />
-                    <span className="text-[#0078FA] font-medium">
-                      + (91) 96506 76241
-                    </span>
-                  </motion.a>
-                </motion.div>
-              </div>
             </motion.div>
 
-            {/* Additional Email IDs */}
-            <motion.div
-              variants={cardVariants}
-              className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 md:p-10 shadow-2xl shadow-green-500/20"
-            >
+            {/* Contact Information Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Additional Contacts */}
               <motion.div
-                variants={itemVariants}
-                className="flex items-center gap-4 mb-8"
+                variants={cardVariants}
+                className="bg-white border border-gray-300 backdrop-blur-sm rounded-xl p-8 md:p-10 "
               >
                 <motion.div
-                  className="bg-white p-3 rounded-2xl shadow-lg"
-                  whileHover={{
-                    scale: 1.1,
-                    rotate: [0, 15, -15, 0],
-                    transition: { duration: 0.4 },
-                  }}
+                  variants={itemVariants}
+                  className="flex items-center gap-4 mb-8"
                 >
-                  <Mail className="w-6 h-6 text-black" />
+                  <motion.div
+                    whileHover={{
+                      scale: 1.1,
+                      rotate: [0, -10, 10, 0],
+                      transition: { duration: 0.4 },
+                    }}
+                  >
+                    <img
+                      src="/call.png"
+                      alt="call"
+                      className="w-8 h-8 object-contain"
+                    />
+                  </motion.div>
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-800">
+                    Additional Contacts
+                  </h3>
                 </motion.div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-800">
-                  Additional Email IDs
-                </h3>
+
+                <div className="space-y-6">
+                  {/* Phone Numbers */}
+                  <motion.div
+                    variants={itemVariants}
+                    className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                  >
+                    <motion.a
+                      href="tel:+917011575305"
+                      variants={phoneHoverVariants}
+                      whileHover="hover"
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center gap-3 p-4 rounded-lg transition-all duration-300 group cursor-pointer border border-gray-200 bg-white"
+                    >
+                      <img
+                        src="/call.png"
+                        alt="call"
+                        className="w-8 h-8 object-contain"
+                      />
+                      <span className="text-[#0078FA] font-medium">
+                        + (91) 7011575305
+                      </span>
+                    </motion.a>
+
+                    <motion.a
+                      href="tel:+919650676241"
+                      variants={phoneHoverVariants}
+                      whileHover="hover"
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center gap-3 p-4 rounded-lg transition-all duration-300 group cursor-pointer border border-gray-200 bg-white"
+                    >
+                      <img
+                        src="/call.png"
+                        alt="call"
+                        className="w-8 h-8 object-contain"
+                      />
+                      <span className="text-[#0078FA] font-medium">
+                        + (91) 96506 76241
+                      </span>
+                    </motion.a>
+                  </motion.div>
+                </div>
               </motion.div>
 
-              <div className="space-y-4">
-                <motion.a
-                  href="mailto:boldlycreativemedia@gmail.com  "
-                  variants={emailHoverVariants}
-                  whileHover="hover"
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-4 p-5 rounded-xl transition-all duration-300 group cursor-pointer border border-gray-200"
+              {/* Additional Email IDs */}
+              <motion.div
+                variants={cardVariants}
+                className="bg-white border border-gray-300 rounded-xl p-8 md:p-10"
+              >
+                <motion.div
+                  variants={itemVariants}
+                  className="flex items-center gap-4 mb-8"
                 >
-                  <Mail className="w-8 h-8" />
-                  <div>
-                    <span className="text-[#0078FA] font-medium text-lg">
-                      boldlycreativemedia@gmail.com
-                    </span>
-                    <p className="text-[#0078FA] text-sm mt-1">
-                      General Inquiries
-                    </p>
-                  </div>
-                </motion.a>
-              </div>
-            </motion.div>
-          </div>
+                  <motion.div
+                    whileHover={{
+                      scale: 1.1,
+                      rotate: [0, 15, -15, 0],
+                      transition: { duration: 0.4 },
+                    }}
+                  >
+                    <Mail className="w-6 h-6 text-black" />
+                  </motion.div>
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-800">
+                    Additional Email IDs
+                  </h3>
+                </motion.div>
 
-          {/* Decorative Elements */}
-          <motion.div
-            className="absolute top-10 right-10 w-20 h-20 bg-white/20 rounded-full blur-xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
+                <div className="space-y-4">
+                  <motion.a
+                    href="mailto:boldlycreativemedia@gmail.com"
+                    variants={emailHoverVariants}
+                    whileHover="hover"
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center gap-4 p-5 rounded-lg transition-all duration-300 group cursor-pointer border border-gray-200 bg-white"
+                  >
+                    <Mail className="w-8 h-8 text-[#0078FA]" />
+                    <div>
+                      <span className="text-[#0078FA] font-medium text-lg">
+                        boldlycreativemedia@gmail.com
+                      </span>
+                      <p className="text-gray-500 text-sm mt-1">
+                        General Inquiries
+                      </p>
+                    </div>
+                  </motion.a>
+                </div>
+              </motion.div>
+            </div>
 
-          <motion.div
-            className="absolute bottom-20 left-20 w-16 h-16 bg-white/15 rounded-full blur-lg"
-            animate={{
-              scale: [1.2, 1, 1.2],
-              rotate: [360, 180, 0],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-
-          {/* Contact CTA */}
-          <motion.div variants={itemVariants} className="text-center mt-16">
-            <motion.p
-              className="text-black text-lg mb-6"
-              variants={itemVariants}
-            >
-              Ready to start your project? Get in touch with us today!
-            </motion.p>
-            <motion.button
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            {/* Decorative Elements */}
+            <motion.div
+              className="absolute top-10 right-10 w-20 h-20 bg-white/20 rounded-full blur-xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                rotate: [0, 180, 360],
               }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white text-green-600 font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              Start a Conversation
-              <br />
-              <span className="text-green-400">(mail above)</span>
-            </motion.button>
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+
+            <motion.div
+              className="absolute bottom-20 left-20 w-16 h-16 bg-white/15 rounded-full blur-lg"
+              animate={{
+                scale: [1.2, 1, 1.2],
+                rotate: [360, 180, 0],
+              }}
+              transition={{
+                duration: 15,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Moving Brand Logos Section */}
       <motion.div
-        className="py-12 bg-gray-50 relative overflow-hidden"
+        className=" bg-white relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -1080,7 +1100,7 @@ ${attachmentsList}
                 alt={brand.alt}
                 width={120}
                 height={60}
-                className="h-40 md:h-46 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </motion.div>
           ))}
