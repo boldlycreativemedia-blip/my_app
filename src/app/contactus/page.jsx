@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import emailjs from "@emailjs/browser";
@@ -18,7 +18,7 @@ import {
   Mail,
 } from "lucide-react";
 
-const page = () => {
+function ContactContent() {
   const sectionRef = useRef(null);
   const scrollRef = useRef(null);
   const formRef = useRef(null);
@@ -1118,4 +1118,10 @@ ${attachmentsList}
   );
 };
 
-export default page;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ContactContent />
+    </Suspense>
+  );
+}
