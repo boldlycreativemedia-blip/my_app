@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Lightbulb } from "lucide-react";
+import Link from "next/link";
 
 export default function AboutAnimatedContent() {
   const sectionRef = useRef(null);
@@ -159,46 +160,50 @@ export default function AboutAnimatedContent() {
               </motion.h1>
 
               {/* Background Text - Changed to animate immediately */}
-          <motion.div
-            className="relative md:hidden -mt-3 pb-7"
-            initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <motion.div
-              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-center md:text-right overflow-hidden"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-            >
-              \\Who We Are
-            </motion.div>
-          </motion.div>
+              <motion.div
+                className="relative md:hidden -mt-3 pb-7"
+                initial={{ x: 100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <motion.div
+                  className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-center md:text-right overflow-hidden"
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                >
+                  \\Who We Are
+                </motion.div>
+              </motion.div>
 
+              {/* CTA Button */}
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="inline-block"
               >
-                <motion.div
-                  className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Get Free Consultation
-                  <motion.span
-                    className="w-6 h-6 sm:w-8 sm:h-8 bg-white bg-opacity-20 rounded-full inline-flex items-center justify-center"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
+                <Link href="/contactus" className="inline-block">
+                  <motion.div
+                    className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
-                  </motion.span>
-                </motion.div>
+                    Get Free Consultation
+                    <motion.span
+                      className="w-6 h-6 sm:w-8 sm:h-8 bg-white bg-opacity-20 rounded-full inline-flex items-center justify-center"
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
+                    </motion.span>
+                  </motion.div>
+                </Link>
               </motion.div>
             </motion.div>
           </div>
