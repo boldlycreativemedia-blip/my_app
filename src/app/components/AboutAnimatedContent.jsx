@@ -124,7 +124,7 @@ export default function AboutAnimatedContent() {
 
   return (
     <section
-      className="relative z-10 bg-white ml-4 mr-4 w-full px-6 md:px-12 py-8 min-h-screen"
+      className="relative z-10 bg-white ml-4 mr-4 w-full px-12 md:px-12 py-8 min-h-screen"
       ref={sectionRef}
     >
       <div className="max-w-[1920px]  ">
@@ -158,6 +158,23 @@ export default function AboutAnimatedContent() {
                 </span>
               </motion.h1>
 
+              {/* Background Text - Changed to animate immediately */}
+          <motion.div
+            className="relative md:hidden -mt-3 pb-7"
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.div
+              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-center md:text-right overflow-hidden"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.2 }}
+            >
+              \\Who We Are
+            </motion.div>
+          </motion.div>
+
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -188,7 +205,7 @@ export default function AboutAnimatedContent() {
 
           {/* Background Text - Changed to animate immediately */}
           <motion.div
-            className="relative mt-8 sm:mt-12 md:-mt-24"
+            className="relative hidden md:block mt-8 sm:mt-12 md:-mt-24"
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}

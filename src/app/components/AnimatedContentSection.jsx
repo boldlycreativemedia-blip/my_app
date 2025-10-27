@@ -141,7 +141,7 @@ export default function AnimatedContentSection({
   };
   return (
     <section
-      className="relative z-10 bg-white w-full px-6 md:px-12 ml-4 mr-4 py-28 min-h-screen flex justify-center"
+      className="relative z-10 bg-white w-full px-12 md:px-12 ml-4 mr-4 py-28 min-h-screen flex justify-center"
       ref={sectionRef}
     >
       <div className="w-full max-w-[1920px]">
@@ -171,7 +171,7 @@ export default function AnimatedContentSection({
           ))}
         </motion.div>
         {/* Main Content Container */}
-        <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 py-6 sm:py-16">
+        <div className="w-full max-w-[1920px] mx-auto px-6 sm:px-6 py-6 sm:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             {/* LEFT CONTENT - Main Heading */}
@@ -204,6 +204,25 @@ export default function AnimatedContentSection({
                   </span>
                 </span>
               </motion.h1>
+
+              {/* Background Text - "Amplified" for Mobile */}
+              <motion.div
+                className="block md:hidden mb-6 -mt-8"
+                initial={{ x: 100, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <motion.div
+                  className="text-[#BBBBBB] text-3xl sm:text-4xl font-bold leading-none select-none text-center"
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                >
+                  \\Amplified
+                </motion.div>
+              </motion.div>
 
               {/* CTA Button */}
               <motion.div
@@ -275,7 +294,7 @@ export default function AnimatedContentSection({
 
           {/* Background Text - "Your Growth" */}
           <motion.div
-            className="relative mt-8 sm:mt-12 md:-mt-24"
+            className="relative hidden md:block mt-8 sm:mt-12 md:-mt-24"
             initial={{ x: 100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true }}

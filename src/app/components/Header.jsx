@@ -206,7 +206,7 @@ export default function Header() {
         transition={{ duration: 0.6 }}
         className="
           md:hidden
-          fixed top-0 left-0 right-0
+          top-0 left-0 right-0
           z-50 bg-transparent
           px-6 py-4
           flex justify-between items-center
@@ -273,7 +273,7 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden fixed inset-0 z-40 bg-[#1F1B1C]/95 backdrop-blur-xl"
+            className="md:hidden inset-0 z-40 bg-[#1F1B1C]/95 backdrop-blur-xl"
             onClick={() => setMenuOpen(false)}
           >
             <motion.div

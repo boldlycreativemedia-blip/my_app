@@ -145,7 +145,6 @@ const ProcessSection = () => {
           animate="visible"
           className="relative ml-4 mr-4"
         >
-
           <div className="space-y-12">
             {processSteps.map((step, index) => (
               <motion.div
@@ -156,57 +155,67 @@ const ProcessSection = () => {
                 {/* Content - Always on Left */}
                 <div className="flex-1 min-w-0 lg:pr-8">
                   <motion.div
-                    className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl hover:bg-[#EC4D37] cursor-pointer transition-all duration-300 group"
+                    className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:bg-[#EC4D37] cursor-pointer transition-all duration-300 group"
                     whileHover={{ y: -5, scale: 1.02 }}
                   >
-                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 group-hover:text-white transition-colors duration-300">
-                      {step.title}
-                    </h2>
+                    {/* Mobile Number Header */}
+                    <div className="lg:hidden bg-[#EC4D37] px-8 py-4">
+                      <span className="text-3xl font-bold text-[#1F1B1C]">
+                        {step.id}
+                      </span>
+                    </div>
 
-                    <p className="text-gray-600 text-lg mb-6 leading-relaxed group-hover:text-white transition-colors duration-300">
-                      {step.description}
-                    </p>
+                    {/* Card Content */}
+                    <div className="p-8">
+                      <h2 className="text-2xl lg:text-3xl font-bold text-[#1F1B1C] mb-4 group-hover:text-white transition-colors duration-300">
+                        {step.title}
+                      </h2>
 
-                    <ul className="space-y-3 mb-6">
-                      {step.points.map((point, pointIndex) => (
-                        <motion.li
-                          key={pointIndex}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={
-                            visibleItems.includes(index)
-                              ? { opacity: 1, x: 0 }
-                              : { opacity: 0, x: -20 }
-                          }
-                          transition={{
-                            delay: pointIndex * 0.1 + 0.3,
-                            duration: 0.5,
-                          }}
-                          className="flex items-start gap-3"
-                        >
-                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#EC4D37] to-[#EC4D37] group-hover:from-[#1F1B1C] group-hover:to-[#1F1B1C] mt-2 flex-shrink-0 transition-all duration-300"></div>
-                          <span className="text-gray-700 leading-relaxed group-hover:text-white transition-colors duration-300">
-                            {point}
-                          </span>
-                        </motion.li>
-                      ))}
-                    </ul>
-
-                    <div className="border-t border-gray-100 group-hover:border-orange-200 pt-6 transition-colors duration-300">
-                      <p className="text-gray-600 italic leading-relaxed group-hover:text-white transition-colors duration-300">
-                        {step.footer}
+                      <p className="text-[#1F1B1C] text-lg mb-6 leading-relaxed group-hover:text-white transition-colors duration-300">
+                        {step.description}
                       </p>
+
+                      <ul className="space-y-3 mb-6">
+                        {step.points.map((point, pointIndex) => (
+                          <motion.li
+                            key={pointIndex}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={
+                              visibleItems.includes(index)
+                                ? { opacity: 1, x: 0 }
+                                : { opacity: 0, x: -20 }
+                            }
+                            transition={{
+                              delay: pointIndex * 0.1 + 0.3,
+                              duration: 0.5,
+                            }}
+                            className="flex items-start gap-3"
+                          >
+                            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#EC4D37] to-[#EC4D37] group-hover:from-[#1F1B1C] group-hover:to-[#1F1B1C] mt-2 flex-shrink-0 transition-all duration-300"></div>
+                            <span className="text-[#1F1B1C] leading-relaxed group-hover:text-white transition-colors duration-300">
+                              {point}
+                            </span>
+                          </motion.li>
+                        ))}
+                      </ul>
+
+                      <div className="border-t border-gray-100 group-hover:border-orange-200 pt-6 transition-colors duration-300">
+                        <p className="text-[#1F1B1C] italic leading-relaxed group-hover:text-white transition-colors duration-300">
+                          {step.footer}
+                        </p>
+                      </div>
                     </div>
                   </motion.div>
                 </div>
 
-                {/* Step Number - Always on Right */}
+                {/* Step Number - Always on Right (Desktop Only) */}
                 <motion.div
-                  className="flex-shrink-0 lg:relative lg:z-10"
+                  className="hidden lg:flex flex-shrink-0 lg:relative lg:z-10"
                   whileHover={{ scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-[#EC4D37] to-[#EC4D37] hover:from-[#1F1B1C] hover:to-[#1F1B1C] flex items-center justify-center shadow-xl cursor-pointer transition-all duration-300">
-                    <span className="text-2xl lg:text-3xl font-bold text-white">
+                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#EC4D37] to-[#EC4D37] hover:from-[#1F1B1C] hover:to-[#1F1B1C] flex items-center justify-center shadow-xl cursor-pointer transition-all duration-300">
+                    <span className="text-3xl font-bold text-white">
                       {step.id}
                     </span>
                   </div>

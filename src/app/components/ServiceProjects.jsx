@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
-import { ArrowRight, Volume2, VolumeX } from "lucide-react";
-import Link from "next/link";
+import { ArrowRight, Volume2, VolumeX, AlertCircle } from "lucide-react";
 
 const ProjectCard = ({
   title,
@@ -17,6 +16,8 @@ const ProjectCard = ({
   const [isMuted, setIsMuted] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [errorDetails, setErrorDetails] = useState(null);
   const videoRef = useRef(null);
 
   const toggleMute = (e) => {
@@ -31,7 +32,8 @@ const ProjectCard = ({
     // High quality settings with 1080x1920 resolution
     const urlParts = url.split("/upload/");
     if (urlParts.length === 2) {
-      return `${urlParts[0]}/upload/q_auto:good,f_auto,w_1080,h_1920,c_fill/${urlParts[1]}`;
+      // Added proper Cloudinary transformations for better compatibility
+      return `${urlParts[0]}/upload/q_auto:good,f_auto,w_1080,h_1920,c_fill,fl_lossy/${urlParts[1]}`;
     }
     return url;
   };
@@ -41,7 +43,6 @@ const ProjectCard = ({
   // Delayed loading strategy - only load when actually in view
   useEffect(() => {
     if (isInView && !shouldLoad) {
-      // Add a small delay to stagger video loading
       const timer = setTimeout(() => {
         setShouldLoad(true);
       }, 100);
@@ -51,23 +52,83 @@ const ProjectCard = ({
 
   // Load video only when shouldLoad is true
   useEffect(() => {
-    if (shouldLoad && videoRef.current && !isLoaded) {
+    if (shouldLoad && videoRef.current && !isLoaded && !hasError) {
       videoRef.current.load();
     }
-  }, [shouldLoad, isLoaded]);
+  }, [shouldLoad, isLoaded, hasError]);
 
   // Pause video when not in view to save resources
   useEffect(() => {
-    if (videoRef.current) {
+    if (videoRef.current && !hasError) {
       if (isInView && isLoaded) {
-        videoRef.current.play().catch(() => {
-          // Ignore play errors
-        });
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            // Auto-play was prevented, this is usually fine
+            console.log("Auto-play prevented:", error.message);
+          });
+        }
       } else {
         videoRef.current.pause();
       }
     }
-  }, [isInView, isLoaded]);
+  }, [isInView, isLoaded, hasError]);
+
+  // Handle video errors with detailed logging
+  const handleVideoError = (e) => {
+    const video = e.target;
+    const error = video.error;
+
+    let errorMessage = "Unknown error";
+    let errorCode = "UNKNOWN";
+
+    if (error) {
+      switch (error.code) {
+        case error.MEDIA_ERR_ABORTED:
+          errorMessage = "Video loading aborted";
+          errorCode = "ABORTED";
+          break;
+        case error.MEDIA_ERR_NETWORK:
+          errorMessage = "Network error while loading video";
+          errorCode = "NETWORK";
+          break;
+        case error.MEDIA_ERR_DECODE:
+          errorMessage = "Video decoding failed";
+          errorCode = "DECODE";
+          break;
+        case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+          errorMessage = "Video format not supported or file not found";
+          errorCode = "NOT_SUPPORTED";
+          break;
+        default:
+          errorMessage = error.message || "Unknown error";
+      }
+    }
+
+    // console.error(`Video load error for "${title}":`, {
+    //   code: errorCode,
+    //   message: errorMessage,
+    //   url: optimizedVideoUrl,
+    //   networkState: video.networkState,
+    //   readyState: video.readyState,
+    // });
+
+    setHasError(true);
+    setErrorDetails({ code: errorCode, message: errorMessage });
+  };
+
+  // Retry loading video
+  const retryLoad = (e) => {
+    e.stopPropagation();
+    setHasError(false);
+    setErrorDetails(null);
+    setIsLoaded(false);
+    setShouldLoad(false);
+
+    setTimeout(() => {
+      setShouldLoad(true);
+    }, 100);
+  };
 
   return (
     <div className="flex-shrink-0 w-[320px] md:w-[360px] px-4">
@@ -87,7 +148,7 @@ const ProjectCard = ({
           {optimizedVideoUrl ? (
             <>
               {/* Loading Placeholder */}
-              {!isLoaded && (
+              {!isLoaded && !hasError && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
                   <div className="text-center text-gray-500">
                     <div className="w-16 h-16 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center shadow-md">
@@ -122,10 +183,34 @@ const ProjectCard = ({
                 </div>
               )}
 
-              {shouldLoad && (
+              {/* Error State */}
+              {hasError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100">
+                  <div className="text-center text-red-600 px-4">
+                    <div className="w-16 h-16 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center shadow-md">
+                      <AlertCircle className="w-8 h-8" />
+                    </div>
+                    <p className="text-sm font-medium mb-2">
+                      Failed to load video
+                    </p>
+                    {errorDetails && (
+                      <p className="text-xs text-red-500 mb-3">
+                        {errorDetails.message}
+                      </p>
+                    )}
+                    <button
+                      onClick={retryLoad}
+                      className="text-xs bg-white text-red-600 px-4 py-2 rounded-full font-medium hover:bg-red-50 transition-colors"
+                    >
+                      Retry
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {shouldLoad && !hasError && (
                 <video
                   ref={videoRef}
-                  src={optimizedVideoUrl}
                   className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${
                     isLoaded ? "opacity-100" : "opacity-0"
                   }`}
@@ -133,13 +218,19 @@ const ProjectCard = ({
                   muted={isMuted}
                   playsInline
                   preload="metadata"
+                  crossOrigin="anonymous"
                   onLoadedData={() => setIsLoaded(true)}
-                  onError={(e) => console.error("Video load error:", e)}
-                />
+                  onError={handleVideoError}
+                  onLoadStart={() => console.log(`Loading started: ${title}`)}
+                  onCanPlay={() => console.log(`Can play: ${title}`)}
+                >
+                  <source src={optimizedVideoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               )}
 
               {/* Mute/Unmute Button */}
-              {isLoaded && (
+              {isLoaded && !hasError && (
                 <motion.button
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -256,24 +347,21 @@ const ServiceProjects = () => {
     },
   ];
 
-  // Duplicate projects for seamless infinite scroll
   const duplicatedProjects = [...projects, ...projects, ...projects];
   const cardWidth = 344;
   const loopWidth = cardWidth * projects.length;
 
-  // Optimized visible range calculation with throttling
   useEffect(() => {
     let rafId;
     let lastUpdate = 0;
-    const throttleMs = 100; // Update every 100ms instead of every frame
+    const throttleMs = 100;
 
     const updateVisibleRange = (timestamp) => {
       if (timestamp - lastUpdate > throttleMs) {
         const currentX = Math.abs(x.get());
         const viewportWidth = window.innerWidth;
 
-        // More conservative visible range - load fewer videos at once
-        const buffer = cardWidth * 1; // 1 card buffer on each side
+        const buffer = cardWidth * 1;
         const startIndex = Math.floor((currentX - buffer) / cardWidth);
         const endIndex = Math.ceil(
           (currentX + viewportWidth + buffer) / cardWidth
@@ -297,10 +385,9 @@ const ServiceProjects = () => {
     };
   }, [x, duplicatedProjects.length]);
 
-  // Optimized smooth scroll with reduced frame rate
   useAnimationFrame((t, delta) => {
     if (!isPaused && !isDragging) {
-      const speed = 0.6; // Slightly slower for better performance
+      const speed = 0.6;
       let currentX = x.get();
       currentX -= speed;
 
@@ -342,7 +429,6 @@ const ServiceProjects = () => {
   return (
     <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 sm:px-6 lg:px-4 pb-20">
       <div className="max-w-[1920px] mx-auto">
-        {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-16">
           <div className="lg:max-w-xl">
             <motion.h1
@@ -381,7 +467,7 @@ const ServiceProjects = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="group cursor-pointer bg-[#1F1B1C] hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-full flex items-center space-x-3 transition-all duration-300 shadow-lg"
             >
-              <Link href="/contactus"><span>Contact Us</span></Link>
+              <span>Contact Us</span>
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{
@@ -396,7 +482,6 @@ const ServiceProjects = () => {
           </div>
         </div>
 
-        {/* Carousel Section */}
         <div ref={containerRef} className="relative overflow-hidden py-2">
           <motion.div
             className="flex cursor-grab active:cursor-grabbing"

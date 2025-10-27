@@ -57,6 +57,25 @@ const page = () => {
                   </span>
                 </motion.h1>
 
+                {/* Background Text - "Work With Us" */}
+          <motion.div
+            className="relative md:hidden -mt-4 pb-8"
+            initial={{ x: 100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+          >
+            <motion.div
+              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden"
+              initial={{ scale: 0.9, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              \\Work With Us
+            </motion.div>
+          </motion.div>
+
                 {/* CTA Button */}
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
@@ -115,7 +134,7 @@ const page = () => {
 
           {/* Background Text - "Work With Us" */}
           <motion.div
-            className="relative mt-8 sm:mt-12 md:mt-16 lg:-mt-24"
+            className="relative hidden md:block mt-8 sm:mt-12 md:mt-16 lg:-mt-24"
             initial={{ x: 100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true }}

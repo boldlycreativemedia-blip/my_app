@@ -123,6 +123,13 @@ const Page = () => {
                 </span>
               </h1>
 
+              {/* Background Text - "Your Growth" */}
+          <div className="relative md:hidden -mt-4 pb-7">
+            <div className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden">
+              \\Amplify Your Voice
+            </div>
+          </div>
+
               {/* CTA Button */}
               <div className="inline-block">
                 <Link href="/contactus" className="inline-block">
@@ -171,7 +178,7 @@ const Page = () => {
           </div>
 
           {/* Background Text - "Your Growth" */}
-          <div className="relative mt-8 sm:mt-12 md:-mt-24">
+          <div className="relative hidden md:block mt-8 sm:mt-12 md:-mt-24">
             <div className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden">
               \\Amplify Your Voice
             </div>
