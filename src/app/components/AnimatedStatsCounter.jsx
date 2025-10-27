@@ -9,28 +9,28 @@ const AnimatedStatsWithDividers = () => {
       id: 1,
       number: 50,
       suffix: "M+",
-      label: "Eyes on our edits — and counting.",
+      label: "Views and counting",
       duration: 3000,
     },
     {
       id: 2,
       number: 90,
       suffix: "%",
-      label: "Clients who keep coming back for more.",
+      label: "Clients return",
       duration: 3000,
     },
     {
       id: 3,
       number: 200,
       suffix: "+",
-      label: "Collabs that made it to the spotlight.",
+      label: "Standout collabs.",
       duration: 3000,
     },
     {
       id: 4,
       number: 100,
       suffix: "%",
-      label: "Deadlines met. Vibes unmatched.",
+      label: " Deadlines nailed.",
       duration: 2000,
     },
   ];
@@ -123,7 +123,7 @@ const AnimatedStatsWithDividers = () => {
     };
 
     return (
-      <div className="flex items-center">
+      <>
         {/* Stat Item */}
         <div
           className={`text-center flex-1 transition-opacity duration-300 ${
@@ -152,7 +152,7 @@ const AnimatedStatsWithDividers = () => {
         {/* Vertical Divider - Only show if not the last item */}
         {!isLast && (
           <div
-            className={`mx-4 md:mx-6 lg:mx-8 transition-opacity duration-300 ${
+            className={`mx-8 md:mx-12 lg:mx-16 flex items-center transition-opacity duration-300 ${
               isVisible ? "animate-fadeInUp" : "opacity-0"
             }`}
             style={{
@@ -163,7 +163,7 @@ const AnimatedStatsWithDividers = () => {
             <div className="w-px bg-gray-300 h-16 md:h-20 lg:h-24"></div>
           </div>
         )}
-      </div>
+      </>
     );
   };
 
@@ -206,7 +206,7 @@ const AnimatedStatsWithDividers = () => {
   return (
     <>
       <div ref={sectionRef} className="w-full bg-[#FFFF] py-10 px-4">
-        <div className="max-w-[1920px] ml-4 mr-4 mx-auto">
+        <div className="max-w-[1920px] ml-16 mr-16 mx-auto">
           {/* Desktop Layout - All in one row with dividers */}
           <div className="hidden lg:flex items-center justify-between">
             {stats.map((stat, index) => (

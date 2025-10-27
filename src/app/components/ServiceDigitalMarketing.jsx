@@ -61,11 +61,11 @@ const ServiceDigitalMarketing = () => {
   return (
     <div
       ref={sectionRef}
-      className="w-full bg-white py-16 px-4 overflow-hidden"
+      className="w-full bg-white py-16 px-4 overflow-hidden "
     >
-      <div className="max-w-[1920px] mx-auto">
+      <div className="max-w-[1920px] ml-14 mr-14 mx-auto">
         {/* Header Section */}
-        <div className="mb-16">
+        <div className="mb-12">
           {/* Main Content - Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             {/* Left Column - Main Heading */}

@@ -206,7 +206,7 @@ export default function AboutAnimatedContent() {
 
         {/* Moving Brand Logos Section */}
         <motion.div
-          className=" bg-white ml-4 mr-4 relative overflow-hidden"
+          className=" bg-white ml-4 mr-4 -mt-7 relative overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -383,16 +383,11 @@ export default function AboutAnimatedContent() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
                 >
-                  At BOLDLY CREATIVE MEDIA, our mission is to provide strategic
-                  and visually stunning creative solutions that build powerful
-                  brands. We are a full-service content studio dedicated to
-                  empowering your business through bold digital storytelling.
-                  Our expertise in brand identity, website design, video
-                  production, and graphic design helps transform your ideas into
-                  tangible, high-impact results. Driven by a passion for
-                  excellence, we're here to challenge conventions and help your
-                  brand not just exist, but thrive. We don't just create
-                  content; we build legacies.
+                  At Boldly Creative Media, we craft bold digital stories that
+                  build powerful brands. As a full-service content studio, we
+                  specialize in brand identity, web design, video production,
+                  and graphic design — turning ideas into high-impact results.
+                  We don’t just create content; we create legacies.
                 </motion.p>
               </div>
 
@@ -465,16 +460,11 @@ export default function AboutAnimatedContent() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
                 >
-                  We believe stories aren't just told—they're felt. As a leading
-                  creative agency and full-service content studio, our vision is
-                  to transform the way brands connect with people. We're a team
-                  dedicated to providing compelling digital solutions that go
-                  beyond aesthetics, making your brand impossible to ignore. We
-                  see our creative solutions as the bridge that connects your
-                  brand identity with your audience. Through strategic video
-                  production, powerful website design, and engaging social media
-                  content, we turn messages into emotions and ideas into
-                  unforgettable moments.
+                  We believe stories aren’t just told — they’re felt. As a
+                  full-service creative studio, we help brands connect deeply
+                  with their audiences through strategic video production,
+                  impactful web design, and engaging social content. We turn
+                  ideas into emotions and brands into unforgettable experiences.
                 </motion.p>
               </div>
 

@@ -8,30 +8,30 @@ const ServiceNumber = () => {
     {
       id: 1,
       number: 50,
-      suffix: "M +",
-      label: "Eyes on our edits — and counting.",
-      duration: 2000,
+      suffix: "M+",
+      label: "Views and counting",
+      duration: 3000,
     },
     {
       id: 2,
       number: 90,
       suffix: "%",
-      label: "Clients who keep coming back for more.",
-      duration: 2000,
+      label: "Clients return",
+      duration: 3000,
     },
     {
       id: 3,
       number: 200,
       suffix: "+",
-      label: "Collabs that made it to the spotlight.",
-      duration: 2000,
+      label: "Standout collabs.",
+      duration: 3000,
     },
     {
       id: 4,
       number: 100,
       suffix: "%",
-      label: "Deadlines met. Vibes unmatched.",
-      duration: 1000,
+      label: " Deadlines nailed.",
+      duration: 2000,
     },
   ];
 
@@ -123,14 +123,14 @@ const ServiceNumber = () => {
     };
 
     return (
-      <div className="flex items-center">
+      <>
         {/* Stat Item */}
         <div
           className={`text-center flex-1 transition-opacity duration-300 ${
             isVisible ? "animate-fadeInUp" : "opacity-0"
           }`}
           style={{
-            animationDelay: isVisible ? `${index * 0.1}s` : "0s",
+            animationDelay: isVisible ? `${index * 0.2}s` : "0s",
             animationFillMode: "both",
           }}
         >
@@ -152,18 +152,18 @@ const ServiceNumber = () => {
         {/* Vertical Divider - Only show if not the last item */}
         {!isLast && (
           <div
-            className={`mx-4 md:mx-6 lg:mx-8 transition-opacity duration-300 ${
+            className={`mx-8 md:mx-12 lg:mx-16 flex items-center transition-opacity duration-300 ${
               isVisible ? "animate-fadeInUp" : "opacity-0"
             }`}
             style={{
-              animationDelay: isVisible ? `${(index + 0.5) * 0.1}s` : "0s",
+              animationDelay: isVisible ? `${(index + 0.5) * 0.2}s` : "0s",
               animationFillMode: "both",
             }}
           >
             <div className="w-px bg-gray-300 h-16 md:h-20 lg:h-24"></div>
           </div>
         )}
-      </div>
+      </>
     );
   };
 

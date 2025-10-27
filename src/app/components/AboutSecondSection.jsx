@@ -80,7 +80,7 @@ const AboutSecondSection = () => {
   ];
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8 ml-4 mr-4 bg-white">
+    <div className="py-8 px-4 sm:px-6 lg:px-8 ml-9 mr-4 bg-white">
       <div className="max-w-[1920px] mx-auto">
         {/* Header Section */}
         <motion.div

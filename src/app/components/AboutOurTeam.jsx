@@ -105,7 +105,7 @@ const TeamShowcase = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] py-10 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-[#F8F8F8] pt-10 pb-1 px-2  relative overflow-hidden">
       {/* Our Team Badge */}
           <div className="flex items-center justify-center gap-2 ">
             <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
@@ -114,7 +114,7 @@ const TeamShowcase = () => {
             </span>
           </div>
       <motion.div
-        className="max-w-[1920px] mx-auto"
+        className="max-w-[1920px] ml-12 mr-12 mx-auto"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -152,7 +152,7 @@ const TeamShowcase = () => {
                   className="flex-shrink-0 w-80 group"
                 >
                   <motion.div
-                    className="relative mt-10 overflow-hidden rounded-2xl shadow-2xl cursor-pointer bg-white h-full transition-transform duration-700 group-hover:scale-105"
+                    className="relative mt-5 overflow-hidden rounded-2xl  cursor-pointer bg-white h-full transition-transform duration-700 group-hover:scale-105"
                     whileHover={{
                       scale: 1.05,
                       y: -10,

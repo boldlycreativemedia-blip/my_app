@@ -79,7 +79,7 @@ const Testimonials = () => {
 
   return (
     <div className="bg-white py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-[1920px] ml-4 mr-4 mx-auto">
+      <div className="max-w-[1920px] ml-12 mr-12 mx-auto">
         {/* Header */}
         <div className="mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">

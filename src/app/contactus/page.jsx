@@ -64,7 +64,7 @@ function ContactContent() {
           behavior: "smooth",
           block: "start",
         });
-      }, 500);
+      }, 100);
     }
   }, [emailFromUrl]);
 

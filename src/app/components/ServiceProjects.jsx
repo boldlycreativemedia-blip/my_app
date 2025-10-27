@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { ArrowRight, Volume2, VolumeX } from "lucide-react";
+import Link from "next/link";
 
 const ProjectCard = ({
   title,
@@ -15,6 +16,7 @@ const ProjectCard = ({
 }) => {
   const [isMuted, setIsMuted] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
   const videoRef = useRef(null);
 
   const toggleMute = (e) => {
@@ -22,25 +24,48 @@ const ProjectCard = ({
     setIsMuted(!isMuted);
   };
 
-  // Optimize Cloudinary URL with transformations - HIGH QUALITY
+  // Optimize Cloudinary URL - 1080x1920 (portrait 9:16)
   const getOptimizedVideoUrl = (url) => {
     if (!url) return null;
 
-    // Use high quality settings for premium footage
-    // q_auto:best = best quality, f_auto = automatic format, w_600 = width 600px for portrait
+    // High quality settings with 1080x1920 resolution
     const urlParts = url.split("/upload/");
     if (urlParts.length === 2) {
-      return `${urlParts[0]}/upload/q_auto:best,f_auto,w_600,ar_9:16,c_fill/${urlParts[1]}`;
+      return `${urlParts[0]}/upload/q_auto:good,f_auto,w_1080,h_1920,c_fill/${urlParts[1]}`;
     }
     return url;
   };
 
   const optimizedVideoUrl = getOptimizedVideoUrl(videoUrl);
 
-  // Preload video when in view
+  // Delayed loading strategy - only load when actually in view
   useEffect(() => {
-    if (isInView && videoRef.current && !isLoaded) {
+    if (isInView && !shouldLoad) {
+      // Add a small delay to stagger video loading
+      const timer = setTimeout(() => {
+        setShouldLoad(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, shouldLoad]);
+
+  // Load video only when shouldLoad is true
+  useEffect(() => {
+    if (shouldLoad && videoRef.current && !isLoaded) {
       videoRef.current.load();
+    }
+  }, [shouldLoad, isLoaded]);
+
+  // Pause video when not in view to save resources
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isInView && isLoaded) {
+        videoRef.current.play().catch(() => {
+          // Ignore play errors
+        });
+      } else {
+        videoRef.current.pause();
+      }
     }
   }, [isInView, isLoaded]);
 
@@ -63,37 +88,65 @@ const ProjectCard = ({
             <>
               {/* Loading Placeholder */}
               {!isLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
                   <div className="text-center text-gray-500">
-                    <div className="w-16 h-16 bg-gray-300 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#EC4D37]"></div>
+                    <div className="w-16 h-16 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center shadow-md">
+                      {shouldLoad ? (
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#EC4D37]"></div>
+                      ) : (
+                        <svg
+                          className="w-8 h-8"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                      )}
                     </div>
-                    <p className="text-sm">Loading video...</p>
+                    <p className="text-sm font-medium">
+                      {shouldLoad ? "Loading video..." : "Scroll to load"}
+                    </p>
                   </div>
                 </div>
               )}
 
-              <video
-                ref={videoRef}
-                src={optimizedVideoUrl}
-                className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
-                  isLoaded ? "opacity-100" : "opacity-0"
-                }`}
-                autoPlay={isInView}
-                loop
-                muted={isMuted}
-                playsInline
-                preload={isInView ? "auto" : "none"}
-                onLoadedData={() => setIsLoaded(true)}
-              />
+              {shouldLoad && (
+                <video
+                  ref={videoRef}
+                  src={optimizedVideoUrl}
+                  className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${
+                    isLoaded ? "opacity-100" : "opacity-0"
+                  }`}
+                  loop
+                  muted={isMuted}
+                  playsInline
+                  preload="metadata"
+                  onLoadedData={() => setIsLoaded(true)}
+                  onError={(e) => console.error("Video load error:", e)}
+                />
+              )}
 
               {/* Mute/Unmute Button */}
               {isLoaded && (
                 <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={toggleMute}
-                  className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white p-2.5 rounded-full backdrop-blur-sm transition-all duration-300 z-10"
+                  className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white p-2.5 rounded-full backdrop-blur-sm transition-all duration-300 z-10 shadow-lg"
                 >
                   {isMuted ? (
                     <VolumeX className="w-4 h-4" />
@@ -108,7 +161,7 @@ const ProjectCard = ({
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="absolute inset-0 border-4 border-[#EC4D37] rounded-lg pointer-events-none"
+                  className="absolute inset-0 border-4 border-transparent rounded-lg pointer-events-none"
                 />
               )}
             </>
@@ -159,7 +212,7 @@ const ProjectCard = ({
 const ServiceProjects = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [visibleRange, setVisibleRange] = useState({ start: 0, end: 6 });
+  const [visibleRange, setVisibleRange] = useState({ start: 0, end: 3 });
   const [isDragging, setIsDragging] = useState(false);
   const x = useMotionValue(0);
   const containerRef = useRef(null);
@@ -205,41 +258,52 @@ const ServiceProjects = () => {
 
   // Duplicate projects for seamless infinite scroll
   const duplicatedProjects = [...projects, ...projects, ...projects];
-  const cardWidth = 344; // 320px + 24px padding (adjusted for portrait cards)
+  const cardWidth = 344;
   const loopWidth = cardWidth * projects.length;
 
-  // Calculate which videos are in view
+  // Optimized visible range calculation with throttling
   useEffect(() => {
-    const updateVisibleRange = () => {
-      const currentX = Math.abs(x.get());
-      const viewportWidth = window.innerWidth;
+    let rafId;
+    let lastUpdate = 0;
+    const throttleMs = 100; // Update every 100ms instead of every frame
 
-      // Calculate which cards are visible (with buffer)
-      const startIndex = Math.floor((currentX - cardWidth) / cardWidth);
-      const endIndex = Math.ceil(
-        (currentX + viewportWidth + cardWidth) / cardWidth
-      );
+    const updateVisibleRange = (timestamp) => {
+      if (timestamp - lastUpdate > throttleMs) {
+        const currentX = Math.abs(x.get());
+        const viewportWidth = window.innerWidth;
 
-      setVisibleRange({
-        start: Math.max(0, startIndex),
-        end: Math.min(duplicatedProjects.length, endIndex),
-      });
+        // More conservative visible range - load fewer videos at once
+        const buffer = cardWidth * 1; // 1 card buffer on each side
+        const startIndex = Math.floor((currentX - buffer) / cardWidth);
+        const endIndex = Math.ceil(
+          (currentX + viewportWidth + buffer) / cardWidth
+        );
+
+        setVisibleRange({
+          start: Math.max(0, startIndex),
+          end: Math.min(duplicatedProjects.length, endIndex),
+        });
+
+        lastUpdate = timestamp;
+      }
+
+      rafId = requestAnimationFrame(updateVisibleRange);
     };
 
-    const unsubscribe = x.on("change", updateVisibleRange);
-    updateVisibleRange(); // Initial calculation
+    rafId = requestAnimationFrame(updateVisibleRange);
 
-    return () => unsubscribe();
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, [x, duplicatedProjects.length]);
 
-  // Smooth infinite scroll animation
+  // Optimized smooth scroll with reduced frame rate
   useAnimationFrame((t, delta) => {
     if (!isPaused && !isDragging) {
-      const speed = 1; // pixels per frame
+      const speed = 0.6; // Slightly slower for better performance
       let currentX = x.get();
       currentX -= speed;
 
-      // Reset position for seamless loop
       if (currentX <= -loopWidth) {
         currentX += loopWidth;
       }
@@ -248,7 +312,6 @@ const ServiceProjects = () => {
     }
   });
 
-  // Handle drag events
   const handleDragStart = () => {
     setIsDragging(true);
     setIsPaused(true);
@@ -257,7 +320,6 @@ const ServiceProjects = () => {
 
   const handleDragEnd = () => {
     setIsDragging(false);
-    // Resume auto-scroll after a short delay
     setTimeout(() => {
       setIsPaused(false);
     }, 1000);
@@ -266,7 +328,6 @@ const ServiceProjects = () => {
   const handleDrag = (event, info) => {
     let newX = dragStartX.current + info.offset.x;
 
-    // Handle infinite loop boundaries during drag
     if (newX > 0) {
       newX -= loopWidth;
       dragStartX.current -= loopWidth;
@@ -279,7 +340,7 @@ const ServiceProjects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 sm:px-6 lg:px-4 pb-20">
       <div className="max-w-[1920px] mx-auto">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-16">
@@ -320,7 +381,7 @@ const ServiceProjects = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="group cursor-pointer bg-[#1F1B1C] hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-full flex items-center space-x-3 transition-all duration-300 shadow-lg"
             >
-              <span>Contact Us</span>
+              <Link href="/contactus"><span>Contact Us</span></Link>
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{
@@ -336,7 +397,7 @@ const ServiceProjects = () => {
         </div>
 
         {/* Carousel Section */}
-        <div ref={containerRef} className="relative overflow-hidden py-8">
+        <div ref={containerRef} className="relative overflow-hidden py-2">
           <motion.div
             className="flex cursor-grab active:cursor-grabbing"
             style={{ x }}

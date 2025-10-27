@@ -12,11 +12,12 @@ import ServiceDigitalMarketing from "../components/ServiceDigitalMarketing";
 import ServiceProjects from "../components/ServiceProjects";
 import Link from "next/link";
 
-const page = () => {
+const Page = () => {
   const sectionRef = useRef(null);
   const scrollRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const scrollPositionRef = useRef(0);
   const animationRef = useRef(null);
 
@@ -32,24 +33,40 @@ const page = () => {
 
   const duplicatedBrands = [...brands, ...brands];
 
+  // Set mounted state after component mounts
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Optimized scroll animation with RAF
   useEffect(() => {
     const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
+    if (!scrollContainer || !isMounted) return;
 
-    const scrollSpeed = 1;
+    const scrollSpeed = 0.5; // Reduced speed for better performance
+    let lastTime = performance.now();
+    const targetFPS = 60;
+    const frameTime = 1000 / targetFPS;
 
-    const animate = () => {
-      if (!isHovered && !isDragging && scrollContainer) {
-        const maxScroll = scrollContainer.scrollWidth / 2;
+    const animate = (currentTime) => {
+      const deltaTime = currentTime - lastTime;
 
-        scrollPositionRef.current += scrollSpeed;
+      // Throttle to target FPS
+      if (deltaTime >= frameTime) {
+        if (!isHovered && !isDragging && scrollContainer) {
+          const maxScroll = scrollContainer.scrollWidth / 2;
 
-        if (scrollPositionRef.current >= maxScroll) {
-          scrollPositionRef.current = 0;
+          scrollPositionRef.current += scrollSpeed;
+
+          if (scrollPositionRef.current >= maxScroll) {
+            scrollPositionRef.current = 0;
+          }
+
+          scrollContainer.scrollLeft = scrollPositionRef.current;
         }
-
-        scrollContainer.scrollLeft = scrollPositionRef.current;
+        lastTime = currentTime - (deltaTime % frameTime);
       }
+
       animationRef.current = requestAnimationFrame(animate);
     };
 
@@ -60,7 +77,7 @@ const page = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isHovered, isDragging]);
+  }, [isHovered, isDragging, isMounted]);
 
   const handleScroll = () => {
     const scrollContainer = scrollRef.current;
@@ -86,19 +103,9 @@ const page = () => {
         <div className="max-w-[1920px] ml-4 mr-4 mx-auto px-4 sm:px-6 py-6 sm:py-16">
           {/* Main Heading Section */}
           <div className="relative">
-            {/* LEFT CONTENT - Main Heading - FIXED: Removed viewport trigger and set immediate animation */}
-            <motion.div
-              className="max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl"
-              initial={{ x: 0, opacity: 1 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <motion.h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-9xl  font-bold leading-tight sm:leading-none text-black mb-6 sm:mb-8 md:mb-12"
-                initial={{ y: 0, opacity: 1 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-              >
+            {/* LEFT CONTENT - Main Heading */}
+            <div className="max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-9xl font-bold leading-tight sm:leading-none text-black mb-6 sm:mb-8 md:mb-12">
                 Explore Our
                 <br />
                 <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6">
@@ -110,18 +117,14 @@ const page = () => {
                       width={20}
                       height={20}
                       className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 text-white"
+                      priority
                     />
                   </span>
                 </span>
-              </motion.h1>
+              </h1>
 
               {/* CTA Button */}
-              <motion.div
-                initial={{ scale: 1, opacity: 1 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-block"
-              >
+              <div className="inline-block">
                 <Link href="/contactus" className="inline-block">
                   <motion.div
                     className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
@@ -142,16 +145,11 @@ const page = () => {
                     </motion.span>
                   </motion.div>
                 </Link>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
 
             {/* Stats positioned on the right */}
-            <motion.div
-              className="hidden md:block absolute top-0 right-0 z-10"
-              initial={{ opacity: 1, y: 0 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
+            <div className="hidden md:block absolute top-0 right-0 z-10">
               <div className="text-right">
                 <div className="text-gray-600 text-lg leading-tight">
                   Let's Bring Your
@@ -159,50 +157,31 @@ const page = () => {
                   Vision to life
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Mobile Stats - Only visible on mobile */}
-          <motion.div
-            className="block md:hidden mt-8 text-center"
-            initial={{ opacity: 1, y: 0 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
+          <div className="block md:hidden mt-8 text-center">
             <div className="text-gray-600 text-base sm:text-lg leading-tight">
               Let's create visuals
               <br />
               that captivate and <br />
               captivate
             </div>
-          </motion.div>
+          </div>
 
           {/* Background Text - "Your Growth" */}
-          <motion.div
-            className="relative mt-8 sm:mt-12 md:-mt-24"
-            initial={{ x: 0, opacity: 1 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          >
-            <motion.div
-              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden"
-              initial={{ scale: 1, opacity: 1 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-            >
+          <div className="relative mt-8 sm:mt-12 md:-mt-24">
+            <div className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden">
               \\Amplify Your Voice
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
+
         <DigitalMarketingHeader />
-        {/* Moving Brand Logos Section */}
-        <motion.div
-          className=" bg-white relative overflow-hidden"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9 }}
-        >
+
+        {/* Moving Brand Logos Section - Optimized */}
+        <div className="bg-white relative overflow-hidden -mt-16">
           {/* Scrolling Container */}
           <div
             ref={scrollRef}
@@ -210,8 +189,9 @@ const page = () => {
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
+              WebkitOverflowScrolling: "touch",
             }}
-            onMouseEnter={() => setIsHovered(false)}
+            onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => {
               setIsHovered(false);
               setIsDragging(false);
@@ -229,12 +209,13 @@ const page = () => {
                 whileHover={{ scale: 1.3 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <img
+                <Image
                   src={brand.image}
                   alt={brand.alt}
                   width={120}
                   height={60}
                   className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  loading="lazy"
                 />
               </motion.div>
             ))}
@@ -246,8 +227,9 @@ const page = () => {
               display: none;
             }
           `}</style>
-        </motion.div>
+        </div>
       </section>
+
       <ServiceNumber />
       <ServiceDigitalMarketing />
       <ServiceProjects />
@@ -257,4 +239,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -147,7 +147,7 @@ export default function AnimatedContentSection({
       <div className="w-full max-w-[1920px]">
         {/* Service Categories at Bottom */}
         <motion.div
-          className="max-w-[1920px] mx-auto flex flex-col sm:flex-row justify-between items-center xl:gap-32 -mt-18"
+          className="max-w-[1920px] ml-8 mr-8 mx-auto flex flex-col sm:flex-row justify-between items-center xl:gap-32 -mt-18"
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
@@ -176,14 +176,14 @@ export default function AnimatedContentSection({
           <div className="relative">
             {/* LEFT CONTENT - Main Heading */}
             <motion.div
-              className="max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-6xl"
+              className="max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-7xl gap-4"
               initial={{ x: -100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <motion.h1
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl  font-bold leading-tight sm:leading-none text-black mb-6 sm:mb-8 md:mb-12"
+                className="text-4xl sm:text-5xl md:text-6xl xl:gap-10 lg:text-7xl xl:text-8xl  font-bold leading-tight sm:leading-none text-black mb-6 sm:mb-8 md:mb-12"
                 initial={{ y: 20, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
@@ -191,8 +191,8 @@ export default function AnimatedContentSection({
               >
                 Your Brand in Motion,
                 <br />
-                <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6">
-                  Your Story
+                <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-10">
+                  Your Story Comes Alive
                   <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
                     <Image
                       src="/finance_mode.png"
@@ -205,7 +205,6 @@ export default function AnimatedContentSection({
                 </span>
               </motion.h1>
 
-              {/* CTA Button */}
               {/* CTA Button */}
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -296,7 +295,7 @@ export default function AnimatedContentSection({
 
         {/* Moving Brand Logos Section */}
         <motion.div
-          className=" bg-white relative overflow-hidden"
+          className=" bg-white relative ml-2 mr-7 overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

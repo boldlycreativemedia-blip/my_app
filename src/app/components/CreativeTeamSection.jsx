@@ -187,7 +187,7 @@ const CreativeTeamSection = () => {
           </div>
 
           {/* View All Button - Desktop */}
-          <Link href="/about-us">
+          <Link href="/about">
             <div className="flex justify-center">
               <div
                 className={`${
@@ -225,7 +225,7 @@ const CreativeTeamSection = () => {
           </div>
 
           {/* View All Button for Mobile */}
-          <Link href="/about-us">
+          <Link href="/about">
           <div className="flex justify-center mt-8">
             <div
               className={`${
