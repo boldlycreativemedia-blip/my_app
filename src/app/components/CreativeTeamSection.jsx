@@ -26,13 +26,21 @@ const CreativeTeamSection = () => {
     {
       id: 3,
       type: "single",
+      name: "Anirudh Vohra",
+      designation: "Creative Director",
+      image: "/member-8.jpg",
+      delay: 0.5,
+    },
+    {
+      id: 4,
+      type: "single",
       name: "Jungkal Brahma",
       designation: "Art Director",
       image: "/member-3.png",
       delay: 1,
     },
     {
-      id: 4,
+      id: 5,
       type: "single",
       name: "Vipul Kumar",
       designation: "Design Head",
@@ -40,7 +48,7 @@ const CreativeTeamSection = () => {
       delay: 1.5,
     },
     {
-      id: 5,
+      id: 6,
       type: "single",
       name: "Naman Dadhich",
       designation: "Cinematographer",
@@ -48,7 +56,7 @@ const CreativeTeamSection = () => {
       delay: 2,
     },
     {
-      id: 6,
+      id: 7,
       type: "single",
       name: "Aman Mann",
       designation: "Photographer",
@@ -56,7 +64,7 @@ const CreativeTeamSection = () => {
       delay: 3,
     },
     {
-      id: 7,
+      id: 8,
       type: "single",
       name: "Aditya Xopun Borah",
       designation: "Photographer",
@@ -181,7 +189,7 @@ const CreativeTeamSection = () => {
 
           {/* Second Row - 3 members */}
           <div className="flex justify-center items-center gap-4 lg:gap-8 mb-12">
-            {teamMembers.slice(4, 7).map((member, index) => (
+            {teamMembers.slice(4, 8).map((member, index) => (
               <MemberCard key={member.id} member={member} index={index + 4} />
             ))}
           </div>

@@ -117,7 +117,7 @@ const CareerPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 pb-20">
+    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 mb-20">
       <div className="max-w-[1920px] ml-16 mr-16 mt-4 mx-auto">
         {/* Our Team Badge */}
           <div className="flex items-center justify-center gap-2 ">

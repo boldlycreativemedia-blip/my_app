@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { ArrowRight, Volume2, VolumeX, AlertCircle } from "lucide-react";
+import Link from "next/link";
 
 const ProjectCard = ({
   title,
@@ -144,14 +145,14 @@ const ProjectCard = ({
         className="group relative cursor-pointer"
       >
         {/* Video container - Portrait/Reel format (9:16 ratio) */}
-        <div className="relative h-[640px] mt-7 mb-6 overflow-hidden rounded-lg shadow-lg bg-gray-200">
+        <div className="relative h-[640px] mt-7 mb-6 overflow-hidden rounded-lg shadow-lg bg-[#F8F8F8]">
           {optimizedVideoUrl ? (
             <>
               {/* Loading Placeholder */}
               {!isLoaded && !hasError && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300">
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#F8F8F8] to-[#F8F8F8]">
                   <div className="text-center text-gray-500">
-                    <div className="w-16 h-16 bg-white rounded-lg mx-auto mb-4 flex items-center justify-center shadow-md">
+                    <div className="w-16 h-16 bg-transparent rounded-lg mx-auto mb-4 flex items-center justify-center shadow-md">
                       {shouldLoad ? (
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#EC4D37]"></div>
                       ) : (
@@ -211,7 +212,7 @@ const ProjectCard = ({
               {shouldLoad && !hasError && (
                 <video
                   ref={videoRef}
-                  className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${
+                  className={`w-full h-full object-contain rounded-lg transition-opacity duration-500 ${
                     isLoaded ? "opacity-100" : "opacity-0"
                   }`}
                   loop
@@ -427,9 +428,9 @@ const ServiceProjects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 sm:px-6 lg:px-4 pb-20">
+    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 sm:px-6 lg:px-4 mb-20">
       <div className="max-w-[1920px] mx-auto">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-16">
+        <div className="flex flex-col ml-14 mr-14 lg:flex-row lg:items-start lg:justify-between mb-16">
           <div className="lg:max-w-xl">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -467,7 +468,7 @@ const ServiceProjects = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="group cursor-pointer bg-[#1F1B1C] hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-full flex items-center space-x-3 transition-all duration-300 shadow-lg"
             >
-              <span>Contact Us</span>
+              <Link href="/contactus"><span>Contact Us</span></Link>
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{
@@ -482,7 +483,7 @@ const ServiceProjects = () => {
           </div>
         </div>
 
-        <div ref={containerRef} className="relative overflow-hidden py-2">
+        <div ref={containerRef} className="relative overflow-hidden ml-12 mr-12 py-2">
           <motion.div
             className="flex cursor-grab active:cursor-grabbing"
             style={{ x }}
