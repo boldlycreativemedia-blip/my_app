@@ -139,13 +139,13 @@ const LastHomeSection = () => {
               </h1>
 
               {/* Subheading */}
-              <p className="text-lg md:text-xl text-white/90 mb-8 font-medium">
+              <p className="text-lg md:text-xl text-white/90 mb-5 font-medium">
                 Let us transform your digital business in just a month.
               </p>
 
               {/* CTA Button */}
               <Link href="/contactus">
-                <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-sm md:text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
                   Get Free Consultation
                 </button>
               </Link>
@@ -154,7 +154,7 @@ const LastHomeSection = () => {
 
           {/* Decorative Elements */}
           {/* Top Right Star */}
-          <div className="absolute top-0 right-0 w-24 h-24 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-48 lg:h-48">
+          <div className="absolute top-0 right-0 w-18 h-18 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-48 lg:h-48">
             <img
               src="/Frame2085660656.png"
               alt="Decorative star"
@@ -163,7 +163,7 @@ const LastHomeSection = () => {
           </div>
 
           {/* Bottom Right Geometric Shape */}
-          <div className="absolute -bottom-10 right-60 sm:right-40 w-40 h-40 sm:w-32 sm:h-32 md:w-64 md:h-64">
+          <div className="absolute -bottom-2 md:-bottom-10 right-14 sm:right-40 w-20 h-20 sm:w-32 sm:h-32 md:w-64 md:h-64">
             <img
               src="/Frame2085660655.png"
               alt="Decorative shape"

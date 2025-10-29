@@ -341,7 +341,7 @@ export default function Page() {
             </h1>
 
             <Link href="/contactus">
-              <button className="mt-40 bg-[#1F1B1C] cursor-pointer text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#2a2526] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
+              <button className="md:mt-40 mt-20 bg-[#1F1B1C] cursor-pointer text-white px-12 py-5 rounded-full text-sm md:text-xl font-semibold transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
                 Start your journey
                 <svg
                   width="24"
@@ -378,13 +378,13 @@ export default function Page() {
           {/* Mute/Unmute Button */}
           <button
             onClick={toggleMute}
-            className="absolute bottom-8 right-8 z-20 bg-[#1F1B1C] text-white p-4 rounded-full transition-all duration-300"
+            className="absolute bottom-4 right-4 z-20 bg-[#1F1B1C] text-white p-4 rounded-full transition-all duration-300"
             aria-label={isMuted ? "Unmute video" : "Mute video"}
           >
             {isMuted ? (
               <svg
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -417,8 +417,8 @@ export default function Page() {
               </svg>
             ) : (
               <svg
-                width="24"
-                height="24"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

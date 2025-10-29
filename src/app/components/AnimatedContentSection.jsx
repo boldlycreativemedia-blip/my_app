@@ -141,13 +141,13 @@ export default function AnimatedContentSection({
   };
   return (
     <section
-      className="relative z-10 bg-white w-full px-12 md:px-12 ml-4 mr-4 py-28 min-h-screen flex justify-center"
+      className="relative z-10 bg-white w-full px-8 md:px-6 lg:ml-7 lg:mr-7 py-16 md:py-28 min-h-screen flex justify-center"
       ref={sectionRef}
     >
       <div className="w-full max-w-[1920px]">
         {/* Service Categories at Bottom */}
         <motion.div
-          className="max-w-[1920px] ml-8 mr-8 mx-auto flex flex-col sm:flex-row justify-between items-center xl:gap-32 -mt-18"
+          className="max-w-[1920px] mx-auto md:ml-8 md:mr-8 flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-8 xl:gap-32 mb-8 md:-mt-18"
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
@@ -156,11 +156,11 @@ export default function AnimatedContentSection({
           {[
             "Cinematic Videos",
             "Engaging Social Media",
-            "Stunnig Website Design",
+            "Stunning Website Design",
           ].map((service, index) => (
             <motion.span
               key={service}
-              className="text-gray-600 text-lg sm:text-xl md:text-2xl font-medium text-center"
+              className="text-gray-600 text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-center"
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -170,8 +170,9 @@ export default function AnimatedContentSection({
             </motion.span>
           ))}
         </motion.div>
+
         {/* Main Content Container */}
-        <div className="w-full max-w-[1920px] mx-auto px-6 sm:px-6 py-6 sm:py-16">
+        <div className="w-full max-w-[1920px] mx-auto px-0 md:px-6 py-6 sm:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             {/* LEFT CONTENT - Main Heading */}
@@ -183,7 +184,7 @@ export default function AnimatedContentSection({
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <motion.h1
-                className="text-4xl sm:text-5xl md:text-6xl xl:gap-10 lg:text-7xl xl:text-8xl  font-bold leading-tight sm:leading-none text-black mb-6 sm:mb-8 md:mb-12"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold leading-tight text-black mb-6 sm:mb-8 md:mb-12 pr-4 md:pr-0"
                 initial={{ y: 20, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
@@ -193,14 +194,14 @@ export default function AnimatedContentSection({
                 <br />
                 <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-10">
                   Your Story Comes Alive
-                  <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
-                    <Image
-                      src="/finance_mode.png"
-                      alt="finance"
-                      width={20}
-                      height={20}
-                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 text-white"
-                    />
+                  <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
+                    <svg
+                      className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-10 lg:h-10 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 10a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                    </svg>
                   </span>
                 </span>
               </motion.h1>
@@ -214,7 +215,7 @@ export default function AnimatedContentSection({
                 transition={{ duration: 0.8, ease: "easeOut" }}
               >
                 <motion.div
-                  className="text-[#BBBBBB] text-3xl sm:text-4xl font-bold leading-none select-none text-center"
+                  className="text-[#BBBBBB] text-2xl sm:text-3xl md:text-4xl font-bold leading-none select-none text-center"
                   initial={{ scale: 0.9, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
@@ -232,30 +233,28 @@ export default function AnimatedContentSection({
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="inline-block"
               >
-                <Link href="/contactus" className="inline-block">
-                  <motion.div
-                    className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                <motion.div
+                  className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-5 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base md:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Get Free Consultation
+                  <motion.span
+                    className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 bg-white bg-opacity-20 rounded-full inline-flex items-center justify-center"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   >
-                    Get Free Consultation
-                    <motion.span
-                      className="w-6 h-6 sm:w-8 sm:h-8 bg-white bg-opacity-20 rounded-full inline-flex items-center justify-center"
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
-                    </motion.span>
-                  </motion.div>
-                </Link>
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
+                  </motion.span>
+                </motion.div>
               </motion.div>
             </motion.div>
 
-            {/* Stats positioned on the right */}
+            {/* Stats positioned on the right - Desktop */}
             <motion.div
               className="hidden md:block absolute top-0 right-0 z-10"
               initial={{ opacity: 0, y: 20 }}
@@ -292,7 +291,7 @@ export default function AnimatedContentSection({
             </div>
           </motion.div>
 
-          {/* Background Text - "Your Growth" */}
+          {/* Background Text - "Your Growth" - Desktop */}
           <motion.div
             className="relative hidden md:block mt-8 sm:mt-12 md:-mt-24"
             initial={{ x: 100, opacity: 0 }}
@@ -301,7 +300,7 @@ export default function AnimatedContentSection({
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.div
-              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl gap-20 font-bold leading-none select-none text-center md:text-right overflow-hidden"
+              className="text-[#BBBBBB] text-6xl lg:text-8xl font-bold leading-none select-none text-right overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
@@ -314,16 +313,15 @@ export default function AnimatedContentSection({
 
         {/* Moving Brand Logos Section */}
         <motion.div
-          className=" bg-white relative ml-2 mr-7 overflow-hidden"
+          className="bg-white relative overflow-hidden mx-0 md:ml-2 md:mr-7 my-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
         >
-          {/* Scrolling Container */}
           <div
             ref={scrollRef}
-            className="flex items-center gap-12 md:gap-16 overflow-x-auto cursor-grab active:cursor-grabbing select-none"
+            className="flex items-center gap-8 md:gap-12 lg:gap-16 overflow-x-auto cursor-grab active:cursor-grabbing select-none py-4"
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",
@@ -342,22 +340,19 @@ export default function AnimatedContentSection({
             {duplicatedBrands.map((brand, index) => (
               <motion.div
                 key={`brand-${index}`}
-                className="flex items-center justify-center whitespace-nowrap flex-shrink-0 px-4 py-2 group"
+                className="flex items-center justify-center whitespace-nowrap flex-shrink-0 px-2 md:px-4 group"
                 whileHover={{ scale: 1.3 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <img
                   src={brand.image}
                   alt={brand.alt}
-                  width={120}
-                  height={60}
-                  className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  className="h-20 sm:h-24 md:h-30 lg:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                 />
               </motion.div>
             ))}
           </div>
 
-          {/* Custom Scrollbar Hide */}
           <style jsx>{`
             div::-webkit-scrollbar {
               display: none;
@@ -366,32 +361,27 @@ export default function AnimatedContentSection({
         </motion.div>
 
         {/* Two-column layout with scroll animations */}
-        <div className="w-full max-w-[1900px] mx-auto">
+        <div className="w-full max-w-[1900px] mx-auto px-0 md:px-4">
           {/* Our Team Badge */}
-          <div className="flex items-center gap-2 ">
+          <div className="flex items-center gap-2 mb-6">
             <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
             <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
               Why Choose Us?
             </span>
           </div>
+
           {/* First Row - Text Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            {/* LEFT COLUMN - Slides in from left */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+            {/* LEFT COLUMN */}
             <motion.div
               ref={leftColumnRef}
-              className="space-y-8"
+              className="space-y-6 md:space-y-8"
               variants={leftSlideVariants}
               initial="hidden"
               animate={isLeftInView ? "visible" : "hidden"}
             >
-              {/* Small tag */}
-              <motion.div
-                className="inline-flex items-center gap-2"
-                variants={childVariants}
-              ></motion.div>
-
               <motion.h2
-                className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900"
                 variants={childVariants}
               >
                 Your Complete
@@ -413,7 +403,7 @@ export default function AnimatedContentSection({
               animate={isRightInView ? "visible" : "hidden"}
             >
               <motion.p
-                className="text-lg md:text-[23px] md:mt-12 text-gray-900 leading-relaxed font-medium"
+                className="text-base sm:text-lg md:text-xl lg:text-[23px] md:mt-12 text-gray-900 leading-relaxed font-medium"
                 variants={childVariants}
               >
                 We simplify the entire creative journey—from strategy and
@@ -430,11 +420,11 @@ export default function AnimatedContentSection({
             </motion.div>
           </div>
 
-          {/* Second Row - Chart and Video with Matching Heights */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch mt-8">
+          {/* Second Row - Chart and Video */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch mt-8 md:mt-12">
             {/* LEFT - Vertical Bar Chart Card */}
             <motion.div
-              className="bg-gray-900 text-white rounded-3xl p-8 w-full flex flex-col relative overflow-hidden"
+              className="bg-gray-900 text-white rounded-2xl md:rounded-3xl p-6 md:p-8 w-full flex flex-col relative overflow-hidden"
               variants={childVariants}
               initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
@@ -442,20 +432,20 @@ export default function AnimatedContentSection({
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <motion.p
-                className="text-sm text-gray-400 mb-1"
+                className="text-xs sm:text-sm text-gray-400 mb-1"
                 variants={childVariants}
               >
                 Rise in conversion
               </motion.p>
               <motion.p
-                className="text-4xl font-bold mb-8"
+                className="text-3xl sm:text-4xl font-bold mb-6 md:mb-8"
                 variants={childVariants}
               >
                 +20%
               </motion.p>
 
               {/* Vertical Bar Chart */}
-              <div className="flex items-end justify-center gap-4 flex-1">
+              <div className="flex items-end justify-center gap-3 md:gap-4 flex-1">
                 {[
                   {
                     label: "Engagement",
@@ -500,7 +490,7 @@ export default function AnimatedContentSection({
                     {/* Bar */}
                     <div
                       className="relative w-full bg-gray-700 rounded-t-lg overflow-hidden"
-                      style={{ height: "140px" }}
+                      style={{ height: "120px" }}
                     >
                       <motion.div
                         className={`absolute bottom-0 left-0 right-0 ${item.color} rounded-t-lg flex items-start justify-center pt-2`}
@@ -521,7 +511,7 @@ export default function AnimatedContentSection({
                     </div>
 
                     {/* Label */}
-                    <span className="text-xs text-gray-300 text-center leading-tight">
+                    <span className="text-[10px] sm:text-xs text-gray-300 text-center leading-tight">
                       {item.label}
                     </span>
                   </motion.div>
@@ -531,7 +521,7 @@ export default function AnimatedContentSection({
 
             {/* RIGHT - Team Image with Play Button */}
             <motion.div
-              className="relative rounded-3xl overflow-hidden cursor-pointer flex items-center justify-center"
+              className="relative rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer flex items-center justify-center min-h-[300px] md:min-h-0"
               variants={childVariants}
               whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
               onClick={handlePlayClick}
@@ -539,12 +529,8 @@ export default function AnimatedContentSection({
               {!isPlaying ? (
                 <>
                   {/* Video Thumbnail Image */}
-                  <div className="w-full h-full flex items-center justify-center relative">
-                    <img
-                      className="w-full h-full object-cover"
-                      src="/thumbnail.png"
-                      alt="Video thumbnail"
-                    />
+                  <div className="w-full h-full flex items-center justify-center relative bg-gray-200">
+                    <div className="text-gray-400 text-sm">Video Thumbnail</div>
                   </div>
 
                   {/* Animated Play Button Overlay */}
@@ -561,12 +547,12 @@ export default function AnimatedContentSection({
                         repeat: Infinity,
                         ease: "easeInOut",
                       }}
-                      style={{ width: "120px", height: "120px" }}
+                      style={{ width: "100px", height: "100px" }}
                     />
 
                     {/* Main Play Button */}
                     <motion.div
-                      className="bg-white rounded-full p-6 shadow-lg relative z-10"
+                      className="bg-white rounded-full p-4 md:p-6 shadow-lg relative z-10"
                       whileHover={{
                         scale: 1.1,
                         boxShadow:
@@ -594,7 +580,7 @@ export default function AnimatedContentSection({
                           ease: "easeInOut",
                         }}
                       >
-                        <Play className="w-10 h-10 text-red-500 fill-current" />
+                        <Play className="w-8 h-8 md:w-10 md:h-10 text-red-500 fill-current" />
                       </motion.div>
                     </motion.div>
 
@@ -611,7 +597,7 @@ export default function AnimatedContentSection({
                         ease: "easeInOut",
                         delay: 0.5,
                       }}
-                      style={{ width: "100px", height: "100px" }}
+                      style={{ width: "80px", height: "80px" }}
                     />
                   </div>
                 </>
@@ -621,8 +607,12 @@ export default function AnimatedContentSection({
                   className="w-full h-full object-cover"
                   controls
                   autoPlay
-                  src="https://res.cloudinary.com/dqjc5fqyx/video/upload/v1739723931/BOLDLY_CREATIVE_MEDIA_3_xsl1da.mp4"
+                  playsInline
                 >
+                  <source
+                    src="https://res.cloudinary.com/dqjc5fqyx/video/upload/v1739723931/BOLDLY_CREATIVE_MEDIA_3_xsl1da.mp4"
+                    type="video/mp4"
+                  />
                   Your browser does not support the video tag.
                 </video>
               )}

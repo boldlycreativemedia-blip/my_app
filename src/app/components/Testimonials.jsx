@@ -90,7 +90,7 @@ const Testimonials = () => {
               <div className="w-16 h-0.5 bg-red-500"></div>
               <div className="w-0 h-0 border-l-[8px] border-l-red-500 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent"></div>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900">
               Clients Say.
             </h2>
           </div>
@@ -103,17 +103,17 @@ const Testimonials = () => {
           onMouseLeave={() => setIsHovering(false)}
         >
           {/* Navigation Buttons */}
-          <div className="absolute -top-16 right-4 z-10 flex gap-2">
+          <div className="absolute -top-10 md:-top-16 right-4 z-10 flex gap-2">
             <button
               onClick={goToPrevious}
-              className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-all duration-200 shadow-sm"
+              className="md:w-12 md:h-12 w-8 h-8  rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-all duration-200 shadow-sm"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="w-5 h-5 text-gray-600" />
             </button>
             <button
               onClick={goToNext}
-              className="w-12 h-12 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-all duration-200 shadow-sm"
+              className="md:w-12 md:h-12 w-8 h-8 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 transition-all duration-200 shadow-sm"
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5 text-white" />
