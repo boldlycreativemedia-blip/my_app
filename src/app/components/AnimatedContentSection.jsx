@@ -172,7 +172,7 @@ export default function AnimatedContentSection({
         </motion.div>
 
         {/* Main Content Container */}
-        <div className="w-full max-w-[1920px] mx-auto px-0 md:px-6 py-6 sm:py-16">
+        <div className="w-full max-w-[1920px] mx-auto pr-10 px-0 md:px-6 py-6 sm:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             {/* LEFT CONTENT - Main Heading */}

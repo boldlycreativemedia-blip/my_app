@@ -206,7 +206,7 @@ const AnimatedStatsWithDividers = () => {
   return (
     <>
       <div ref={sectionRef} className="w-full bg-[#FFFF] py-10 px-4">
-        <div className="max-w-[1920px] ml-10 mr-10 mx-auto">
+        <div className="max-w-[1920px] ml-6 mr-6 md:ml-10 md:mr-10 mx-auto">
           {/* Desktop Layout - All in one row with dividers */}
           <div className="hidden lg:flex items-center justify-between">
             {stats.map((stat, index) => (
