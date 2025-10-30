@@ -145,7 +145,7 @@ const LastHomeSection = () => {
 
               {/* CTA Button */}
               <Link href="/contactus">
-                <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-sm md:text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-xs md:text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
                   Get Free Consultation
                 </button>
               </Link>
@@ -163,7 +163,7 @@ const LastHomeSection = () => {
           </div>
 
           {/* Bottom Right Geometric Shape */}
-          <div className="absolute -bottom-2 md:-bottom-10 right-14 sm:right-40 w-20 h-20 sm:w-32 sm:h-32 md:w-64 md:h-64">
+          <div className="absolute -bottom-3 md:-bottom-10 right-14 sm:right-40 w-22 h-22 sm:w-32 sm:h-32 md:w-64 md:h-64">
             <img
               src="/Frame2085660655.png"
               alt="Decorative shape"
