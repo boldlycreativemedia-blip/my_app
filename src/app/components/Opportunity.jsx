@@ -118,7 +118,7 @@ const CareerPage = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 mb-20">
-      <div className="max-w-[1920px] ml-16 mr-16 mt-4 mx-auto">
+      <div className="max-w-[1920px] ml-7 mr-7 md:ml-16 md:mr-16 mt-4 mx-auto">
         {/* Our Team Badge */}
           <div className="flex items-center justify-center gap-2 ">
             <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
@@ -162,7 +162,7 @@ const CareerPage = () => {
               onClick={() => handleJobClick(job.id)}
             >
               {/* Top Right Star */}
-              <div className="absolute top-0 right-0 w-24 h-24 sm:w-24 sm:h-24 md:w-30 md:h-30 lg:w-30 lg:h-30">
+              <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 md:w-30 md:h-30 lg:w-30 lg:h-30">
                 <img
                   src="/Frame2085660656.png"
                   alt="Decorative star"

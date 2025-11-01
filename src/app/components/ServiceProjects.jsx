@@ -288,9 +288,9 @@ const ProjectCard = ({
         </div>
 
         <div className="relative z-10">
-          <h3 className="text-sm font-medium text-[#EC4D37] mb-2">{title}</h3>
+          <h3 className="text-lg font-medium text-[#EC4D37] mb-2">{title}</h3>
 
-          <h4 className="text-xl font-bold text-[#1F1B1C] mb-4 leading-tight">
+          <h4 className="text-sm font-bold text-[#1F1B1C] mb-4 leading-tight">
             {description}
           </h4>
 
@@ -428,9 +428,9 @@ const ServiceProjects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 sm:px-6 lg:px-4 mb-20">
+    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 sm:px-6 lg:px-4 z-50 pb-30">
       <div className="max-w-[1920px] mx-auto">
-        <div className="flex flex-col ml-14 mr-14 lg:flex-row lg:items-start lg:justify-between mb-16">
+        <div className="flex flex-col lg:ml-14 lg:mr-14 ml-8 mr-8 lg:flex-row lg:items-start lg:justify-between mb-16">
           <div className="lg:max-w-xl">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -468,7 +468,9 @@ const ServiceProjects = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="group cursor-pointer bg-[#1F1B1C] hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-full flex items-center space-x-3 transition-all duration-300 shadow-lg"
             >
-              <Link href="/contactus"><span>Contact Us</span></Link>
+              <Link href="/contactus">
+                <span>Contact Us</span>
+              </Link>
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{
@@ -483,40 +485,43 @@ const ServiceProjects = () => {
           </div>
         </div>
 
-        <div ref={containerRef} className="relative overflow-hidden ml-12 mr-12 py-2">
-          <motion.div
-            className="flex cursor-grab active:cursor-grabbing"
-            style={{ x }}
-            drag="x"
-            dragConstraints={{ left: -loopWidth * 2, right: 0 }}
-            dragElastic={0.1}
-            dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            onDrag={handleDrag}
+          <div
+            ref={containerRef}
+            className="relative overflow-hidden ml-8 mr-8 md:ml-12 md:mr-12 py-2"
           >
-            {duplicatedProjects.map((project, index) => (
-              <ProjectCard
-                key={index}
-                title={project.title}
-                description={project.description}
-                date={project.date}
-                videoUrl={project.videoUrl}
-                isHovered={hoveredIndex === index}
-                isInView={
-                  index >= visibleRange.start && index <= visibleRange.end
-                }
-                onHover={() => {
-                  setIsPaused(true);
-                  setHoveredIndex(index);
-                }}
-                onLeave={() => {
-                  setIsPaused(false);
-                  setHoveredIndex(null);
-                }}
-              />
-            ))}
-          </motion.div>
+            <motion.div
+              className="flex cursor-grab active:cursor-grabbing"
+              style={{ x }}
+              drag="x"
+              dragConstraints={{ left: -loopWidth * 2, right: 0 }}
+              dragElastic={0.1}
+              dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              onDrag={handleDrag}
+            >
+              {duplicatedProjects.map((project, index) => (
+                <ProjectCard
+                  key={index}
+                  title={project.title}
+                  description={project.description}
+                  date={project.date}
+                  videoUrl={project.videoUrl}
+                  isHovered={hoveredIndex === index}
+                  isInView={
+                    index >= visibleRange.start && index <= visibleRange.end
+                  }
+                  onHover={() => {
+                    setIsPaused(true);
+                    setHoveredIndex(index);
+                  }}
+                  onLeave={() => {
+                    setIsPaused(false);
+                    setHoveredIndex(null);
+                  }}
+                />
+              ))}
+            </motion.div>
         </div>
       </div>
     </div>

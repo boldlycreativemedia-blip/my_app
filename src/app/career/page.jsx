@@ -17,10 +17,10 @@ const page = () => {
     <div>
       <Header />
       <section
-        className="relative z-10 bg-white w-full px-6 py-10"
+        className="relative z-10 bg-white w-full px-6 py-2 md:py-10"
         ref={sectionRef}
       >
-        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-6 sm:py-16">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-4 md:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             {/* Desktop: Two column layout, Mobile: Stacked */}
@@ -57,24 +57,39 @@ const page = () => {
                   </span>
                 </motion.h1>
 
-                {/* Background Text - "Work With Us" */}
-          <motion.div
-            className="relative md:hidden -mt-4 pb-8"
-            initial={{ x: 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-          >
-            <motion.div
-              className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden"
-              initial={{ scale: 0.9, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: 0.8 }}
-            >
-              \\Work With Us
-            </motion.div>
-          </motion.div>
+                {/* Background Text - "Work With Us" - Mobile only */}
+                <motion.div
+                  className="relative md:hidden -mt-2 pb-8"
+                  initial={{ x: 100, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+                >
+                  <motion.div
+                    className="text-[#BBBBBB] text-3xl sm:text-4xl font-bold leading-none select-none text-start overflow-hidden"
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.8 }}
+                  >
+                    \\Work With Us
+                  </motion.div>
+                </motion.div>
+
+                {/* Tagline - Shows before CTA on mobile, hidden on desktop */}
+                <motion.h2
+                  className="lg:hidden text-md sm:text-lg font-bold leading-tight text-gray-500 text-left mb-6"
+                  initial={{ y: 20, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                >
+                  Let's build a
+                  <br />
+                  future where
+                  <br />
+                  Creativity thrives
+                </motion.h2>
 
                 {/* CTA Button */}
                 <motion.div
@@ -84,7 +99,10 @@ const page = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="inline-block"
                 >
-                  <Link href="https://www.linkedin.com/company/boldly-creative-media/" className="inline-block">
+                  <Link
+                    href="https://www.linkedin.com/company/boldly-creative-media/"
+                    className="inline-block"
+                  >
                     <motion.div
                       className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
                       whileHover={{ scale: 1.05 }}
@@ -107,16 +125,16 @@ const page = () => {
                 </motion.div>
               </motion.div>
 
-              {/* RIGHT CONTENT - New Heading (Top Right on Desktop) */}
+              {/* RIGHT CONTENT - New Heading (Top Right on Desktop only) */}
               <motion.div
-                className="lg:col-span-4 order-1 lg:order-2 flex items-start justify-start lg:justify-end lg:pt-0"
+                className="hidden lg:flex lg:col-span-4 order-1 lg:order-2 items-start justify-end lg:pt-0"
                 initial={{ x: 100, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
               >
                 <motion.h2
-                  className="text-md sm:text-lg md:text-xl font-bold leading-tight text-gray-500 text-left lg:text-right"
+                  className="text-md sm:text-lg md:text-xl font-bold leading-tight text-gray-500 text-right"
                   initial={{ y: 20, opacity: 0 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   viewport={{ once: true }}
@@ -132,7 +150,7 @@ const page = () => {
             </div>
           </div>
 
-          {/* Background Text - "Work With Us" */}
+          {/* Background Text - "Work With Us" - Desktop only */}
           <motion.div
             className="relative hidden md:block mt-8 sm:mt-12 md:mt-16 lg:-mt-24"
             initial={{ x: 100, opacity: 0 }}

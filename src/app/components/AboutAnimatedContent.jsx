@@ -125,12 +125,12 @@ export default function AboutAnimatedContent() {
 
   return (
     <section
-      className="relative z-10 bg-white ml-4 mr-4 w-full px-12 md:px-12 py-8 min-h-screen"
+      className="relative z-10 bg-white ml-4 mr-4 w-full px-12 md:px-12 py-4 min-h-screen"
       ref={sectionRef}
     >
       <div className="max-w-[1920px]  ">
         {/* Main Content Container */}
-        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-6 sm:py-20">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-4 md:py-20">
           {/* Main Heading Section - Changed to animate immediately */}
           <div className="relative">
             <motion.div

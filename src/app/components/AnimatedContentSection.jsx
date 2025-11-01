@@ -141,10 +141,10 @@ export default function AnimatedContentSection({
   };
   return (
     <section
-      className="relative z-10 bg-white w-full px-8 md:px-6 lg:ml-7 lg:mr-7 py-16 md:py-28 min-h-screen flex justify-center"
+      className="relative z-10 bg-white w-full px-8 md:px-8 py-16 md:py-28 min-h-screen flex justify-center"
       ref={sectionRef}
     >
-      <div className="w-full max-w-[1920px]">
+      <div className="w-full max-w-[1600px] mx-auto">
         {/* Service Categories at Bottom */}
         <motion.div
           className="max-w-[1920px] mx-auto md:ml-8 md:mr-8 flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-8 xl:gap-32 mb-8 md:-mt-18"
@@ -195,13 +195,13 @@ export default function AnimatedContentSection({
                 <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-10">
                   Your Story Comes Alive
                   <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
-                    <svg
-                      className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-10 lg:h-10 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 10a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                    </svg>
+                    <Image
+                      src="/finance_mode.png"
+                      alt="draw"
+                      width={20}
+                      height={20}
+                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 text-white"
+                    />
                   </span>
                 </span>
               </motion.h1>
