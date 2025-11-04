@@ -7,8 +7,8 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import CareerOptions from "../components/CareerOptions";
 import Opportunity from "../components/Opportunity";
-import LastAboutSection from "../components/LastAboutSection";
 import Link from "next/link";
+import LastCareerSection from "../components/LastCareerSection";
 
 const page = () => {
   const sectionRef = useRef(null);
@@ -17,10 +17,10 @@ const page = () => {
     <div>
       <Header />
       <section
-        className="relative z-10 bg-white w-full px-6 py-2 md:py-10"
+        className="relative z-10 bg-white w-full px-4 py-2 md:py-10"
         ref={sectionRef}
       >
-        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 py-4 md:py-16">
+        <div className="max-w-[1920px] mx-auto px-4 py-4 md:py-16">
           {/* Main Heading Section */}
           <div className="relative">
             {/* Desktop: Two column layout, Mobile: Stacked */}
@@ -172,7 +172,7 @@ const page = () => {
       </section>
       <CareerOptions />
       <Opportunity />
-      <LastAboutSection />
+      <LastCareerSection />
       <Footer />
     </div>
   );

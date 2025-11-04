@@ -428,9 +428,9 @@ const ServiceProjects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 sm:px-6 lg:px-4 z-50 pb-30">
+    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4  z-50 pb-30">
       <div className="max-w-[1920px] mx-auto">
-        <div className="flex flex-col lg:ml-14 lg:mr-14 ml-8 mr-8 lg:flex-row lg:items-start lg:justify-between mb-16">
+        <div className="flex flex-col lg:ml-14 lg:mr-14 ml-4 mr-4 lg:flex-row lg:items-start lg:justify-between mb-16">
           <div className="lg:max-w-xl">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -487,7 +487,7 @@ const ServiceProjects = () => {
 
           <div
             ref={containerRef}
-            className="relative overflow-hidden ml-8 mr-8 md:ml-12 md:mr-12 py-2"
+            className="relative overflow-hidden ml-4 mr-4 md:ml-12 md:mr-12 py-2"
           >
             <motion.div
               className="flex cursor-grab active:cursor-grabbing"

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const ServiceNumber = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef(null);
 
   const stats = [
@@ -41,10 +42,12 @@ const ServiceNumber = () => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Immediately update visibility state when entering/leaving viewport
-        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting && !hasAnimated) {
+          setIsVisible(true);
+          setHasAnimated(true);
+        }
       },
-      { threshold: 0.1 } // Lower threshold for earlier detection
+      { threshold: 0.1 }
     );
 
     if (currentRef) {
@@ -56,27 +59,24 @@ const ServiceNumber = () => {
         observer.unobserve(currentRef);
       }
     };
-  }, []);
+  }, [hasAnimated]);
 
-  // Counter animation hook - FIXED VERSION
+  // Counter animation hook
   const useCountUp = (end, duration, shouldStart) => {
     const [count, setCount] = useState(0);
     const animationFrameRef = useRef(null);
 
     useEffect(() => {
-      // Cancel any existing animation
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = null;
       }
 
-      // Reset to 0 immediately when not visible
       if (!shouldStart) {
         setCount(0);
         return;
       }
 
-      // Reset to 0 and start animation
       setCount(0);
 
       const startTime = performance.now();
@@ -85,7 +85,6 @@ const ServiceNumber = () => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
-        // Easing function for smooth animation
         const easeOutQuart = 1 - Math.pow(1 - progress, 4);
         const currentCount = end * easeOutQuart;
 
@@ -98,7 +97,6 @@ const ServiceNumber = () => {
         }
       };
 
-      // Start animation immediately
       animationFrameRef.current = requestAnimationFrame(animate);
 
       return () => {
@@ -117,24 +115,18 @@ const ServiceNumber = () => {
 
     const formatNumber = (num) => {
       if (stat.number >= 1 && stat.number < 10) {
-        return num.toFixed(1); // For 1.5M case
+        return num.toFixed(1);
       }
-      return Math.floor(num); // For whole numbers
+      return Math.floor(num);
     };
 
     return (
       <>
-        {/* Stat Item */}
         <div
-          className={`text-center flex-1 transition-opacity duration-300 ${
-            isVisible ? "animate-fadeInUp" : "opacity-0"
+          className={`text-center flex-1 transition-opacity duration-500 ${
+            isVisible ? "opacity-100" : "opacity-0"
           }`}
-          style={{
-            animationDelay: isVisible ? `${index * 0.2}s` : "0s",
-            animationFillMode: "both",
-          }}
         >
-          {/* Large Number with Animation */}
           <div className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-4 font-mono">
             <span>
               {stat.prefix && stat.prefix}
@@ -143,22 +135,16 @@ const ServiceNumber = () => {
             </span>
           </div>
 
-          {/* Description */}
           <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-xs mx-auto">
             {stat.label}
           </p>
         </div>
 
-        {/* Vertical Divider - Only show if not the last item */}
         {!isLast && (
           <div
-            className={`mx-8 md:mx-12 lg:mx-16 flex items-center transition-opacity duration-300 ${
-              isVisible ? "animate-fadeInUp" : "opacity-0"
+            className={`mx-8 md:mx-12 lg:mx-16 flex items-center transition-opacity duration-500 ${
+              isVisible ? "opacity-100" : "opacity-0"
             }`}
-            style={{
-              animationDelay: isVisible ? `${(index + 0.5) * 0.2}s` : "0s",
-              animationFillMode: "both",
-            }}
           >
             <div className="w-px bg-gray-300 h-16 md:h-20 lg:h-24"></div>
           </div>
@@ -167,80 +153,22 @@ const ServiceNumber = () => {
     );
   };
 
-  // Mobile stat item component to avoid duplicate hook calls
-  const MobileStatItem = ({ stat, index, isLast }) => {
-    const count = useCountUp(stat.number, stat.duration, isVisible);
-
-    const formatNumber = (num) => {
-      if (stat.number >= 1 && stat.number < 10) {
-        return num.toFixed(1);
-      }
-      return Math.floor(num);
-    };
-
-    return (
-      <React.Fragment>
-        <div
-          className={`text-center flex-shrink-0 ${
-            isVisible ? "animate-fadeInUp" : "opacity-0"
-          }`}
-          style={{
-            animationDelay: isVisible ? `${index * 0.2}s` : "0s",
-            animationFillMode: "both",
-          }}
-        >
-          {/* Large Number with Animation */}
-          <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 font-mono">
-            <span>
-              {stat.prefix && stat.prefix}
-              {formatNumber(count)}
-              {stat.suffix && stat.suffix}
-            </span>
-          </div>
-
-          {/* Description */}
-          <p className="text-gray-600 text-xs leading-tight max-w-[70px] md:max-w-[100px] mx-auto">
-            {stat.label}
-          </p>
-        </div>
-
-        {/* Vertical Divider - Only show if not the last item */}
-        {!isLast && (
-          <div
-            className={`flex-shrink-0 ${
-              isVisible ? "animate-fadeInUp" : "opacity-0"
-            }`}
-            style={{
-              animationDelay: isVisible ? `${(index + 0.5) * 0.2}s` : "0s",
-              animationFillMode: "both",
-            }}
-          >
-            <div className="w-px bg-gray-300 h-12 md:h-16"></div>
-          </div>
-        )}
-      </React.Fragment>
-    );
-  };
-
   return (
     <>
       <div ref={sectionRef} className="w-full bg-[#F8F8F8] py-5 px-4">
-        <div className="max-w-[1920px] ml-8 mr-4 mx-auto">
-          {/* Our Team Badge */}
+        <div className="max-w-[1920px] ml-4 mr-4 mx-auto">
           <div className="flex items-center justify-center gap-2 ">
             <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
             <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
               Impact
             </span>
           </div>
-          {/* Header Section */}
+
           <div className="text-center mb-16">
-            {/* Main Heading */}
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               What have we achieved so far?
             </h2>
 
-            {/* Description */}
             <div className="max-w-4xl mx-auto">
               <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-2">
                 Lorem ipsum dolor sit amet consectetur. Nam aliquam aliquam diam
@@ -252,8 +180,7 @@ const ServiceNumber = () => {
             </div>
           </div>
 
-          {/* Stats Section */}
-          {/* Desktop Layout - All in one row with dividers */}
+          {/* Desktop Layout */}
           <div className="hidden lg:flex items-center justify-between">
             {stats.map((stat, index) => (
               <StatItem
@@ -265,8 +192,8 @@ const ServiceNumber = () => {
             ))}
           </div>
 
-          {/* Mobile/Tablet Layout - Single row with smaller stats */}
-          <div className="lg:hidden flex items-center justify-between gap-2 overflow-x-auto">
+          {/* Mobile/Tablet Layout - Fixed spacing */}
+          <div className="lg:hidden flex items-center justify-between gap-1 sm:gap-2 px-1">
             {stats.map((stat, index) => {
               const count = useCountUp(stat.number, stat.duration, isVisible);
               const formatNumber = (num) => {
@@ -279,16 +206,11 @@ const ServiceNumber = () => {
               return (
                 <React.Fragment key={stat.id}>
                   <div
-                    className={`text-center flex-shrink-0 ${
-                      isVisible ? "animate-fadeInUp" : "opacity-0"
+                    className={`text-center flex-1 transition-opacity duration-500 ${
+                      isVisible ? "opacity-100" : "opacity-0"
                     }`}
-                    style={{
-                      animationDelay: isVisible ? `${index * 0.2}s` : "0s",
-                      animationFillMode: "both",
-                    }}
                   >
-                    {/* Large Number with Animation */}
-                    <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 font-mono">
+                    <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-1 sm:mb-2 font-mono whitespace-nowrap">
                       <span>
                         {stat.prefix && stat.prefix}
                         {formatNumber(count)}
@@ -296,26 +218,18 @@ const ServiceNumber = () => {
                       </span>
                     </div>
 
-                    {/* Description */}
-                    <p className="text-gray-600 text-xs leading-tight max-w-[70px] md:max-w-[100px] mx-auto">
+                    <p className="text-gray-600 text-[10px] sm:text-xs leading-tight px-1">
                       {stat.label}
                     </p>
                   </div>
 
-                  {/* Vertical Divider - Only show if not the last item */}
                   {index !== stats.length - 1 && (
                     <div
-                      className={`flex-shrink-0 ${
-                        isVisible ? "animate-fadeInUp" : "opacity-0"
+                      className={`flex-shrink-0 transition-opacity duration-500 ${
+                        isVisible ? "opacity-100" : "opacity-0"
                       }`}
-                      style={{
-                        animationDelay: isVisible
-                          ? `${(index + 0.5) * 0.2}s`
-                          : "0s",
-                        animationFillMode: "both",
-                      }}
                     >
-                      <div className="w-px bg-white h-12 md:h-16"></div>
+                      <div className="w-px bg-gray-300 h-10 sm:h-12 md:h-16"></div>
                     </div>
                   )}
                 </React.Fragment>

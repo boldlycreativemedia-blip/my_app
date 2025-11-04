@@ -74,8 +74,8 @@ const LastServiceSection = () => {
   };
 
   return (
-    <div className="bg-white -mt-20 md:-mt-30">
-      <div className="min-h-screen bg-white flex items-center justify-center p-[34px] md:p-[48px] md:-mb-30 -mb-46 pb-0">
+    <div className="bg-white -mt-30">
+      <div className="min-h-screen bg-white flex items-center justify-center p-[34px] md:p-[48px] -mb-30 pb-0">
         <div className="relative w-full max-w-[1920px] bg-[#EC4D37] rounded-3xl overflow-hidden">
           {/* Main Content Container */}
           <div className="relative z-10 px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">

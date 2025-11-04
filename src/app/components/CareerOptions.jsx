@@ -59,7 +59,7 @@ const CareerOptions = () => {
 
   return (
     <div ref={sectionRef} className="w-full bg-white py-3 px-4 overflow-hidden">
-      <div className="max-w-[1920px] ml-7 mr-7 md:ml-16 md:mr-16 mx-auto">
+      <div className="max-w-[1920px] ml-4 mr-4 md:ml-8 md:mr-8 mx-auto">
         {/* Header Section */}
         <div className="">
           {/* Our Team Badge */}

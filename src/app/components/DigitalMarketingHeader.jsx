@@ -119,7 +119,7 @@ const DigitalMarketingHeader = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen -mb-12">
       {/* Header Section */}
       <div className="max-w-[1920px] ml-4 mr-4 mx-auto bg-white py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1920px]">

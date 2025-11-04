@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-const LastAboutSection = () => {
+const LastCareerSection = () => {
   const scrollRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -75,7 +75,7 @@ const LastAboutSection = () => {
 
   return (
     <div className="bg-white">
-      <div className="min-h-screen bg-white flex items-center justify-center p-[34px] md:p-[48px] -mt-26 -mb-30 md:-mt-20 md:-mb-28">
+      <div className="min-h-screen bg-white flex items-center justify-center p-[34px] md:p-[48px] -mt-14 -mb-30 md:-mt-14 md:-mb-28">
         <div className="relative w-full max-w-[1920px] bg-[#EC4D37] rounded-3xl overflow-hidden">
           {/* Main Content Container */}
           <div className="relative z-10 px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">
@@ -94,14 +94,14 @@ const LastAboutSection = () => {
 
               {/* CTA Button */}
               <Link href="/contactus">
-              <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-sm md:text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                Get Free Consultation
-              </button>
+                <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-sm md:text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  Get Free Consultation
+                </button>
               </Link>
             </div>
           </div>
 
-           {/* Decorative Elements */}
+          {/* Decorative Elements */}
           {/* Top Right Star */}
           <div className="absolute top-0 right-0 w-18 h-18 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-48 lg:h-48">
             <img
@@ -176,4 +176,4 @@ const LastAboutSection = () => {
   );
 };
 
-export default LastAboutSection;
+export default LastCareerSection;

@@ -20,14 +20,12 @@ const DigitalMarketingFAQs = () => {
         "We offer complete creative production services — including event coverage, video editing, cinematography, photography, branding, and motion graphics. From planning to final delivery, we handle every detail with precision and creativity.",
     },
     {
-      question:
-        "Do you work with both brands and individual artists?",
+      question: "Do you work with both brands and individual artists?",
       answer:
         "Yes! We collaborate with startups, established brands, creators, and artists to craft visuals that tell their story and amplify their presence.",
     },
     {
-      question:
-        "How long does a typical project take?",
+      question: "How long does a typical project take?",
       answer:
         "Project timelines vary based on scale — a short social media edit may take 2–3 days, while a full event production or campaign can range from 1–3 weeks. We always ensure on-time delivery without compromising quality.",
     },
@@ -46,7 +44,7 @@ const DigitalMarketingFAQs = () => {
       question: "How can I get started with a project?",
       answer:
         "You can reach out through our contact form or email. Once we understand your goals, we’ll share a concept, timeline, and budget proposal to kick things off.",
-    }
+    },
   ];
 
   // Animation variants for the container
@@ -83,12 +81,12 @@ const DigitalMarketingFAQs = () => {
     <div className="min-h-screen bg-[#F8F8F8] py-3 px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1920px] border border-transparent rounded-2xl bg-white ml-4 mr-4 py-[80px] mx-auto">
         {/* Our Team Badge */}
-          <div className="flex items-center justify-center gap-2 ">
-            <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
-            <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
-              Our FAQs
-            </span>
-          </div>
+        <div className="flex items-center justify-center gap-2 ">
+          <div className="w-2 h-2 rounded-full bg-[#EC4D37]"></div>
+          <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+            Our FAQs
+          </span>
+        </div>
         {/* Header Section */}
         <motion.div
           className="text-center mb-7"
@@ -108,7 +106,10 @@ const DigitalMarketingFAQs = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/contactus" className="w-full sm:w-auto">
+            <Link
+              href="/contactus"
+              className="w-full sm:w-auto flex justify-center"
+            >
               <button className="px-6 cursor-pointer py-3 bg-white border-2 border-[#1F1B1C] rounded-full text-[#1F1B1C] font-medium hover:border-[#1F1B1C] transition-colors duration-200 flex items-center gap-2">
                 More Questions
                 <ChevronRightIcon className="w-4 h-4" />

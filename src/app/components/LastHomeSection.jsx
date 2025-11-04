@@ -103,7 +103,7 @@ const LastHomeSection = () => {
           {duplicatedBrands.map((brand, index) => (
             <motion.div
               key={`brand-${index}`}
-              className="flex items-center justify-center whitespace-nowrap flex-shrink-0 px-4 py-2 group"
+              className="flex items-center justify-center whitespace-nowrap flex-shrink-0 px-4 py-0 group"
               whileHover={{ scale: 1.3 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -126,7 +126,7 @@ const LastHomeSection = () => {
         `}</style>
       </motion.div>
 
-      <div className="min-h-screen bg-white flex items-center justify-center -mt-18 -mb-14 p-[48px]">
+      <div className="min-h-screen bg-white flex items-center justify-center -mt-30 -mb-24 md:-mt-26 md:-mb-14 p-[48px]">
         <div className="relative w-full max-w-[1920px]   bg-[#EC4D37] rounded-3xl overflow-hidden">
           {/* Main Content Container */}
           <div className="relative  z-10 px-8 md:px-12 lg:px-16 py-12 md:py-16 lg:py-20">

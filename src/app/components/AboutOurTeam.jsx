@@ -121,7 +121,7 @@ const TeamShowcase = () => {
             </span>
           </div>
       <motion.div
-        className="max-w-[1920px] ml-12 mr-12 mx-auto"
+        className="max-w-[1920px] ml-6 mr-6 md:ml-12 md:mr-12 mx-auto"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

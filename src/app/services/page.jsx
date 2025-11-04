@@ -97,7 +97,7 @@ const Page = () => {
     <div>
       <Header />
       <section
-        className="relative z-10 bg-white w-full px-6 md:px-12 md:py-16 py-2 min-h-screen"
+        className="relative z-10 bg-white w-full px-1 md:px-4 md:py-16 py-0 min-h-screen"
         ref={sectionRef}
       >
         <div className="max-w-[1920px] ml-4 mr-4 mx-auto px-4 sm:px-6 py-4 md:py-12">
