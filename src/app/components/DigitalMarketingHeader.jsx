@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ArrowRight, Plus, Minus } from "lucide-react";
-import Link from "next/link";
 
 const DigitalMarketingHeader = () => {
   const [expandedSections, setExpandedSections] = useState({});
@@ -135,31 +134,36 @@ const DigitalMarketingHeader = () => {
           <div className="flex flex-col  lg:flex-row items-start lg:items-baseline justify-between gap-8">
             {/* Main Heading */}
             <div className="flex-1 max-w-[1920px]">
-              <h1 className=" max-w-[1920px] text-4xl sm:text-5xl lg:text-7xl font-bold text-[#1F1B1C] leading-tight">
-                Innovative Services Crafted
+              {/* Mobile: Single line */}
+              <h1 className="lg:hidden max-w-[1920px] text-4xl sm:text-5xl font-bold text-[#1F1B1C] leading-tight">
+                Innovative Services Crafted To Elevate Your Brand
               </h1>
-              <div className="flex items-center gap-4 mt-4">
-                <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-[#1F1B1C] leading-tight">
-                  To Elevate
-                </h2>
 
-                <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-[#1F1B1C] leading-tight mt-2">
-                  Your Brand
-                </h2>
+              {/* Desktop: Split layout */}
+              <div className="hidden lg:block">
+                <h1 className="max-w-[1920px] text-7xl font-bold text-[#1F1B1C] leading-tight">
+                  Innovative Services Crafted
+                </h1>
+                <div className="flex items-center gap-4 mt-4">
+                  <h2 className="text-7xl font-bold text-[#1F1B1C] leading-tight">
+                    To Elevate
+                  </h2>
+                  <h2 className="text-7xl font-bold text-[#1F1B1C] leading-tight mt-2">
+                    Your Brand
+                  </h2>
+                </div>
               </div>
             </div>
 
             {/* CTA Button - Minimalist Style */}
-            <Link href="services">
-              <div className="flex-shrink-0 ">
-                <button className="group flex cursor-pointer items-baseline gap-2 border-b-2 border-[#1F1B1C] hover:border-[#EC4D37] transition-all duration-300">
-                  <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
-                    Learn More Our Service
-                  </span>
-                  <ArrowRight className="w-4 h-4 text-[#1F1B1C] group-hover:text-[#EC4D37] group-hover:translate-x-1 transition-all duration-300" />
-                </button>
-              </div>
-            </Link>
+            <div className="flex-shrink-0">
+              <button className="group flex cursor-pointer items-baseline gap-2 border-b-2 border-[#1F1B1C] hover:border-[#EC4D37] transition-all duration-300">
+                <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+                  Learn More Our Service
+                </span>
+                <ArrowRight className="w-4 h-4 text-[#1F1B1C] group-hover:text-[#EC4D37] group-hover:translate-x-1 transition-all duration-300" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -194,24 +198,22 @@ const DigitalMarketingHeader = () => {
                 {/* All services - collapsible layout */}
                 <div className=" rounded-2xl">
                   <div
-                    className="flex items-center justify-between p-8 cursor-pointer hover:scale-105 transition-transform duration-200"
+                    className="flex items-start justify-between p-4 sm:p-8 cursor-pointer hover:scale-105 transition-transform duration-200"
                     onClick={() => toggleSection(service.id)}
                   >
-                    <div className="flex items-center gap-6">
-                      <span className="text-orange-500 font-bold text-xl">
+                    <div className="flex items-start gap-3 sm:gap-6 flex-1 min-w-0">
+                      <span className="text-orange-500 font-bold text-lg sm:text-xl flex-shrink-0 pt-1">
                         0{service.id}
                       </span>
-                      {!expandedSections[service.id] && (
-                        <h3 className="text-2xl lg:text-3xl font-bold text-[#1F1B1C]">
-                          {service.title}
-                        </h3>
-                      )}
+                      <h3 className="text-lg sm:text-2xl lg:text-3xl font-bold text-[#1F1B1C] break-words">
+                        {service.title}
+                      </h3>
                     </div>
-                    <button className="w-10 h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-orange-500 hover:text-orange-500 transition-colors duration-200">
+                    <button className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-orange-500 hover:text-orange-500 transition-colors duration-200 flex-shrink-0 ml-2">
                       {expandedSections[service.id] ? (
-                        <Minus className="w-5 h-5" />
+                        <Minus className="w-4 h-4 sm:w-5 sm:h-5" />
                       ) : (
-                        <Plus className="w-5 h-5" />
+                        <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                       )}
                     </button>
                   </div>
@@ -220,7 +222,7 @@ const DigitalMarketingHeader = () => {
                   <div
                     className={`overflow-hidden transition-all duration-500 ease-in-out ${
                       expandedSections[service.id]
-                        ? "max-h-[600px] opacity-100"
+                        ? "max-h-[2000px] opacity-100"
                         : "max-h-0 opacity-0"
                     }`}
                   >
@@ -251,18 +253,13 @@ const DigitalMarketingHeader = () => {
                               )}
                             </div>
                             <div className="lg:w-3/5">
-                              {/* Service title and description */}
-                              <h4 className="text-2xl lg:text-3xl font-bold text-[#1F1B1C] mb-6">
-                                {service.title}
-                              </h4>
-
                               {/* Service image */}
                               <div className="flex justify-start mb-6">
-                                <div className="w-full h-64 rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                <div className="w-full rounded-2xl overflow-hidden shadow-lg">
                                   <img
                                     src={service.image}
                                     alt={service.title}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-auto object-contain"
                                   />
                                 </div>
                               </div>

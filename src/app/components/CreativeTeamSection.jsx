@@ -21,7 +21,7 @@ const CreativeTeamSection = () => {
       name: "Harshit Singh",
       designation: "Co-founder & COO",
       image: "/member-2.png",
-      delay: 0.5,
+      delay: 0.1,
     },
     {
       id: 3,
@@ -29,7 +29,7 @@ const CreativeTeamSection = () => {
       name: "Anirudh Vohra",
       designation: "Creative Director",
       image: "/member-8.jpg",
-      delay: 0.5,
+      delay: 0.3,
     },
     {
       id: 4,
@@ -37,7 +37,7 @@ const CreativeTeamSection = () => {
       name: "Jungkal Brahma",
       designation: "Art Director",
       image: "/member-3.png",
-      delay: 1,
+      delay: 0.5
     },
     {
       id: 5,
@@ -45,7 +45,7 @@ const CreativeTeamSection = () => {
       name: "Vipul Kumar",
       designation: "Design Head",
       image: "/member-4.png",
-      delay: 1.5,
+      delay: 0.7,
     },
     {
       id: 6,
@@ -53,7 +53,7 @@ const CreativeTeamSection = () => {
       name: "Naman Dadhich",
       designation: "Cinematographer",
       image: "/member-5.png",
-      delay: 2,
+      delay: 0.9,
     },
     {
       id: 7,
@@ -61,7 +61,7 @@ const CreativeTeamSection = () => {
       name: "Aman Mann",
       designation: "Photographer",
       image: "/member-6.png",
-      delay: 3,
+      delay: 1.1,
     },
     {
       id: 8,
@@ -69,7 +69,7 @@ const CreativeTeamSection = () => {
       name: "Aditya Xopun Borah",
       designation: "Photographer",
       image: "/member-7.png",
-      delay: 3.5,
+      delay: 1.3,
     },
   ];
 
@@ -202,7 +202,7 @@ const CreativeTeamSection = () => {
                   isVisible ? "animate-fadeInUp" : "opacity-0"
                 } cursor-pointer`}
                 style={{
-                  animationDelay: isVisible ? "3.5s" : "0s",
+                  animationDelay: isVisible ? "0.8s" : "0s",
                   animationFillMode: "both",
                 }}
               >

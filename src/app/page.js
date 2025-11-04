@@ -326,7 +326,7 @@ export default function Page() {
           }}
         >
           <div className="text-center">
-            <h1 className="text-[#1F1B1C] lg:w-[438.32px] lg:h-[380.59px] leading-tight text-center lg:mt-12 sm:-mt-24 thoge-font">
+            <h1 className="text-[#1F1B1C] lg:w-[438.32px] lg:h-[380.59px] leading-tight text-center lg:mt-12 sm:-mt-30 thoge-font">
               <span className="text-9xl md:text-9xl lg:text-[250px]">
                 BOLDLY
               </span>
@@ -442,9 +442,9 @@ export default function Page() {
           </button>
 
           <Link href="/contactus">
-            <div className="relative z-10 h-full flex items-end justify-center pb-20">
+            <div className="relative z-10 h-full flex items-end justify-center pb-44 md:pb-10">
               <div className="text-white text-center">
-                <button className="mt-40 bg-[#EC4D37] cursor-pointer text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#ea4b36] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
+                <button className="mt-50 bg-[#EC4D37] cursor-pointer text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#ea4b36] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
                   Start your journey
                   <svg
                     width="24"

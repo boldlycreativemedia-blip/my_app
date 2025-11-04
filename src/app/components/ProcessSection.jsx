@@ -159,15 +159,18 @@ const ProcessSection = () => {
                     whileHover={{ y: -5, scale: 1.02 }}
                   >
                     {/* Mobile Number Header */}
-                    <div className="lg:hidden bg-[#EC4D37] px-8 py-4">
+                    <div className="lg:hidden bg-[#EC4D37] px-8 py-4 flex items-center gap-4">
                       <span className="text-3xl font-bold text-[#1F1B1C]">
                         {step.id}
                       </span>
+                      <h2 className="text-2xl font-bold text-[#1F1B1C] flex-1">
+                        {step.title}
+                      </h2>
                     </div>
 
                     {/* Card Content */}
                     <div className="p-8">
-                      <h2 className="text-2xl lg:text-3xl font-bold text-[#1F1B1C] mb-4 group-hover:text-white transition-colors duration-300">
+                      <h2 className="hidden lg:block text-2xl lg:text-3xl font-bold text-[#1F1B1C] mb-4 group-hover:text-white transition-colors duration-300">
                         {step.title}
                       </h2>
 

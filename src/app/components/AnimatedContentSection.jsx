@@ -177,7 +177,7 @@ export default function AnimatedContentSection({
           <div className="relative">
             {/* LEFT CONTENT - Main Heading */}
             <motion.div
-              className="max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-7xl gap-4"
+              className="max-w-full sm:max-w-6xl md:max-w-6xl lg:max-w-7xl gap-4 "
               initial={{ x: -100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -190,10 +190,12 @@ export default function AnimatedContentSection({
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                Your Brand in Motion,
-                <br />
-                <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-10">
-                  Your Story Comes Alive
+                <span className="block whitespace-nowrap">
+                  Your Brand in Motion,
+                </span>
+                <span className="block">Your Story Comes </span>
+                <span className="inline-flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-10">
+                  Alive
                   <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
                     <Image
                       src="/finance_mode.png"
@@ -205,10 +207,9 @@ export default function AnimatedContentSection({
                   </span>
                 </span>
               </motion.h1>
-
               {/* Background Text - "Amplified" for Mobile */}
               <motion.div
-                className="block md:hidden mb-6 -mt-8"
+                className="block md:hidden mb-6 ml-24"
                 initial={{ x: 100, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
