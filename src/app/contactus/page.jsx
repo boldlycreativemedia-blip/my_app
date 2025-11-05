@@ -370,7 +370,7 @@ ${attachmentsList}
     <div>
       <Header />
       <section
-        className="relative z-10 bg-white max-w-[1920px] px-6 md:px-12 py-12 pb-6"
+        className="relative z-10 bg-white max-w-[1920px] px-6 md:px-12 py-0 md:py-12 pb-6"
         ref={sectionRef}
       >
         <div className="max-w-[1920px] mx-auto px-4 py-12 sm:px-6">
