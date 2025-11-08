@@ -147,10 +147,10 @@ export default function AboutAnimatedContent() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  Know More
-                  <br />
+                  <span className="block sm:inline">Know More</span>
+                  <br className="hidden sm:block" />
                   <span className="flex flex-wrap items-center gap-2 mt-3 sm:gap-3 md:gap-4 lg:gap-8">
-                    About Boldly
+                    <span className="inline sm:contents">About Boldly</span>
                     <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
                       <Lightbulb
                         strokeWidth={4}
@@ -184,7 +184,7 @@ export default function AboutAnimatedContent() {
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  className="inline-block"
+                  className="w-full md:w-auto flex justify-center md:justify-start"
                 >
                   <motion.div
                     className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"

@@ -444,7 +444,7 @@ export default function Page() {
           <Link href="/contactus">
             <div className="relative z-10 h-full flex items-end justify-center pb-44 md:pb-10">
               <div className="text-white text-center">
-                <button className="mt-50 bg-[#EC4D37] cursor-pointer text-white px-12 py-5 rounded-full text-xl font-semibold hover:bg-[#ea4b36] transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
+                <button className="mt-50 bg-[#EC4D37] cursor-pointer text-white px-12 py-5 rounded-full text-sm md:text-xl font-semibold transition-all duration-300 flex items-center gap-3 mx-auto pointer-events-auto">
                   Start your journey
                   <svg
                     width="24"

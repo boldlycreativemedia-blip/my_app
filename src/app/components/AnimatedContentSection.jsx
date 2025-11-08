@@ -144,10 +144,10 @@ export default function AnimatedContentSection({
       className="relative z-10 bg-white w-full px-8 md:px-8 py-16 md:py-28 min-h-screen flex justify-center"
       ref={sectionRef}
     >
-      <div className="w-full max-w-[1600px] mx-auto">
+      <div className="w-full max-w-[1920px] mx-auto">
         {/* Service Categories at Bottom */}
         <motion.div
-          className="max-w-[1920px] mx-auto md:ml-8 md:mr-8 flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-8 xl:gap-32 mb-8 md:-mt-18"
+          className="max-w-[1920px] mx-auto md:ml-8 md:mr-8 flex flex-row sm:flex-row justify-center md:justify-between items-center gap-6 sm:gap-8 xl:gap-32 mb-8 md:-mt-18"
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
@@ -160,7 +160,9 @@ export default function AnimatedContentSection({
           ].map((service, index) => (
             <motion.span
               key={service}
-              className="text-gray-600 text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-center"
+              className={`text-gray-600 text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-center ${
+                service === "Stunning Website Design" ? "hidden md:inline" : ""
+              }`}
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -193,7 +195,7 @@ export default function AnimatedContentSection({
                 <span className="block whitespace-nowrap">
                   Your Brand in Motion,
                 </span>
-                <span className="block">Your Story Comes </span>
+                <span className="block whitespace-nowrap">Your Story Comes </span>
                 <span className="inline-flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-10">
                   Alive
                   <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
@@ -209,7 +211,7 @@ export default function AnimatedContentSection({
               </motion.h1>
               {/* Background Text - "Amplified" for Mobile */}
               <motion.div
-                className="block md:hidden mb-6 ml-24"
+                className="block md:hidden mb-6 ml-40"
                 initial={{ x: 100, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
@@ -232,7 +234,7 @@ export default function AnimatedContentSection({
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="inline-block"
+                className="w-full md:w-auto flex justify-center md:justify-start"
               >
                 <motion.div
                   className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-5 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base md:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
@@ -278,7 +280,7 @@ export default function AnimatedContentSection({
 
           {/* Mobile Stats - Only visible on mobile */}
           <motion.div
-            className="block md:hidden mt-8 text-center"
+            className="md:hidden hidden mt-8 text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -322,7 +324,7 @@ export default function AnimatedContentSection({
         >
           <div
             ref={scrollRef}
-            className="flex items-center gap-8 md:gap-12 lg:gap-16 overflow-x-auto cursor-grab active:cursor-grabbing select-none py-4"
+            className="flex items-center gap-8 md:gap-12 lg:gap-16 overflow-x-auto cursor-grab active:cursor-grabbing select-none"
             style={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",

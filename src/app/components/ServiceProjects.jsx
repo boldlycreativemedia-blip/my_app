@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { ArrowRight, Volume2, VolumeX, AlertCircle } from "lucide-react";
-import Link from "next/link";
 
 const ProjectCard = ({
   title,
@@ -13,6 +12,8 @@ const ProjectCard = ({
   onHover,
   onLeave,
   isInView,
+  isTapped,
+  onTap,
 }) => {
   const [isMuted, setIsMuted] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -106,14 +107,6 @@ const ProjectCard = ({
       }
     }
 
-    // console.error(`Video load error for "${title}":`, {
-    //   code: errorCode,
-    //   message: errorMessage,
-    //   url: optimizedVideoUrl,
-    //   networkState: video.networkState,
-    //   readyState: video.readyState,
-    // });
-
     setHasError(true);
     setErrorDetails({ code: errorCode, message: errorMessage });
   };
@@ -136,12 +129,13 @@ const ProjectCard = ({
       <motion.div
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
+        onClick={onTap}
         animate={{
           scale: isHovered ? 1.1 : 1,
           y: isHovered ? -20 : 0,
         }}
         transition={{ duration: 0.3 }}
-        style={{ zIndex: isHovered ? 50 : 1 }}
+        style={{ zIndex: isHovered || isTapped ? 50 : 1 }}
         className="group relative cursor-pointer"
       >
         {/* Video container - Portrait/Reel format (9:16 ratio) */}
@@ -248,12 +242,16 @@ const ProjectCard = ({
                 </motion.button>
               )}
 
-              {/* Hover Overlay */}
-              {isHovered && (
+              {/* Hover/Tap Overlay */}
+              {(isHovered || isTapped) && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="absolute inset-0 border-4 border-transparent rounded-lg pointer-events-none"
+                  className={`absolute inset-0 ${
+                    isTapped
+                      ? "border-4 border-[#EC4D37]"
+                      : "border-4 border-transparent"
+                  } rounded-lg pointer-events-none`}
                 />
               )}
             </>
@@ -306,6 +304,7 @@ const ServiceProjects = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [visibleRange, setVisibleRange] = useState({ start: 0, end: 3 });
   const [isDragging, setIsDragging] = useState(false);
+  const [tappedIndex, setTappedIndex] = useState(null);
   const x = useMotionValue(0);
   const containerRef = useRef(null);
   const dragStartX = useRef(0);
@@ -387,7 +386,7 @@ const ServiceProjects = () => {
   }, [x, duplicatedProjects.length]);
 
   useAnimationFrame((t, delta) => {
-    if (!isPaused && !isDragging) {
+    if (!isPaused && !isDragging && tappedIndex === null) {
       const speed = 0.6;
       let currentX = x.get();
       currentX -= speed;
@@ -428,7 +427,7 @@ const ServiceProjects = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4  z-50 pb-30">
+    <div className="min-h-screen bg-[#F8F8F8] py-8 px-4 z-50 pb-30">
       <div className="max-w-[1920px] mx-auto">
         <div className="flex flex-col lg:ml-14 lg:mr-14 ml-4 mr-4 lg:flex-row lg:items-start lg:justify-between mb-16">
           <div className="lg:max-w-xl">
@@ -468,9 +467,7 @@ const ServiceProjects = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="group cursor-pointer bg-[#1F1B1C] hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-full flex items-center space-x-3 transition-all duration-300 shadow-lg"
             >
-              <Link href="/contactus">
-                <span>Contact Us</span>
-              </Link>
+              <span>Contact Us</span>
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{
@@ -485,43 +482,55 @@ const ServiceProjects = () => {
           </div>
         </div>
 
-          <div
-            ref={containerRef}
-            className="relative overflow-hidden ml-4 mr-4 md:ml-12 md:mr-12 py-2"
+        <div
+          ref={containerRef}
+          className="relative overflow-hidden ml-4 mr-4 md:ml-12 md:mr-12 py-2"
+        >
+          <motion.div
+            className="flex cursor-grab active:cursor-grabbing"
+            style={{ x }}
+            drag="x"
+            dragConstraints={{ left: -loopWidth * 2, right: 0 }}
+            dragElastic={0.1}
+            dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDrag={handleDrag}
           >
-            <motion.div
-              className="flex cursor-grab active:cursor-grabbing"
-              style={{ x }}
-              drag="x"
-              dragConstraints={{ left: -loopWidth * 2, right: 0 }}
-              dragElastic={0.1}
-              dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              onDrag={handleDrag}
-            >
-              {duplicatedProjects.map((project, index) => (
-                <ProjectCard
-                  key={index}
-                  title={project.title}
-                  description={project.description}
-                  date={project.date}
-                  videoUrl={project.videoUrl}
-                  isHovered={hoveredIndex === index}
-                  isInView={
-                    index >= visibleRange.start && index <= visibleRange.end
-                  }
-                  onHover={() => {
-                    setIsPaused(true);
-                    setHoveredIndex(index);
-                  }}
-                  onLeave={() => {
+            {duplicatedProjects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                title={project.title}
+                description={project.description}
+                date={project.date}
+                videoUrl={project.videoUrl}
+                isHovered={hoveredIndex === index}
+                isTapped={tappedIndex === index}
+                isInView={
+                  index >= visibleRange.start && index <= visibleRange.end
+                }
+                onHover={() => {
+                  setIsPaused(true);
+                  setHoveredIndex(index);
+                }}
+                onLeave={() => {
+                  setIsPaused(false);
+                  setHoveredIndex(null);
+                }}
+                onTap={() => {
+                  if (tappedIndex === index) {
+                    // Untap if tapping the same video
+                    setTappedIndex(null);
                     setIsPaused(false);
-                    setHoveredIndex(null);
-                  }}
-                />
-              ))}
-            </motion.div>
+                  } else {
+                    // Tap new video
+                    setTappedIndex(index);
+                    setIsPaused(true);
+                  }
+                }}
+              />
+            ))}
+          </motion.div>
         </div>
       </div>
     </div>

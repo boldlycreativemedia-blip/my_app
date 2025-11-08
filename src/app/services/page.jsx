@@ -125,13 +125,13 @@ const Page = () => {
 
               {/* Background Text - "Your Growth" */}
               <div className="relative md:hidden -mt-4 pb-7">
-                <div className="text-[#BBBBBB] md:text-[#BBBBBB] text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden">
+                <div className="text-[#BBBBBB] md:text-[#BBBBBB] text-2xl sm:text-3xl md:text-6xl lg:text-8xl font-bold leading-none select-none text-start md:text-right overflow-hidden whitespace-nowrap">
                   \\Amplify Your Voice
                 </div>
               </div>
 
               {/* CTA Button */}
-              <div className="inline-block">
+              <div className="w-full md:w-auto flex justify-center md:justify-start">
                 <Link href="/contactus" className="inline-block">
                   <motion.div
                     className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
@@ -171,8 +171,7 @@ const Page = () => {
           <div className="block md:hidden mt-8 text-center">
             <div className="text-gray-600 text-base sm:text-lg leading-tight">
               Let's create visuals
-              <br />
-              that captivate and <br />
+              that captivate and
               captivate
             </div>
           </div>

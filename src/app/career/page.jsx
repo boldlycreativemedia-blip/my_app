@@ -85,9 +85,7 @@ const page = () => {
                   transition={{ duration: 0.8, delay: 0.5 }}
                 >
                   Let's build a
-                  <br />
                   future where
-                  <br />
                   Creativity thrives
                 </motion.h2>
 
@@ -97,7 +95,7 @@ const page = () => {
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  className="inline-block"
+                  className="w-full md:w-auto flex justify-center md:justify-start"
                 >
                   <Link
                     href="https://www.linkedin.com/company/boldly-creative-media/"

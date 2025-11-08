@@ -114,9 +114,9 @@ function ContactContent() {
   ];
 
   // EmailJS configuration (replace with your actual service details)
-  const EMAILJS_SERVICE_ID = "your_service_id";
-  const EMAILJS_TEMPLATE_ID = "your_template_id";
-  const EMAILJS_PUBLIC_KEY = "your_public_key";
+  const EMAILJS_SERVICE_ID = "service_lwh8suv";
+  const EMAILJS_TEMPLATE_ID = "template_z83qww4";
+  const EMAILJS_PUBLIC_KEY = "AJa4K0h87Mna2MZFa";
 
   // Duplicate brands array for seamless loop
   const duplicatedBrands = [...brands, ...brands];
@@ -214,7 +214,6 @@ function ContactContent() {
    • Industry Type: ${formData.industryType}
 
 💼 PROJECT DETAILS:
-   • Budget Range: ${formData.budgetRange}
    • Need Help With: ${formData.helpWith}
 
 💬 MESSAGE:
@@ -263,10 +262,10 @@ ${attachmentsList}
         organization: formData.organization,
         region: formData.region,
         industry_type: formData.industryType,
-        budget_range: formData.budgetRange,
         help_with: formData.helpWith,
         user_message: formData.message,
         attachments_count: attachments.length,
+        stay_updated: formData.stayUpdated ? "Yes" : "No",
       };
 
       await emailjs.send(
@@ -454,7 +453,7 @@ ${attachmentsList}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <p className="text-lg text-[#212529] mb-2 font-semibold">
+              <p className="text-md md:text-lg text-[#212529] mb-2 font-semibold">
                 Write us an email via this form or just send us an{" "}
                 <span className="text-[#EC4D37] font-semibold">E-mail</span> at:{" "}
                 <a
@@ -601,33 +600,6 @@ ${attachmentsList}
 
             {/* Budget & Help Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <motion.div
-                initial={{ x: -30, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.7 }}
-                className="relative"
-              >
-                <select
-                  name="budgetRange"
-                  value={formData.budgetRange}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-4 border border-gray-300 rounded focus:border-[#EC4D37] outline-none transition-colors duration-300 bg-white text-gray-600 appearance-none cursor-pointer"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E")`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "right 1rem center",
-                    backgroundSize: "12px",
-                  }}
-                >
-                  <option value="">Choose your budget range</option>
-                  {budgetRanges.map((budget) => (
-                    <option key={budget} value={budget}>
-                      {budget}
-                    </option>
-                  ))}
-                </select>
-              </motion.div>
 
               <motion.div
                 initial={{ x: 30, opacity: 0 }}
@@ -1019,7 +991,7 @@ ${attachmentsList}
                   >
                     <Mail className="w-8 h-8 text-[#0078FA]" />
                     <div>
-                      <span className="text-[#0078FA] font-medium text-lg">
+                      <span className="text-[#0078FA] font-medium text-xs md:text-lg">
                         boldlycreativemedia@gmail.com
                       </span>
                       <p className="text-gray-500 text-sm mt-1">

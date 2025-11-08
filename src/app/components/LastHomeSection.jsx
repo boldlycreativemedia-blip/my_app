@@ -110,9 +110,7 @@ const LastHomeSection = () => {
               <img
                 src={brand.image}
                 alt={brand.alt}
-                width={120}
-                height={60}
-                className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className="h-20 sm:h-24 md:h-30 lg:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </motion.div>
           ))}
