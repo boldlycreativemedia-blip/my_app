@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ArrowRight, Plus, Minus } from "lucide-react";
+import Link from "next/link";
 
 const DigitalMarketingHeader = () => {
   const [expandedSections, setExpandedSections] = useState({});
@@ -156,14 +157,16 @@ const DigitalMarketingHeader = () => {
             </div>
 
             {/* CTA Button - Minimalist Style */}
-            <div className="flex-shrink-0">
-              <button className="group flex cursor-pointer items-baseline gap-2 border-b-2 border-[#1F1B1C] hover:border-[#EC4D37] transition-all duration-300">
-                <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
-                  Learn More Our Service
-                </span>
-                <ArrowRight className="w-4 h-4 text-[#1F1B1C] group-hover:text-[#EC4D37] group-hover:translate-x-1 transition-all duration-300" />
-              </button>
-            </div>
+            <Link href="/services">
+              <div className="flex-shrink-0">
+                <button className="group flex cursor-pointer items-baseline gap-2 border-b-2 border-[#1F1B1C] hover:border-[#EC4D37] transition-all duration-300">
+                  <span className="text-[#1F1B1C] font-medium text-sm sm:text-base">
+                    Learn More Our Service
+                  </span>
+                  <ArrowRight className="w-4 h-4 text-[#1F1B1C] group-hover:text-[#EC4D37] group-hover:translate-x-1 transition-all duration-300" />
+                </button>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
@@ -255,11 +258,11 @@ const DigitalMarketingHeader = () => {
                             <div className="lg:w-3/5">
                               {/* Service image */}
                               <div className="flex justify-start mb-6">
-                                <div className="w-full rounded-2xl overflow-hidden shadow-lg">
+                                <div className="w-full h-80 rounded-2xl overflow-hidden shadow-lg">
                                   <img
                                     src={service.image}
                                     alt={service.title}
-                                    className="w-full h-auto object-contain"
+                                    className="w-full h-full object-cover"
                                   />
                                 </div>
                               </div>

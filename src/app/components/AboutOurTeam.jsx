@@ -75,7 +75,7 @@ const TeamShowcase = () => {
   useEffect(() => {
     const scroll = () => {
       setScrollPosition((prev) => {
-        const newPosition = prev + 1.5; // Slightly faster scroll
+        const newPosition = prev + 0.5; // Slightly faster scroll
         return newPosition >= totalWidth ? 0 : newPosition;
       });
       animationRef.current = requestAnimationFrame(scroll);

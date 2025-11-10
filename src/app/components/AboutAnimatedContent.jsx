@@ -186,6 +186,7 @@ export default function AboutAnimatedContent() {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="w-full md:w-auto flex justify-center md:justify-start"
                 >
+                  <Link href="/contactus">
                   <motion.div
                     className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
                     whileHover={{ scale: 1.05 }}
@@ -204,6 +205,7 @@ export default function AboutAnimatedContent() {
                       <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
                     </motion.span>
                   </motion.div>
+                  </Link>
                 </motion.div>
               </motion.div>
             </div>

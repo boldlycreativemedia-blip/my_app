@@ -179,7 +179,7 @@ export default function AnimatedContentSection({
           <div className="relative">
             {/* LEFT CONTENT - Main Heading */}
             <motion.div
-              className="max-w-full sm:max-w-6xl md:max-w-6xl lg:max-w-7xl gap-4 "
+              className="max-w-[1920px] sm:max-w-6xl md:max-w-6xl lg:max-w-8xl gap-4 "
               initial={{ x: -100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -236,6 +236,7 @@ export default function AnimatedContentSection({
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="w-full md:w-auto flex justify-center md:justify-start"
               >
+                <Link href="/contactus">
                 <motion.div
                   className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-5 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base md:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
                   whileHover={{ scale: 1.05 }}
@@ -254,6 +255,7 @@ export default function AnimatedContentSection({
                     <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
                   </motion.span>
                 </motion.div>
+                </Link>
               </motion.div>
             </motion.div>
 
