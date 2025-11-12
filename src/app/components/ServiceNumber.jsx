@@ -135,7 +135,7 @@ const ServiceNumber = () => {
             </span>
           </div>
 
-          <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-xs mx-auto">
+          <p className="text-gray-600 font-medium sm:font-extrabold text-sm md:text-base leading-relaxed max-w-xs mx-auto">
             {stat.label}
           </p>
         </div>

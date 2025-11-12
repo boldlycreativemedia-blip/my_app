@@ -81,6 +81,7 @@ export default function AboutAnimatedContent() {
     { image: "/Brand-5.png", alt: "Brand 5" },
     { image: "/Brand-6.png", alt: "Brand 6" },
     { image: "/Brand-7.png", alt: "Brand 7" },
+    { image: "/Brand-8.png", alt: "Brand 8" },
   ];
 
   const duplicatedBrands = [...brands, ...brands];
@@ -163,7 +164,7 @@ export default function AboutAnimatedContent() {
 
                 {/* Background Text - Mobile */}
                 <motion.div
-                  className="relative md:hidden -mt-3 pb-7"
+                  className="relative md:hidden -mt-3 ml-20 pb-7"
                   initial={{ x: 100, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
@@ -264,7 +265,7 @@ export default function AboutAnimatedContent() {
                   <img
                     src={brand.image}
                     alt={brand.alt}
-                    className="h-20 md:h-24 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                    className="h-20 sm:h-24 md:h-30 lg:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
                   />
                 </motion.div>
               ))}

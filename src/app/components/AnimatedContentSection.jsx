@@ -86,6 +86,7 @@ export default function AnimatedContentSection({
     { image: "/Brand-5.png", alt: "Brand 5" },
     { image: "/Brand-6.png", alt: "Brand 6" },
     { image: "/Brand-7.png", alt: "Brand 7" },
+    { image: "/Brand-8.png", alt: "Brand 8" },
   ];
 
   // Duplicate brands array for seamless loop
@@ -160,7 +161,7 @@ export default function AnimatedContentSection({
           ].map((service, index) => (
             <motion.span
               key={service}
-              className={`text-gray-600 text-base sm:text-lg md:text-xl lg:text-2xl font-medium text-center ${
+              className={`text-gray-600 text-sm  font-medium text-center ${
                 service === "Stunning Website Design" ? "hidden md:inline" : ""
               }`}
               initial={{ opacity: 0, y: 10 }}
@@ -211,7 +212,7 @@ export default function AnimatedContentSection({
               </motion.h1>
               {/* Background Text - "Amplified" for Mobile */}
               <motion.div
-                className="block md:hidden mb-6 ml-40"
+                className="block md:hidden mb-6 ml-40 -mt-15"
                 initial={{ x: 100, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}

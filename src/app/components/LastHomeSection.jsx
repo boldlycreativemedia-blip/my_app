@@ -19,6 +19,7 @@ const LastHomeSection = () => {
     { image: "/Brand-5.png", alt: "Brand 5" },
     { image: "/Brand-6.png", alt: "Brand 6" },
     { image: "/Brand-7.png", alt: "Brand 7" },
+    { image: "/Brand-8.png", alt: "Brand 8" },
   ];
 
   // Duplicate brands array for seamless loop

@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { ArrowRight, Volume2, VolumeX, AlertCircle } from "lucide-react";
+import Link from "next/link";
 
 const ProjectCard = ({
   title,
@@ -467,7 +468,7 @@ const ServiceProjects = () => {
               transition={{ duration: 0.3, ease: "easeOut" }}
               className="group cursor-pointer bg-[#1F1B1C] hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-full flex items-center space-x-3 transition-all duration-300 shadow-lg"
             >
-              <span>Contact Us</span>
+              <Link href='/contactus'><span>Contact Us</span></Link>
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{

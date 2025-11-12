@@ -19,6 +19,7 @@ const LastServiceSection = () => {
     { image: "/Brand-5.png", alt: "Brand 5" },
     { image: "/Brand-6.png", alt: "Brand 6" },
     { image: "/Brand-7.png", alt: "Brand 7" },
+    { image: "/Brand-8.png", alt: "Brand 8" },
   ];
 
   // Duplicate brands array for seamless loop
@@ -157,9 +158,7 @@ const LastServiceSection = () => {
               <img
                 src={brand.image}
                 alt={brand.alt}
-                width={120}
-                height={60}
-                className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className="h-20 sm:h-24 md:h-30 lg:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </motion.div>
           ))}

@@ -76,6 +76,7 @@ function ContactContent() {
     { image: "/Brand-5.png", alt: "Brand 5" },
     { image: "/Brand-6.png", alt: "Brand 6" },
     { image: "/Brand-7.png", alt: "Brand 7" },
+    { image: "/Brand-8.png", alt: "Brand 8" },
   ];
 
   // Form options
@@ -105,12 +106,10 @@ function ContactContent() {
     "$100K+",
   ];
   const helpOptions = [
-    "Web Development",
-    "Mobile App",
-    "Digital Marketing",
-    "UI/UX Design",
-    "Consultation",
-    "Other",
+    "Video Production Services",
+    "Photography Services",
+    "Graphic & Design Services",
+    "Website Design & Development Services",
   ];
 
   // EmailJS configuration (replace with your actual service details)
@@ -393,7 +392,7 @@ ${attachmentsList}
                 <br />
                 <span className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6">
                   About Your
-                  <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-red-500 rounded-full flex-shrink-0">
+                  <span className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
                     <Image
                       src="/local_cafe.png"
                       alt="draw"
@@ -1070,9 +1069,7 @@ ${attachmentsList}
               <img
                 src={brand.image}
                 alt={brand.alt}
-                width={120}
-                height={60}
-                className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className="h-20 sm:h-24 md:h-30 lg:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </motion.div>
           ))}

@@ -155,7 +155,7 @@ const ProcessSection = () => {
                 {/* Content - Always on Left */}
                 <div className="flex-1 min-w-0 lg:pr-8">
                   <motion.div
-                    className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl hover:bg-[#EC4D37] cursor-pointer transition-all duration-300 group"
+                    className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 lg:hover:shadow-2xl lg:hover:bg-[#EC4D37] lg:cursor-pointer transition-all duration-300 group"
                     whileHover={{ y: -5, scale: 1.02 }}
                   >
                     {/* Mobile Number Header */}
