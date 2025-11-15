@@ -599,7 +599,6 @@ ${attachmentsList}
 
             {/* Budget & Help Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
               <motion.div
                 initial={{ x: 30, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
@@ -1069,7 +1068,11 @@ ${attachmentsList}
               <img
                 src={brand.image}
                 alt={brand.alt}
-                className="h-20 sm:h-24 md:h-30 lg:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className={`${
+                  brand.image === "/Brand-8.png"
+                    ? "h-10 sm:h-14 md:h-16 lg:h-20" // Custom height for Brand-8
+                    : "h-20 sm:h-24 md:h-30 lg:h-36" // Default height for others
+                } w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300`}
               />
             </motion.div>
           ))}
@@ -1085,7 +1088,7 @@ ${attachmentsList}
       <Footer />
     </div>
   );
-};
+}
 
 export default function Page() {
   return (

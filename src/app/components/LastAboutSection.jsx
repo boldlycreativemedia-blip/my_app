@@ -95,14 +95,14 @@ const LastAboutSection = () => {
 
               {/* CTA Button */}
               <Link href="/contactus">
-              <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-sm md:text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                Get Free Consultation
-              </button>
+                <button className="bg-white text-gray-900 px-8 cursor-pointer py-4 rounded-full font-semibold text-sm md:text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  Get Free Consultation
+                </button>
               </Link>
             </div>
           </div>
 
-           {/* Decorative Elements */}
+          {/* Decorative Elements */}
           {/* Top Right Star */}
           <div className="absolute top-0 right-0 w-18 h-18 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-48 lg:h-48">
             <img
@@ -158,7 +158,11 @@ const LastAboutSection = () => {
               <img
                 src={brand.image}
                 alt={brand.alt}
-                className="h-20 sm:h-24 md:h-30 lg:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className={`${
+                  brand.image === "/Brand-8.png"
+                    ? "h-10 sm:h-14 md:h-16 lg:h-20" // Custom height for Brand-8
+                    : "h-20 sm:h-24 md:h-30 lg:h-36" // Default height for others
+                } w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300`}
               />
             </motion.div>
           ))}

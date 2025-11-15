@@ -29,6 +29,7 @@ const Page = () => {
     { image: "/Brand-5.png", alt: "Brand 5" },
     { image: "/Brand-6.png", alt: "Brand 6" },
     { image: "/Brand-7.png", alt: "Brand 7" },
+    { image: "/Brand-8.png", alt: "Brand 8" },
   ];
 
   const duplicatedBrands = [...brands, ...brands];
@@ -170,9 +171,7 @@ const Page = () => {
           {/* Mobile Stats - Only visible on mobile */}
           <div className="block md:hidden mt-8 text-center">
             <div className="text-gray-600 text-base sm:text-lg leading-tight">
-              Let's create visuals
-              that captivate and
-              captivate
+              Let's create visuals that captivate and captivate
             </div>
           </div>
 
@@ -215,13 +214,14 @@ const Page = () => {
                 whileHover={{ scale: 1.3 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Image
+                <img
                   src={brand.image}
                   alt={brand.alt}
-                  width={120}
-                  height={60}
-                  className="h-30 md:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
-                  loading="lazy"
+                  className={`${
+                    brand.image === "/Brand-8.png"
+                      ? "h-10 sm:h-14 md:h-16 lg:h-20" // Custom height for Brand-8
+                      : "h-20 sm:h-24 md:h-30 lg:h-36" // Default height for others
+                  } w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300`}
                 />
               </motion.div>
             ))}

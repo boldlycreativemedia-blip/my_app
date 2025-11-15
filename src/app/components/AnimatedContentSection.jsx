@@ -196,7 +196,9 @@ export default function AnimatedContentSection({
                 <span className="block whitespace-nowrap">
                   Your Brand in Motion,
                 </span>
-                <span className="block whitespace-nowrap">Your Story Comes </span>
+                <span className="block whitespace-nowrap">
+                  Your Story Comes{" "}
+                </span>
                 <span className="inline-flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-10">
                   Alive
                   <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
@@ -238,24 +240,24 @@ export default function AnimatedContentSection({
                 className="w-full md:w-auto flex justify-center md:justify-start"
               >
                 <Link href="/contactus">
-                <motion.div
-                  className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-5 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base md:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Get Free Consultation
-                  <motion.span
-                    className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 bg-white bg-opacity-20 rounded-full inline-flex items-center justify-center"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
+                  <motion.div
+                    className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-5 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base md:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
-                  </motion.span>
-                </motion.div>
+                    Get Free Consultation
+                    <motion.span
+                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 bg-white bg-opacity-20 rounded-full inline-flex items-center justify-center"
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
+                    </motion.span>
+                  </motion.div>
                 </Link>
               </motion.div>
             </motion.div>
@@ -353,7 +355,11 @@ export default function AnimatedContentSection({
                 <img
                   src={brand.image}
                   alt={brand.alt}
-                  className="h-20 sm:h-24 md:h-30 lg:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                  className={`${
+                    brand.image === "/Brand-8.png"
+                      ? "h-10 sm:h-14 md:h-16 lg:h-20" // Custom height for Brand-8
+                      : "h-20 sm:h-24 md:h-30 lg:h-36" // Default height for others
+                  } w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300`}
                 />
               </motion.div>
             ))}

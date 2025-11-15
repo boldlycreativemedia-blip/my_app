@@ -158,7 +158,11 @@ const LastServiceSection = () => {
               <img
                 src={brand.image}
                 alt={brand.alt}
-                className="h-20 sm:h-24 md:h-30 lg:h-36 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                className={`${
+                  brand.image === "/Brand-8.png"
+                    ? "h-10 sm:h-14 md:h-16 lg:h-20" // Custom height for Brand-8
+                    : "h-20 sm:h-24 md:h-30 lg:h-36" // Default height for others
+                } w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300`}
               />
             </motion.div>
           ))}
