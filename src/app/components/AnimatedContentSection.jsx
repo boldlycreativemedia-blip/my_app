@@ -180,7 +180,87 @@ export default function AnimatedContentSection({
           <div className="relative">
             {/* LEFT CONTENT - Main Heading */}
             <motion.div
-              className="max-w-[1920px] sm:max-w-6xl md:max-w-6xl lg:max-w-8xl gap-4 "
+              className="hidden md:block max-w-[1920px] sm:max-w-6xl md:max-w-6xl lg:max-w-8xl gap-4 "
+              initial={{ x: -100, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <motion.h1
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold leading-tight text-black mb-6 sm:mb-8 md:mb-12 pr-4 md:pr-0"
+                initial={{ y: 20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <span className="block whitespace-nowrap">
+                  Your Brand in Motion,
+                </span>
+                <span className="whitespace-nowrap inline-flex items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-10">
+                  Your Story Comes Alive
+                  <span className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-20 lg:h-20 bg-[#EC4D37] rounded-full flex-shrink-0">
+                    <Image
+                      src="/finance_mode.png"
+                      alt="draw"
+                      width={20}
+                      height={20}
+                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 text-white"
+                    />
+                  </span>
+                </span>
+              </motion.h1>
+              {/* Background Text - "Amplified" for Mobile */}
+              <motion.div
+                className="block md:hidden mb-6 ml-40 -mt-15"
+                initial={{ x: 100, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <motion.div
+                  className="text-[#BBBBBB] text-2xl sm:text-3xl md:text-4xl font-bold leading-none select-none text-center"
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                >
+                  \\Amplified
+                </motion.div>
+              </motion.div>
+
+              {/* CTA Button */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="w-full md:w-auto flex justify-center md:justify-start"
+              >
+                <Link href="/contactus">
+                  <motion.div
+                    className="group bg-[#EC4D37] hover:bg-[#e74b36] text-white px-5 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base md:text-lg font-medium inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 cursor-pointer relative z-10"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Get Free Consultation
+                    <motion.span
+                      className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 bg-white bg-opacity-20 rounded-full inline-flex items-center justify-center"
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-black pointer-events-none" />
+                    </motion.span>
+                  </motion.div>
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              className="max-w-[1920px] md:hidden sm:max-w-6xl md:max-w-6xl lg:max-w-8xl gap-4 "
               initial={{ x: -100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -230,7 +310,6 @@ export default function AnimatedContentSection({
                   \\Amplified
                 </motion.div>
               </motion.div>
-
               {/* CTA Button */}
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}

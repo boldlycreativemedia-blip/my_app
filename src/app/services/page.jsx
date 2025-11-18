@@ -159,7 +159,7 @@ const Page = () => {
             {/* Stats positioned on the right */}
             <div className="hidden md:block absolute top-0 right-0 z-10">
               <div className="text-right">
-                <div className="text-gray-600 text-lg leading-tight">
+                <div className="text-[#BBBBBB] text-3xl leading-tight">
                   Let's Bring Your
                   <br />
                   Vision to life
@@ -170,8 +170,8 @@ const Page = () => {
 
           {/* Mobile Stats - Only visible on mobile */}
           <div className="block md:hidden mt-8 text-center">
-            <div className="text-gray-600 text-base sm:text-lg leading-tight">
-              Let's create visuals that captivate and captivate
+            <div className="text-[#BBBBBB] text-base sm:text-lg leading-tight">
+              Let's Bring Your Vision to life
             </div>
           </div>
 
